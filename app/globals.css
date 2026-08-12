@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-bg text-content font-inter antialiased;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* Offset para que el nav fijo no tape el título de la sección al saltar */
+  section[id] {
+    scroll-margin-top: 80px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-underline-in,
+  .animate-pulse,
+  .animate-fade-up {
+    animation: none !important;
+  }
+  /* Dejar el subrayado visible sin animación */
+  .underline-animated::after {
+    transform: scaleX(1) !important;
+  }
+}
