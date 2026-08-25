@@ -1,21 +1,35 @@
 import type { Metadata } from "next";
-import { templates } from "@/lib/config";
-import PlaceholderTemplate from "@/components/templates/PlaceholderTemplate";
-
-const data = templates.items.find((t) => t.slug === "bienestar")!;
+import ThemeProvider from "@/components/templates/ThemeProvider";
+import { bienestarThemes, bienestarFonts, bienestar } from "@/lib/templates/bienestar";
+import Nav from "@/components/templates/bienestar/Nav";
+import Hero from "@/components/templates/bienestar/Hero";
+import Clases from "@/components/templates/bienestar/Clases";
+import Horarios from "@/components/templates/bienestar/Horarios";
+import Coaches from "@/components/templates/bienestar/Coaches";
+import Planes from "@/components/templates/bienestar/Planes";
+import Contacto from "@/components/templates/bienestar/Contacto";
+import Footer from "@/components/templates/bienestar/Footer";
 
 export const metadata: Metadata = {
-  title: `Template ${data.name} — Mostrate`,
-  description: data.desc,
+  title: `${bienestar.business.name} — ${bienestar.footer.tagline}`,
+  description: bienestar.hero.subtitle,
 };
 
 export default function BienestarTemplatePage() {
   return (
-    <PlaceholderTemplate
-      name={data.name}
-      tag={data.tag}
-      desc={data.desc}
-      accent={data.accent}
-    />
+    <ThemeProvider themes={bienestarThemes} fonts={bienestarFonts}>
+      <div className="min-h-screen bg-[#0A0A0A] font-inter text-[#F5F5F5]">
+        <Nav />
+        <main>
+          <Hero />
+          <Clases />
+          <Horarios />
+          <Coaches />
+          <Planes />
+        </main>
+        <Contacto />
+        <Footer />
+      </div>
+    </ThemeProvider>
   );
 }

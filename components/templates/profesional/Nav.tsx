@@ -13,10 +13,10 @@ export default function Nav() {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
         {/* Logo */}
         <a href="#top" className="flex items-center gap-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--accent)] font-syne text-sm font-extrabold text-[var(--accent-contrast)]">
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--accent)] font-[family-name:var(--tpl-font-heading)] text-sm font-extrabold text-[var(--accent-contrast)]">
             {business.initials}
           </span>
-          <span className="font-syne text-lg font-bold tracking-[-0.02em] text-[#16182B]">
+          <span className="font-[family-name:var(--tpl-font-heading)] text-lg font-bold tracking-[-0.02em] text-[#16182B]">
             {business.name}
           </span>
         </a>

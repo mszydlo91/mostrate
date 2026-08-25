@@ -23,7 +23,7 @@ export default function Hero() {
             {hero.eyebrow}
           </span>
 
-          <h1 className="mt-6 font-syne text-[clamp(2.2rem,5vw,3.8rem)] font-extrabold leading-[1.08] tracking-[-0.03em] text-[#16182B]">
+          <h1 className="mt-6 font-[family-name:var(--tpl-font-heading)] text-[clamp(2.2rem,5vw,3.8rem)] font-extrabold leading-[1.08] tracking-[-0.03em] text-[#16182B]">
             {hero.title.before}
             <span className="text-[var(--accent)]">{hero.title.highlight}</span>
             {hero.title.after}
@@ -80,7 +80,7 @@ export default function Hero() {
               <div className="text-xs font-medium text-[#5A5F73]">
                 {hero.card.label}
               </div>
-              <div className="mt-1 font-syne text-3xl font-extrabold text-[#16182B]">
+              <div className="mt-1 font-[family-name:var(--tpl-font-heading)] text-3xl font-extrabold text-[#16182B]">
                 {hero.card.amount}
               </div>
             </div>

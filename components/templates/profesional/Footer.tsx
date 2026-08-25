@@ -8,11 +8,11 @@ export default function Footer() {
     <footer className="border-t border-[#E6E8F0] bg-white">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-5 py-10 sm:px-8 md:flex-row">
         <div className="flex items-center gap-2.5">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--accent)] font-syne text-xs font-extrabold text-[var(--accent-contrast)]">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--accent)] font-[family-name:var(--tpl-font-heading)] text-xs font-extrabold text-[var(--accent-contrast)]">
             {business.initials}
           </span>
           <div>
-            <div className="font-syne text-sm font-bold text-[#16182B]">
+            <div className="font-[family-name:var(--tpl-font-heading)] text-sm font-bold text-[#16182B]">
               {business.name}
             </div>
             <div className="text-xs text-[#5A5F73]">{footer.tagline}</div>

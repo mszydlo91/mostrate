@@ -13,7 +13,7 @@ export default function Local() {
           <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--accent)]">
             {local.label}
           </span>
-          <h2 className="mt-2 font-syne text-[clamp(1.8rem,3vw,2.6rem)] font-bold tracking-[-0.02em] text-[#2A211A]">
+          <h2 className="mt-2 font-[family-name:var(--tpl-font-heading)] text-[clamp(1.8rem,3vw,2.6rem)] font-bold tracking-[-0.02em] text-[#2A211A]">
             {local.title}
           </h2>
           <p className="mt-3 max-w-md text-[clamp(0.95rem,1.2vw,1.05rem)] text-[#6E6152]">
@@ -47,7 +47,7 @@ export default function Local() {
 
         {/* Horarios */}
         <div className="rounded-3xl border border-[#E7DECF] bg-white p-7 sm:p-9">
-          <h3 className="font-syne text-lg font-bold text-[#2A211A]">Horarios de atención</h3>
+          <h3 className="font-[family-name:var(--tpl-font-heading)] text-lg font-bold text-[#2A211A]">Horarios de atención</h3>
           <ul className="mt-5 divide-y divide-[#EFE7DA]">
             {local.hours.map((h) => (
               <li key={h.day} className="flex items-center justify-between py-3.5">

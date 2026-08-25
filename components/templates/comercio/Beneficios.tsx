@@ -12,7 +12,7 @@ export default function Beneficios() {
               {b.icon}
             </span>
             <div>
-              <h3 className="font-syne text-sm font-bold text-[#2A211A]">{b.title}</h3>
+              <h3 className="font-[family-name:var(--tpl-font-heading)] text-sm font-bold text-[#2A211A]">{b.title}</h3>
               <p className="mt-0.5 text-sm text-[#6E6152]">{b.desc}</p>
             </div>
           </div>

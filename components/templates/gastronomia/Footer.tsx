@@ -1,18 +1,17 @@
 import Link from "next/link";
-import { comercio } from "@/lib/templates/comercio";
+import { gastronomia } from "@/lib/templates/gastronomia";
 
-const { business, footer, nav } = comercio;
+const { business, footer, nav } = gastronomia;
 
 export default function Footer() {
   return (
-    <footer className="border-t border-[#E7DECF] bg-[#EFE7DA]">
+    <footer>
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-5 py-10 sm:px-8 md:flex-row">
         <div>
-          <div className="font-[family-name:var(--tpl-font-heading)] text-lg font-extrabold text-[#2A211A]">
+          <div className="font-[family-name:var(--tpl-font-heading)] text-sm font-bold uppercase tracking-[0.14em] text-[#F3ECE1]">
             {business.name}
-            <span className="text-[var(--accent)]">.</span>
           </div>
-          <div className="text-xs text-[#6E6152]">{footer.tagline}</div>
+          <div className="mt-0.5 text-xs text-[#F3ECE1]/40">{footer.tagline}</div>
         </div>
 
         <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2">
@@ -20,7 +19,7 @@ export default function Footer() {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-[#6E6152] hover:text-[var(--accent)]"
+              className="text-xs uppercase tracking-[0.08em] text-[#F3ECE1]/45 hover:text-[var(--accent)]"
             >
               {link.label}
             </a>
@@ -28,11 +27,11 @@ export default function Footer() {
         </nav>
       </div>
 
-      <div className="border-t border-[#E0D6C4]">
+      <div className="border-t border-[#F3ECE1]/10">
         <div className="mx-auto flex max-w-6xl items-center justify-center px-5 py-4 sm:px-8">
           <Link
             href="/#templates"
-            className="text-xs text-[#9C8F7C] transition-colors hover:text-[var(--accent)]"
+            className="text-xs text-[#F3ECE1]/30 transition-colors hover:text-[var(--accent)]"
           >
             Sitio de demostración · hecho con Mostrate ↗
           </Link>

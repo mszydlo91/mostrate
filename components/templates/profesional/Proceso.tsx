@@ -10,7 +10,7 @@ export default function Proceso() {
           <span className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent)]">
             {proceso.label}
           </span>
-          <h2 className="mt-3 font-syne text-[clamp(1.8rem,3vw,2.6rem)] font-bold tracking-[-0.02em] text-[#16182B]">
+          <h2 className="mt-3 font-[family-name:var(--tpl-font-heading)] text-[clamp(1.8rem,3vw,2.6rem)] font-bold tracking-[-0.02em] text-[#16182B]">
             {proceso.title}
           </h2>
         </div>
@@ -26,10 +26,10 @@ export default function Proceso() {
                 />
               )}
               <div className="relative rounded-2xl border border-[#E6E8F0] bg-white p-7">
-                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--accent)] font-syne text-lg font-extrabold text-[var(--accent-contrast)]">
+                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--accent)] font-[family-name:var(--tpl-font-heading)] text-lg font-extrabold text-[var(--accent-contrast)]">
                   {step.num}
                 </span>
-                <h3 className="mt-5 font-syne text-lg font-bold text-[#16182B]">
+                <h3 className="mt-5 font-[family-name:var(--tpl-font-heading)] text-lg font-bold text-[#16182B]">
                   {step.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-[#5A5F73]">
