@@ -11,7 +11,7 @@ export default function Sobre() {
           <div className="relative mx-auto max-w-md">
             <div className="aspect-square rounded-3xl bg-[var(--accent-soft)] p-10">
               <div className="flex h-full w-full items-center justify-center rounded-2xl bg-[var(--accent)]">
-                <span className="font-syne text-6xl font-extrabold text-[var(--accent-contrast)]">
+                <span className="font-[family-name:var(--tpl-font-heading)] text-6xl font-extrabold text-[var(--accent-contrast)]">
                   {business.initials}
                 </span>
               </div>
@@ -38,7 +38,7 @@ export default function Sobre() {
           <span className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent)]">
             {sobre.label}
           </span>
-          <h2 className="mt-3 font-syne text-[clamp(1.8rem,3vw,2.6rem)] font-bold tracking-[-0.02em] text-[#16182B]">
+          <h2 className="mt-3 font-[family-name:var(--tpl-font-heading)] text-[clamp(1.8rem,3vw,2.6rem)] font-bold tracking-[-0.02em] text-[#16182B]">
             {sobre.title}
           </h2>
 

@@ -33,7 +33,7 @@ export default function Contacto() {
           <span className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent)]">
             {contacto.label}
           </span>
-          <h2 className="mt-3 font-syne text-[clamp(1.8rem,3vw,2.6rem)] font-bold tracking-[-0.02em] text-[#16182B]">
+          <h2 className="mt-3 font-[family-name:var(--tpl-font-heading)] text-[clamp(1.8rem,3vw,2.6rem)] font-bold tracking-[-0.02em] text-[#16182B]">
             {contacto.title}
           </h2>
           <p className="mt-4 max-w-md text-[clamp(0.95rem,1.2vw,1.05rem)] text-[#5A5F73]">

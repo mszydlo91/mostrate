@@ -12,7 +12,7 @@ export default function Promo() {
           <span className="inline-block rounded-full bg-white/20 px-3.5 py-1 text-xs font-bold uppercase tracking-wide text-[var(--accent-contrast)]">
             {promo.badge}
           </span>
-          <h2 className="mt-3 font-syne text-[clamp(1.8rem,3.5vw,2.8rem)] font-extrabold leading-tight text-[var(--accent-contrast)]">
+          <h2 className="mt-3 font-[family-name:var(--tpl-font-heading)] text-[clamp(1.8rem,3.5vw,2.8rem)] font-extrabold leading-tight text-[var(--accent-contrast)]">
             {promo.title}
           </h2>
           <p className="mt-2 max-w-xl text-[var(--accent-contrast)] opacity-90">

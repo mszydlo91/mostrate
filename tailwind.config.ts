@@ -25,7 +25,7 @@ const config: Config = {
         DEFAULT: "12px",
       },
       maxWidth: {
-        shell: "1280px",
+        shell: "clamp(280px, 92vw, 1760px)",
       },
       keyframes: {
         pulse: {

@@ -175,9 +175,34 @@ No saben qué tema está activo → cambiar de tema solo reescribe las variables
 **Para agregar/editar temas:** tocás el array `<template>Themes` en el archivo de
 contenido del template (ej. `profesionalThemes` en `lib/templates/profesional.ts`).
 
+### 🔤 Sistema de tipografías (mismo patrón, para títulos)
+Igual que el theming de color, pero para la fuente de los títulos:
+
+- [`font.ts`](components/templates/font.ts) — tipo `TemplateFont` (`id`, `name`,
+  `heading`), helper `fontVars()`, y `templateFonts` (lista compartida de 4
+  opciones: Syne, Playfair Display, Space Grotesk, Poppins). Las 3 fuentes
+  extra se cargan como variables CSS en [`app/layout.tsx`](app/layout.tsx)
+  junto a Syne/Inter.
+- `ThemeProvider` inyecta la fuente activa como `--tpl-font-heading` (usa
+  `templateFonts` por defecto si el template no pasa su propio array).
+- [`FontSwitcher.tsx`](components/templates/FontSwitcher.tsx) — control
+  flotante (arriba del de temas) para previsualizar las 4 tipografías.
+
+**Cómo lo consumen las secciones:** los títulos usan
+`font-[family-name:var(--tpl-font-heading)]` en vez de una clase `font-syne`
+fija. La landing de Mostrate y `PlaceholderTemplate` no usan esto — mantienen
+Syne fijo a propósito, porque no son templates elegibles por el visitante.
+
+### ↩️ Volver a Mostrate
+[`BackToSite.tsx`](components/templates/BackToSite.tsx) — link flotante
+(abajo a la izquierda) que monta automáticamente `ThemeProvider` en todo
+template, para no quedar "encerrado" dentro de la demo.
+
 ---
 
-## 7. Template Profesional (referencia)
+## 7. Templates desarrollados
+
+### 7.1 Profesional (referencia)
 
 Rubro: **servicios profesionales** (contadores, abogados, consultores).
 Cliente demo: **"Estudio Rivas — Contador Público"**.
@@ -191,6 +216,101 @@ Cliente demo: **"Estudio Rivas — Contador Público"**.
 - **Temas:** Azul ejecutivo · Esmeralda · Bordó.
 
 Sirve de **patrón de referencia** para construir los demás templates.
+
+### 7.2 Comercio
+
+Rubro: **tiendas y locales** (productos físicos, venta por WhatsApp).
+Cliente demo: **"Casa Bonita — Deco & Hogar"**.
+
+- **Estilo:** fondo crema cálido, orientado a catálogo de productos y venta
+  por WhatsApp (distinto al corporativo de Profesional).
+- **Contenido:** [`lib/templates/comercio.ts`](lib/templates/comercio.ts).
+- **Secciones** ([`components/templates/comercio/`](components/templates/comercio/)):
+  Nav (con barra de anuncio) · Hero (collage de tiles de producto) ·
+  Categorías · Productos (grid con precios) · Promo (banner de oferta) ·
+  Beneficios (envíos, medios de pago) · Local (horarios + WhatsApp) · Footer.
+- **Temas:** Mandarina · Frambuesa · Uva.
+
+### 7.3 Gastronomía
+
+Rubro: **restaurantes, cantinas, cafés**. Cliente demo: **"Cantina Sorrento"**
+— cantina ítalo-argentina de barrio (San Telmo, CABA).
+
+- **Estilo:** deliberadamente **NO** es la landing "tipo SaaS" de los otros
+  dos templates (hero de 2 columnas + card, botones pill sólidos, grid de
+  tarjetas). Usa un lenguaje **editorial / carta de restaurante impresa**,
+  inspirado en sitios reales de restaurantes (Fabric Sushi, Kansas Grill &
+  Bar): tipografía serif grande, mucho espacio negativo, sin botones
+  rellenos (todo bordes finos o texto subrayado), fondo casi negro y cálido
+  (`#0B0906`) con una textura de grano sutil (`GrainOverlay.tsx`, SVG
+  `feTurbulence`) para que no se sienta "plano".
+- **Tipografía por defecto:** Playfair Display (serif), no Syne — es la
+  única de las 4 tipografías compartidas (`components/templates/font.ts`)
+  que transmite "carta de restaurante". Se define reordenando la lista en
+  `gastronomiaFonts` (en `lib/templates/gastronomia.ts`); el visitante
+  igual puede cambiarla desde el FontSwitcher.
+- **Contenido:** [`lib/templates/gastronomia.ts`](lib/templates/gastronomia.ts).
+- **Secciones** ([`components/templates/gastronomia/`](components/templates/gastronomia/)):
+  - Nav — minimal, sin botón pill; el CTA es un link con subrayado de acento.
+  - Hero — una sola columna, título enorme en itálica, regla horizontal +
+    fila subtítulo/acciones estilo masthead de revista (no el hero de 2
+    columnas con card de los otros templates).
+  - **Nosotros** — deliberadamente mínima: una frase grande en itálica + un
+    dato de contexto, sin caja, sin bio ni testimonios (a pedido explícito,
+    para no restarle protagonismo al menú).
+  - **Menú** ([`Menu.tsx`](components/templates/gastronomia/Menu.tsx)) —
+    sección central, con estética de carta impresa: índice numerado de
+    categorías (en vez de tabs con pill) y cada plato con una línea de
+    puntos entre el nombre y el precio (`border-dotted`), no tarjetas.
+    Categorías editables 100% desde `gastronomia.ts` (`menu.categories`) —
+    agregar o quitar una no toca el componente. Incluye el **toggle
+    "mostrar/ocultar precios"** (estado propio, `useState` local — distinto
+    de ThemeSwitcher/FontSwitcher porque es un control de contenido
+    específico de este template) y un destacado de "plato del día" que
+    reutiliza el dato `hero.card`.
+  - **Ubicación** — dirección/horarios en tipografía grande + las 3
+    modalidades (salón/reservas, retiro, delivery) como lista numerada
+    separada por líneas, sin íconos en badges de color; contenido pensado
+    como punto de partida razonable a falta de detalle del cliente real.
+  - Contacto — formulario con inputs subrayados (sin caja), orientado a
+    reservas · Footer minimal.
+- **Temas:** Terracota · Vino · Oliva (paleta cálida, de cocina). A
+  diferencia de los otros templates, el acento **nunca se usa como fondo
+  sólido de botón** — solo en texto, líneas y el destacado del menú, para
+  sostener el lenguaje editorial.
+
+### 7.4 Bienestar
+
+Rubro: **gimnasios, estudios de entrenamiento, nutricionistas, coaches**.
+Cliente demo: **"Núcleo Training Club"** — estudio boutique de entrenamiento
+funcional en Palermo, CABA. Inspirado en sitios reales de gimnasios (ej.
+onfit.com.ar): estadísticas dinámicas, catálogo de clases con intensidad,
+horarios y planes.
+
+- **Estilo:** cuarto lenguaje visual del proyecto, deliberadamente **bold y
+  atlético** — nada que ver con los otros tres. Negro puro (`#0A0A0A`) +
+  acento neón usado como **fondo sólido** de botones (lo opuesto a
+  Gastronomía), tipografía en mayúsculas con tracking apretado, y bloques
+  angulares con `clip-path` (cortes en diagonal en botones, tarjetas y
+  badges) en vez de bordes redondeados o hairlines.
+- **Tipografía por defecto:** Space Grotesk (técnica/bold) — reordenada en
+  `bienestarFonts`, igual mecanismo que `gastronomiaFonts`.
+- **Contenido:** [`lib/templates/bienestar.ts`](lib/templates/bienestar.ts).
+- **Secciones** ([`components/templates/bienestar/`](components/templates/bienestar/)):
+  - Nav — CTA en botón sólido con corner-cut.
+  - Hero — título gigante en mayúsculas + bloque de acento angular
+    decorativo de fondo + **stats animados** (`Counter.tsx`, cuentan desde 0
+    al montar, respeta `prefers-reduced-motion`).
+  - **Clases** — grid de modalidades con badge de intensidad (Alta/Media/Baja,
+    codificado por color). Editable 100% desde `bienestar.ts` (`clases.items`).
+  - **Horarios** — grilla semanal (día × franjas horarias), la única sección
+    de este tipo en todo el proyecto; contenido en `horarios.days`.
+  - **Coaches** — grid de entrenadores con iniciales en badge angular.
+  - **Planes** — pricing de 3 planes, la tarjeta destacada (`featured`) usa
+    fondo sólido de acento + corner-cut; mismo patrón conceptual que la
+    sección Precios de la landing de Mostrate pero con esta estética.
+  - Contacto (orientado a "clase de prueba gratis") · Footer.
+- **Temas:** Lima · Naranja · Cian (paleta neón, energía de gimnasio).
 
 ---
 
@@ -246,9 +366,9 @@ Skills de proyecto en `.claude/skills/`. Se invocan con `/nombre-skill`.
 - [x] Landing de Mostrate completa y responsive.
 - [x] Motor de theming reutilizable (3 temas por template).
 - [x] Template **Profesional** desarrollado.
-- [ ] Template **Comercio**.
-- [ ] Template **Gastronomía**.
-- [ ] Template **Bienestar**.
+- [x] Template **Comercio** desarrollado.
+- [x] Template **Gastronomía** desarrollado.
+- [x] Template **Bienestar** desarrollado.
 - [ ] Backend real del formulario de contacto (hoy abre el cliente de mail).
 - [ ] Definir arquitectura multi-cliente (dominio por cliente).
 
@@ -258,3 +378,25 @@ Skills de proyecto en `.claude/skills/`. Se invocan con `/nombre-skill`.
 
 - **2026-07-05** — Setup inicial: landing de Mostrate, estructura de carpetas,
   config central, motor de theming, template Profesional con 3 temas, y esta doc.
+- **2026-08-25** — Ancho del contenedor (`max-w-shell`) pasado a `clamp()`
+  responsivo en vez de un pixel fijo, para que el margen lateral se vea
+  proporcional en cualquier ancho de pantalla; alineación del Nav de Mostrate
+  corregida al mismo contenedor que el resto de las secciones. Sistema de
+  tipografías para templates de clientes (`font.ts` + `FontSwitcher`, 4
+  opciones) y link flotante `BackToSite` para volver a Mostrate desde
+  cualquier template. Template **Gastronomía** desarrollado completo (cliente
+  demo "Cantina Sorrento"): menú por categorías con toggle de precios,
+  sección "Nosotros" minimalista, y sección de ubicación/retiro/delivery.
+- **2026-08-25 (rediseño)** — Primera versión de Gastronomía reemplazada por
+  completo: pasó de reusar el lenguaje visual "SaaS" de Profesional/Comercio
+  (recoloreado a oscuro) a un lenguaje editorial propio inspirado en sitios
+  reales de restaurantes — tipografía Playfair por defecto, botones sin
+  relleno, menú con líneas de puntos en vez de tarjetas, y textura de grano
+  (`GrainOverlay.tsx`) sobre el fondo.
+- **2026-08-25** — Template **Bienestar** desarrollado (cliente demo "Núcleo
+  Training Club"): cuarto lenguaje visual del proyecto — negro puro + acento
+  neón en bloques angulares (`clip-path`), stats animados al montar
+  (`Counter.tsx`), catálogo de clases con badge de intensidad, grilla de
+  horarios semanal, coaches y planes de membresía. Con esto, los 4 templates
+  de la landing (Profesional, Comercio, Gastronomía, Bienestar) quedan
+  completos.

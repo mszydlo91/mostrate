@@ -18,62 +18,64 @@ export default function Nav() {
 
   return (
     <>
-      <nav className="fixed inset-x-0 top-0 z-[100] flex items-center justify-between border-b border-line bg-bg/85 px-5 py-5 backdrop-blur-md sm:px-[clamp(20px,4vw,60px)]">
-        <a
-          href="#hero"
-          onClick={close}
-          className="font-syne text-[clamp(1rem,1.5vw,1.2rem)] font-extrabold tracking-[-0.02em] text-content"
-        >
-          {site.logo.first}
-          <span className="text-accent">{site.logo.accent}</span>
-        </a>
+      <nav className="fixed inset-x-0 top-0 z-[100] border-b border-line bg-bg/85 backdrop-blur-md">
+        <div className="mx-auto flex max-w-shell items-center justify-between px-5 py-5 sm:px-[clamp(20px,4vw,60px)]">
+          <a
+            href="#hero"
+            onClick={close}
+            className="font-syne text-[clamp(1rem,1.5vw,1.2rem)] font-extrabold tracking-[-0.02em] text-content"
+          >
+            {site.logo.first}
+            <span className="text-accent">{site.logo.accent}</span>
+          </a>
 
-        {/* Links desktop */}
-        <ul className="hidden list-none items-center gap-[clamp(16px,2.5vw,32px)] md:flex">
-          {nav.links.map((link) => (
-            <li key={link.href}>
+          {/* Links desktop */}
+          <ul className="hidden list-none items-center gap-[clamp(16px,2.5vw,32px)] md:flex">
+            {nav.links.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  className="text-[clamp(0.8rem,1vw,0.9rem)] font-medium text-muted transition-colors hover:text-content"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+            <li>
               <a
-                href={link.href}
-                className="text-[clamp(0.8rem,1vw,0.9rem)] font-medium text-muted transition-colors hover:text-content"
+                href={nav.cta.href}
+                className="rounded-md bg-accent px-5 py-2 text-[clamp(0.8rem,1vw,0.9rem)] font-semibold text-white transition-opacity hover:opacity-85"
               >
-                {link.label}
+                {nav.cta.label}
               </a>
             </li>
-          ))}
-          <li>
-            <a
-              href={nav.cta.href}
-              className="rounded-md bg-accent px-5 py-2 text-[clamp(0.8rem,1vw,0.9rem)] font-semibold text-white transition-opacity hover:opacity-85"
-            >
-              {nav.cta.label}
-            </a>
-          </li>
-        </ul>
+          </ul>
 
-        {/* Hamburger */}
-        <button
-          type="button"
-          aria-label={open ? "Cerrar menú" : "Abrir menú"}
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-          className="z-[200] flex h-9 w-9 flex-col items-center justify-center gap-[5px] p-1 md:hidden"
-        >
-          <span
-            className={`block h-0.5 w-[22px] rounded bg-content transition-transform duration-300 ${
-              open ? "translate-y-[7px] rotate-45" : ""
-            }`}
-          />
-          <span
-            className={`block h-0.5 w-[22px] rounded bg-content transition-opacity duration-300 ${
-              open ? "opacity-0" : ""
-            }`}
-          />
-          <span
-            className={`block h-0.5 w-[22px] rounded bg-content transition-transform duration-300 ${
-              open ? "-translate-y-[7px] -rotate-45" : ""
-            }`}
-          />
-        </button>
+          {/* Hamburger */}
+          <button
+            type="button"
+            aria-label={open ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+            className="z-[200] flex h-9 w-9 flex-col items-center justify-center gap-[5px] p-1 md:hidden"
+          >
+            <span
+              className={`block h-0.5 w-[22px] rounded bg-content transition-transform duration-300 ${
+                open ? "translate-y-[7px] rotate-45" : ""
+              }`}
+            />
+            <span
+              className={`block h-0.5 w-[22px] rounded bg-content transition-opacity duration-300 ${
+                open ? "opacity-0" : ""
+              }`}
+            />
+            <span
+              className={`block h-0.5 w-[22px] rounded bg-content transition-transform duration-300 ${
+                open ? "-translate-y-[7px] -rotate-45" : ""
+              }`}
+            />
+          </button>
+        </div>
       </nav>
 
       {/* Overlay menú mobile */}

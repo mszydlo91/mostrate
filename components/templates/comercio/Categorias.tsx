@@ -11,7 +11,7 @@ export default function Categorias() {
             <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--accent)]">
               {categorias.label}
             </span>
-            <h2 className="mt-2 font-syne text-[clamp(1.6rem,2.6vw,2.2rem)] font-bold tracking-[-0.02em] text-[#2A211A]">
+            <h2 className="mt-2 font-[family-name:var(--tpl-font-heading)] text-[clamp(1.6rem,2.6vw,2.2rem)] font-bold tracking-[-0.02em] text-[#2A211A]">
               {categorias.title}
             </h2>
           </div>

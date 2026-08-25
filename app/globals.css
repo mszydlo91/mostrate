@@ -13,9 +13,15 @@
     line-height: 1.6;
   }
 
-  /* Offset para que el nav fijo no tape el título de la sección al saltar */
+  /*
+   * Offset para que el nav fijo no tape el título de la sección al saltar
+   * por ancla. Chico a propósito: cada sección ya tiene su propio padding
+   * superior (60-110px) que sobra de sobra como despeje del nav — un valor
+   * grande acá se SUMABA a ese padding y dejaba un salto con demasiado
+   * espacio vacío antes del título.
+   */
   section[id] {
-    scroll-margin-top: 80px;
+    scroll-margin-top: 24px;
   }
 }
 

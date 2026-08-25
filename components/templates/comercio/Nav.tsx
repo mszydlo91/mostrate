@@ -22,7 +22,7 @@ export default function Nav() {
       {/* Nav */}
       <div className="border-b border-[#E7DECF] bg-[#F5EEE3]/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
-          <a href="#top" className="font-syne text-xl font-extrabold tracking-[-0.02em] text-[#2A211A]">
+          <a href="#top" className="font-[family-name:var(--tpl-font-heading)] text-xl font-extrabold tracking-[-0.02em] text-[#2A211A]">
             {business.name}
             <span className="text-[var(--accent)]">.</span>
           </a>
