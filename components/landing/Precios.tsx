@@ -13,11 +13,11 @@ export default function Precios() {
         subtitle={precios.subtitle}
       />
 
-      <div className="grid max-w-[760px] grid-cols-[repeat(auto-fit,minmax(min(280px,100%),1fr))] items-start gap-[clamp(16px,2vw,24px)]">
+      <div className="grid max-w-[760px] grid-cols-[repeat(auto-fit,minmax(min(280px,100%),1fr))] gap-[clamp(16px,2vw,24px)]">
         {precios.plans.map((plan) => (
           <div
             key={plan.name}
-            className={`relative rounded border bg-surface p-[clamp(28px,3vw,36px)] ${
+            className={`relative flex h-full flex-col rounded border bg-surface p-[clamp(28px,3vw,36px)] ${
               plan.featured ? "border-accent" : "border-line"
             }`}
           >
@@ -30,14 +30,14 @@ export default function Precios() {
             <div className="mb-3 font-syne text-[clamp(0.85rem,1vw,1rem)] font-bold text-muted">
               {plan.name}
             </div>
-            <div className="mb-1 font-syne text-[clamp(2rem,3vw,2.8rem)] font-extrabold leading-none">
+            <div className="mb-1 font-syne text-[clamp(2rem,3vw,2.8rem)] font-extrabold leading-[1.15]">
               {plan.price}
             </div>
             <div className="mb-7 text-[clamp(0.78rem,0.9vw,0.85rem)] text-muted">
               {plan.period}
             </div>
 
-            <ul className="mb-8 flex list-none flex-col gap-3">
+            <ul className="mb-8 flex flex-1 list-none flex-col gap-3">
               {plan.features.map((feature) => (
                 <li
                   key={feature}

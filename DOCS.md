@@ -32,6 +32,7 @@ Este repo contiene **dos cosas distintas**:
 | Estilos | **Tailwind CSS** 3 |
 | Lenguaje | **TypeScript** (strict) |
 | Fuentes | **Syne** (títulos) + **Inter** (texto), vía `next/font/google` |
+| Testing | **Vitest** + **React Testing Library** (jsdom), alias `@/*` vía `vite-tsconfig-paths` |
 | Deploy | **Vercel** |
 
 Requisitos: Node 18+. Comandos:
@@ -41,7 +42,32 @@ npm install     # instalar dependencias
 npm run dev     # desarrollo → http://localhost:3000
 npm run build   # build de producción
 npm start       # servir el build
+npm test        # correr los tests una vez
+npm run test:watch  # tests en modo watch
+npm run coverage    # tests + reporte de cobertura (v8)
 ```
+
+Convención: los tests viven junto al archivo que prueban, como
+`<archivo>.test.ts(x)` (ej. `components/templates/theme.test.ts`,
+`components/templates/gastronomia/Menu.test.tsx`).
+
+Dos formas de test conviviendo en el repo, cada una con su propósito:
+- **Funciones puras** (`theme.ts`, `font.ts`) — sin dependencias, rápidas,
+  cero setup.
+- **Componentes con estado/interacción** (`Menu.tsx`) — usan
+  `@testing-library/react` + `@testing-library/user-event` sobre entorno
+  `jsdom`. Requieren `vitest.setup.ts` con `afterEach(() => cleanup())`:
+  sin eso, cada `render()` de un test se queda montado y contamina el
+  siguiente (aparecen elementos "duplicados" que en realidad son del test
+  anterior). Ya está resuelto, pero si un test nuevo falla con "Found
+  multiple elements", es la primera sospecha.
+- Al testear contenido real (no mocks), pueden aparecer **ambigüedades
+  genuinas de UI** — ej. "Sorrentinos de jamón y muzzarella" aparece tanto
+  en el destacado de "Plato del día" como en la lista de Pastas. No es un
+  bug, pero el test tiene que elegir un texto que no se repita en pantalla.
+
+Esta es la base real (no especulada) sobre la que va a operar el futuro
+subagente `testing-coverage`.
 
 ---
 
@@ -369,8 +395,13 @@ Skills de proyecto en `.claude/skills/`. Se invocan con `/nombre-skill`.
 - [x] Template **Comercio** desarrollado.
 - [x] Template **Gastronomía** desarrollado.
 - [x] Template **Bienestar** desarrollado.
+- [x] Base de testing (Vitest + React Testing Library) instalada, con tests
+      sobre el motor compartido (theme.ts, font.ts) y sobre un componente
+      con estado/interacción (Menu.tsx de Gastronomía).
 - [ ] Backend real del formulario de contacto (hoy abre el cliente de mail).
 - [ ] Definir arquitectura multi-cliente (dominio por cliente).
+- [ ] Primer subagente (`testing-coverage`), una vez que haya más superficie
+      de tests para justificarlo.
 
 ---
 
@@ -387,6 +418,23 @@ Skills de proyecto en `.claude/skills/`. Se invocan con `/nombre-skill`.
   cualquier template. Template **Gastronomía** desarrollado completo (cliente
   demo "Cantina Sorrento"): menú por categorías con toggle de precios,
   sección "Nosotros" minimalista, y sección de ubicación/retiro/delivery.
+- **2026-08-30** — Repo pasado a público y protección de rama activada sobre
+  `main` (ruleset de GitHub: PR + revisión de code owner obligatoria para
+  todos, con bypass solo de "esperar aprobación" para el rol admin — nadie
+  puede pushear directo, ni siquiera el admin). Agregado `.github/CODEOWNERS`.
+  Fix en `Precios.tsx`: `leading-none` reemplazado por `leading-[1.15]` en el
+  precio (se veía apretado al envolver a 2 líneas con textos largos como "A
+  consultar"), y las cards de plan ahora se estiran a la misma altura
+  (`items-start` sacado del grid + `flex flex-col h-full` en cada card) en
+  vez de medir cada una su propio contenido. Base de testing instalada
+  (Vitest + `@vitest/coverage-v8` + `vite-tsconfig-paths`), con tests sobre
+  `theme.ts` y `font.ts`. Sumado soporte para testear componentes
+  (`@testing-library/react` + `user-event` + `@vitejs/plugin-react`, entorno
+  `jsdom`, `vitest.setup.ts` con cleanup entre tests) probado sobre el toggle
+  de precios y las tabs de categoría de `Menu.tsx` (Gastronomía) — decisión
+  deliberada de escribir un test de cada tipo (función pura + componente con
+  estado) antes de armar el subagente `testing-coverage`, para que sus
+  reglas salgan de la práctica y no de la especulación.
 - **2026-08-25 (rediseño)** — Primera versión de Gastronomía reemplazada por
   completo: pasó de reusar el lenguaje visual "SaaS" de Profesional/Comercio
   (recoloreado a oscuro) a un lenguaje editorial propio inspirado en sitios
