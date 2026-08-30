@@ -6,12 +6,13 @@ description: Scaffold completo de un template de cliente nuevo para Mostrate (ej
 # Skill: nuevo-template
 
 Crea un template de cliente nuevo siguiendo la arquitectura ya establecida en el
-proyecto (ver `DOCS.md` secciones 6-8). El template **Profesional** es la
-referencia canónica.
+proyecto (ver `DOCS.md` secciones 6-8 y principios comunes de la sección 14).
+El template **Profesional** es la referencia canónica.
 
 ## Datos que necesito (preguntar si faltan)
-- **slug**: identificador en kebab-case (ej. `comercio`). Debe existir ya la ruta
-  `app/templates/<slug>/page.tsx` (hoy es un placeholder) o se crea.
+- **slug**: identificador en kebab-case. Verificar si existe la ruta
+  `app/templates/<slug>/page.tsx` antes de crearla o modificarla; los cuatro
+  templates actuales ya están desarrollados, no son placeholders.
 - **rubro / público**: para qué negocios es (ej. "tiendas y locales").
 - **cliente demo**: nombre ficticio + rubro concreto para poblar el contenido.
 - **estilo visual**: cómo diferenciarlo de los otros (¡cada template debe verse
@@ -23,22 +24,23 @@ referencia canónica.
 
 1. **Contenido** — Crear `lib/templates/<slug>.ts` copiando la estructura de
    `lib/templates/profesional.ts`:
-   - Exportar `<slug>Themes: TemplateTheme[]` con **3** temas
-     (`accent`, `accentStrong`, `accentSoft`, `accentContrast`).
-   - Exportar el objeto de contenido con todo el copy (nav, hero, secciones,
-     footer). Todo el texto editable va acá, nada hardcodeado en componentes.
+   - Exportar `<slug>Themes: TemplateTheme[]` con **3** temas según `DOCS.md`,
+     sección 6.
+   - Exportar el objeto de contenido (nav, hero, secciones, footer), siguiendo
+     la convención de centralización de textos de `DOCS.md`, sección 6.
 
 2. **Secciones** — Crear `components/templates/<slug>/` con las secciones del
    template. **Diseño propio del rubro** (no copiar el layout de Profesional;
    variar estructura, densidad, tratamiento visual). Reglas:
-   - Consumir colores SOLO vía `var(--accent)`, `var(--accent-strong)`,
-     `var(--accent-soft)`, `var(--accent-contrast)` (nunca hex de acento hardcodeado).
-   - Títulos con `font-syne`, texto con `font-inter`.
+   - Aplicar el sistema de acentos y tipografías de `DOCS.md`, sección 6:
+     títulos con `font-[family-name:var(--tpl-font-heading)]`, sin fijar Syne;
+     texto con `font-inter`.
    - Componentes con interacción (nav mobile, forms) llevan `"use client"`.
    - Secciones navegables con `id` para el scroll ancla.
 
-3. **Página** — Reemplazar `app/templates/<slug>/page.tsx`:
+3. **Página** — Crear o actualizar `app/templates/<slug>/page.tsx`:
    - Envolver todo en `<ThemeProvider themes={<slug>Themes}>`.
+   - Para un orden de fuentes propio, pasar `fonts` según `DOCS.md`, sección 6.
    - Wrapper con el fondo/tipografía base del template.
    - Exportar `metadata` (title/description desde el contenido).
 
@@ -57,5 +59,6 @@ referencia canónica.
 - [ ] Los 3 temas cambian todo el acento en vivo (probar el ThemeSwitcher).
 - [ ] Responsive en mobile/tablet/desktop.
 - [ ] `tsc --noEmit` sin errores.
-- [ ] Contenido 100% en `lib/templates/<slug>.ts`.
+- [ ] Textos editables nuevos centralizados según `DOCS.md`, sección 6.
+- [ ] Los títulos responden al FontSwitcher.
 - [ ] DOCS.md actualizado.
