@@ -12,15 +12,15 @@ pequeños negocios, emprendedores y monotributistas en Argentina que no tienen
 presencia online (o tienen una desactualizada).
 
 ### Modelo de negocio
-- Se ofrecen **3-4 templates reutilizables** que se personalizan por cliente.
+- Se ofrecen **4 templates reutilizables** que se personalizan por cliente.
 - Cada cliente tiene **su propio dominio**.
 - **Pago único inicial** por diseño y desarrollo.
 - **Abono mensual** que cubre hosting, dominio y mantenimiento.
 
 Este repo contiene **dos cosas distintas**:
 1. **La landing de Mostrate** (`/`) → la web que *vende el servicio*.
-2. **Los templates de clientes** (`/templates/*`) → los diseños que se le
-   entregan a cada cliente.
+2. **Las demos de templates** (`/templates/*`) → diseños con contenido de ejemplo
+   para personalizar por cliente. La arquitectura multi-cliente sigue pendiente.
 
 ---
 
@@ -31,10 +31,10 @@ Este repo contiene **dos cosas distintas**:
 | Framework | **Next.js 14** (App Router) |
 | Estilos | **Tailwind CSS** 3 |
 | Lenguaje | **TypeScript** (strict) |
-| Fuentes | **Syne** (títulos) + **Inter** (texto), vía `next/font/google` |
-| Deploy | **Vercel** |
+| Fuentes | **Syne** + **Inter** para la landing; títulos configurables en templates (sección 6), vía `next/font/google` |
+| Deploy | **Vercel** como destino documentado; estado remoto no verificado desde el repo |
 
-Requisitos: Node 18+. Comandos:
+Requisito de la versión instalada de Next.js: Node >=18.17.0. Comandos:
 
 ```bash
 npm install     # instalar dependencias
@@ -42,6 +42,10 @@ npm run dev     # desarrollo → http://localhost:3000
 npm run build   # build de producción
 npm start       # servir el build
 ```
+
+Verificación de tipos: `npx tsc --noEmit`. El script `npm run lint` existe,
+pero ESLint aún no está configurado: abre el asistente de configuración.
+No hay tests ni workflows de CI versionados actualmente.
 
 ---
 
@@ -53,10 +57,10 @@ app/
   globals.css                    → base de Tailwind + reduced-motion + scroll offset
   page.tsx                       → LANDING de Mostrate (ensambla las secciones)
   templates/
-    profesional/page.tsx         → template Profesional (¡ya desarrollado!)
-    comercio/page.tsx            → placeholder (pendiente)
-    gastronomia/page.tsx         → placeholder (pendiente)
-    bienestar/page.tsx           → placeholder (pendiente)
+    profesional/page.tsx         → demo Profesional desarrollada
+    comercio/page.tsx            → demo Comercio desarrollada
+    gastronomia/page.tsx         → demo Gastronomía desarrollada
+    bienestar/page.tsx           → demo Bienestar desarrollada
 
 components/
   landing/                       → secciones de la landing de Mostrate
@@ -71,18 +75,27 @@ components/
     Footer.tsx
   templates/                     → motor + piezas reutilizables de los templates
     theme.ts                     → tipo TemplateTheme + helper de variables CSS
-    ThemeProvider.tsx            → aplica el tema activo y monta el selector
+    font.ts                      → tipo TemplateFont + variables CSS + fuentes compartidas
+    ThemeProvider.tsx            → aplica tema/fuente y monta controles de demo
     ThemeSwitcher.tsx            → control flotante de 3 temas
-    TemplateShell.tsx            → wrapper base (setea --tpl-accent)
-    PlaceholderTemplate.tsx      → placeholder para templates aún no hechos
+    FontSwitcher.tsx             → control flotante de tipografías
+    BackToSite.tsx               → enlace de vuelta a Mostrate
+    TemplateShell.tsx            → wrapper usado solo por PlaceholderTemplate
+    PlaceholderTemplate.tsx      → placeholder sin uso en las rutas actuales
     profesional/                 → secciones del template Profesional
       Nav.tsx  Hero.tsx  Stats.tsx  Servicios.tsx
       Proceso.tsx  Sobre.tsx  Contacto.tsx  Footer.tsx
+    comercio/                    → secciones del template Comercio
+    gastronomia/                 → secciones del template Gastronomía + GrainOverlay
+    bienestar/                   → secciones del template Bienestar + Counter
 
 lib/
   config.ts                      → precios, textos y contacto de la LANDING de Mostrate
   templates/
     profesional.ts               → temas + contenido del template Profesional (demo)
+    comercio.ts                  → temas + contenido del template Comercio (demo)
+    gastronomia.ts               → temas + fuentes + contenido de Gastronomía (demo)
+    bienestar.ts                 → temas + fuentes + contenido de Bienestar (demo)
 ```
 
 ---
@@ -105,11 +118,15 @@ Definida en [`tailwind.config.ts`](tailwind.config.ts) como colores custom:
 Radio general: **12px** (`rounded` por defecto).
 
 ### Tipografías
-Cargadas en [`app/layout.tsx`](app/layout.tsx) y expuestas como variables CSS
-(`--font-syne`, `--font-inter`) → usables con `font-syne` / `font-inter`.
+Cargadas en [`app/layout.tsx`](app/layout.tsx) y expuestas como variables CSS.
+La landing usa `font-syne` / `font-inter` (`--font-syne`, `--font-inter`):
 
 - **Syne** 700/800 → títulos (`h1`, `h2`, `h3`, logos).
 - **Inter** 400/500/600 → texto.
+
+El layout también carga **Playfair Display**, **Space Grotesk** y **Poppins**.
+Los templates eligen entre estas tres y Syne para los títulos mediante
+`--tpl-font-heading`; Inter se mantiene para el texto. Ver sección 6.
 
 ### Responsive
 Se usa `clamp()` para tamaños fluidos + breakpoints de Tailwind y arbitrarios
@@ -127,7 +144,7 @@ notebook chica, tablet, celu grande, celu chico.
 
 Ensamblada en [`app/page.tsx`](app/page.tsx). Secciones en orden:
 
-1. **Nav** — fija, logo `mos·trate`, links, CTA "Hablemos", hamburger en mobile.
+1. **Nav** — fija, logo `mostrate`, links, CTA "Hablemos", hamburger en mobile.
 2. **Hero** — headline con subrayado animado, subtítulo, 2 botones, stats.
 3. **Servicios** — 4 cards (diseño, dominio/hosting, responsive, mantenimiento).
 4. **Templates** — 4 cards con preview; cada una linkea a `/templates/<slug>`.
@@ -136,8 +153,9 @@ Ensamblada en [`app/page.tsx`](app/page.tsx). Secciones en orden:
 7. **Footer**.
 
 ### 🔧 Config central — `lib/config.ts`
-**Todo el contenido editable de la landing vive acá.** Ningún componente
-hardcodea textos ni precios. Bloques principales:
+Centraliza los precios, los datos de contacto y el contenido comercial de la
+landing. Aún hay textos auxiliares en componentes, como las etiquetas para abrir
+o cerrar el menú y el asunto/cuerpo del correo de contacto. Bloques principales:
 
 - `pricing` → **precios** (`inicial`, `mensual`). *Editá esto para cambiar los precios.*
 - `contact` → email, WhatsApp, ubicación.
@@ -151,12 +169,21 @@ Cada template es una **página independiente** en `/app/templates/<slug>/`,
 pensada para escalar (a futuro, cada cliente = su dominio).
 
 ### Principio
-- El **contenido** de cada template vive en `lib/templates/<slug>.ts` (copy + temas).
+- El **contenido principal** de cada template vive en `lib/templates/<slug>.ts`
+  (copy + temas). Persisten textos en componentes, como "Ocultar precios" y
+  "Plato del día" en Gastronomía, o "Más elegido" y "Elegir plan" en Bienestar.
+  Para contenido nuevo, centralizar los textos editables en ese archivo.
 - Las **secciones visuales** viven en `components/templates/<slug>/`.
 - La **página** (`app/templates/<slug>/page.tsx`) solo ensambla y envuelve con el
   `ThemeProvider`.
 
 Cada template es **visualmente distinto** a propósito, para mostrar versatilidad.
+
+Actualmente las secciones importan su contenido demo directamente; no reciben
+contenido de clientes por props. `ThemeProvider` usa estado local e inyecta
+variables CSS, sin React Context ni persistencia de la selección. Siempre monta
+los selectores y el enlace a Mostrate: no hay un modo de publicación de cliente
+que excluya esos controles. Ver sección 9 antes de instanciar un cliente real.
 
 ### 🎨 Sistema de theming (3 temas por template)
 Motor reutilizable en `components/templates/`:
@@ -322,8 +349,9 @@ horarios y planes.
    - `<slug>Themes: TemplateTheme[]` (3 temas).
    - objeto de contenido (nav, hero, secciones, footer).
 2. Crear secciones en `components/templates/<slug>/` (diseño propio del rubro).
-3. Reemplazar `app/templates/<slug>/page.tsx` para ensamblar dentro de
-   `<ThemeProvider themes={<slug>Themes}>`.
+3. Crear o actualizar `app/templates/<slug>/page.tsx` para ensamblar dentro de
+   `<ThemeProvider themes={<slug>Themes}>`, siguiendo las convenciones de color
+   y tipografía de la sección 6. Pasar `fonts` si se necesita un orden propio.
 4. (Opcional) Actualizar la card en `lib/config.ts → templates.items`.
 5. `npx tsc --noEmit` para verificar.
 
@@ -337,11 +365,20 @@ horarios y planes.
 Idea general: clonar el archivo de contenido de un template con los datos reales
 del cliente, elegir su tema, y publicarlo en su propio dominio.
 
+Copiar un archivo de contenido no cambia las importaciones de las secciones:
+hay que resolver cómo se les proporciona el contenido del cliente según la
+estrategia elegida, además de los controles/enlaces propios de las demos.
+Si se elige un deploy compartido con rutas por cliente, también debe definirse
+cómo se resuelve el dominio hacia el sitio correspondiente; esa lógica no existe
+hoy. La elección se registra acá antes de implementar, sin asumir una opción.
+
 ---
 
 ## 10. Skills (automatización)
 
-Skills de proyecto en `.claude/skills/`. Se invocan con `/nombre-skill`.
+Skills de proyecto en `.claude/skills/`, invocables en Claude Code con
+`/nombre-skill`. Son procedimientos especializados para guiar al agente, no
+generadores ejecutables. Deben respetar las convenciones de este documento.
 
 | Skill | Para qué |
 |---|---|
@@ -357,7 +394,8 @@ Skills de proyecto en `.claude/skills/`. Se invocan con `/nombre-skill`.
 1. Subir el repo a GitHub.
 2. Importar en Vercel (detecta Next.js solo).
 3. Deploy — sin variables de entorno.
-4. Para clientes: cada uno con su dominio (config de dominios en Vercel).
+4. Para clientes: dominio propio como objetivo; la publicación depende de la
+   arquitectura pendiente de la sección 9, además de configurar los dominios.
 
 ---
 
@@ -371,6 +409,12 @@ Skills de proyecto en `.claude/skills/`. Se invocan con `/nombre-skill`.
 - [x] Template **Bienestar** desarrollado.
 - [ ] Backend real del formulario de contacto (hoy abre el cliente de mail).
 - [ ] Definir arquitectura multi-cliente (dominio por cliente).
+
+Las cinco páginas se prerenderizan como contenido estático. No hay CRM, backend
+de reservas/compras ni integraciones de IA: los paneles, catálogos y horarios
+son contenido de demostración. Los formularios abren `mailto:`. Los números de
+WhatsApp están vacíos en la landing, Comercio y Gastronomía; los enlaces no
+constituyen una integración operativa mientras no se configure el número.
 
 ---
 
@@ -400,3 +444,65 @@ Skills de proyecto en `.claude/skills/`. Se invocan con `/nombre-skill`.
   horarios semanal, coaches y planes de membresía. Con esto, los 4 templates
   de la landing (Profesional, Comercio, Gastronomía, Bienestar) quedan
   completos.
+- **2026-08-30** — Correcciones documentales contra el código: demos, estructura,
+  tipografías, alcance de la configuración y límites de publicación de clientes.
+  Incorporación de principios comunes de arquitectura y colaboración, entradas
+  breves para Codex/Claude Code y alineación de las skills existentes, sin cambios
+  de comportamiento del producto.
+
+---
+
+## 14. Arquitectura y colaboración
+
+### Fuentes de verdad
+
+Orden de autoridad para describir el estado y las decisiones del proyecto:
+
+1. Código, configuración, tests y contratos ejecutables.
+2. Documentación versionada.
+3. Decisiones arquitectónicas registradas.
+4. Instrucciones específicas de agentes.
+5. Conversaciones.
+
+Las conversaciones sirven para razonar y decidir, pero no deben ser la única
+fuente persistente de una decisión importante. Registrar en la sección pertinente
+de este documento las decisiones que cambien el proyecto, con fecha, motivo y
+consecuencias; distinguir el estado implementado de propuestas y pendientes.
+
+### Principios
+
+- Mostrate debe permanecer agnóstico al proveedor de IA; los agentes son
+  ejecutores intercambiables, no dependencias arquitectónicas del producto.
+- Git es el mecanismo principal de coordinación técnica: revisar rama y cambios
+  locales antes de trabajar, sin descartar ni sobrescribir trabajo ajeno.
+- No introducir complejidad, capas, dependencias o abstracciones sin una
+  necesidad concreta. Evaluar capacidades reutilizables antes de una solución
+  específica y priorizar configuración → composición → extensión → desarrollo
+  específico.
+- Documentar las decisiones difíciles de revertir y actualizar la documentación
+  cuando cambie una decisión persistente.
+- Los clientes deben mantener contexto aislado; esto es un requisito para las
+  decisiones futuras, no una capacidad multi-cliente implementada hoy.
+- Ejecutar las verificaciones disponibles pertinentes al cambio y registrar sus
+  resultados o limitaciones. Para cambios exclusivamente Markdown, revisar diff,
+  enlaces y coherencia; no es necesario ejecutar TypeScript/build.
+- Nunca introducir secretos en archivos versionados. Usar variables de entorno
+  o gestión de secretos fuera de Git y aplicar el menor privilegio.
+
+### Definiciones y dirección futura
+
+- Proyecto = frontera de contexto.
+- Agente = frontera de responsabilidad.
+- Workflow = proceso reproducible.
+- Skill/herramienta = capacidad concreta.
+- Artefacto/estado = información persistente.
+- Chat = espacio de interacción y razonamiento.
+
+**Mostrate Core → Orquestación → Dominios → Workflows → Skills → Clientes**
+es una dirección conceptual futura, no una estructura que deba implementarse
+ahora. No implica crear carpetas, capas ni un agente para cada tarea.
+
+[`AGENTS.md`](AGENTS.md) y [`CLAUDE.md`](CLAUDE.md) son entradas breves a estas
+mismas fuentes. Las skills de `.claude/skills/` complementan los procedimientos
+comunes; no deben convertirse en una fuente de arquitectura paralela ni requerir
+duplicados por proveedor.

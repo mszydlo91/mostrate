@@ -23,7 +23,7 @@ Abrir [http://localhost:3000](http://localhost:3000).
 
 ```
 app/
-  layout.tsx              → fuentes (Syne + Inter), metadata, estilos globales
+  layout.tsx              → fuentes de landing y templates, metadata, estilos globales
   page.tsx                → landing principal de Mostrate
   globals.css             → base Tailwind + reduced-motion
   templates/              → páginas independientes de templates de clientes
@@ -35,13 +35,16 @@ components/
   landing/                → componentes de la landing (Nav, Hero, Servicios, ...)
   templates/              → componentes reutilizables para templates de clientes
 lib/
-  config.ts               → precios, textos y datos de contacto (ÚNICO lugar a editar)
+  config.ts               → precios, contenido comercial y contacto de la landing
+  templates/              → contenido demo y temas de cada template
 ```
 
 ## Editar contenido y precios
 
-Todo el copy editable, los precios y los datos de contacto viven en
-[`lib/config.ts`](lib/config.ts). Ningún componente hardcodea estos valores.
+Los precios, los datos de contacto y el contenido comercial de la landing viven
+en [`lib/config.ts`](lib/config.ts). Algunos textos auxiliares siguen en los
+componentes. Las demos usan `lib/templates/<slug>.ts`; ver
+[`DOCS.md`](DOCS.md) para su estructura y convenciones.
 
 - **Precios:** objeto `pricing` (`inicial` / `mensual`).
 - **Contacto:** objeto `contact` (email, WhatsApp, ubicación).

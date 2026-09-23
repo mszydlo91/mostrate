@@ -8,6 +8,9 @@ description: Genera la instancia de un cliente real a partir de un template exis
 Toma un **template ya construido** y produce la versión personalizada de un
 **cliente real** con su contenido, su color y lista para publicar en su dominio.
 
+Respetar `DOCS.md`, secciones 6 y 9 (estado y límites actuales), y los principios
+comunes de arquitectura y colaboración de la sección 14.
+
 > ⚠️ La arquitectura multi-cliente definitiva se confirma con el usuario la
 > primera vez que se corra esta skill (ver "Decisión de arquitectura"). A partir
 > de ahí se sigue la convención elegida.
@@ -28,8 +31,9 @@ Elegir con el usuario cómo se sirven los clientes y dejarlo anotado en `DOCS.md
 - **B) Un repo/deploy por cliente**: se clona el proyecto (o solo el template) por
   cliente. Aísla dominios y facturación; más overhead.
 
-Para dominios propios en Vercel, ambos casos se resuelven con la config de
-dominios de Vercel.
+La configuración del dominio no resuelve por sí sola la instancia del cliente.
+Antes de publicar, resolver los límites descritos en `DOCS.md`, sección 9,
+según la opción elegida; ninguna de estas opciones está implementada hoy.
 
 ## Pasos (para la opción A — ruta por cliente)
 
@@ -45,7 +49,9 @@ dominios de Vercel.
 
 3. **Ruta** — Crear `app/sites/<slug>/page.tsx`: ensambla las secciones del
    template base con el contenido del cliente, dentro de `<ThemeProvider>` con el
-   tema elegido. Exportar `metadata` con los datos del negocio.
+   tema elegido. Exportar `metadata` con los datos del negocio. Tener en cuenta
+   los controles y enlaces de demo que hoy monta el template (`DOCS.md`,
+   secciones 6 y 9); no asumir que la ruta ya está lista para publicar.
 
 4. **Verificar** — `npx tsc --noEmit` y revisar en el navegador.
 
