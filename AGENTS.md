@@ -10,6 +10,9 @@ breve al proyecto.
   aplicar los principios comunes de DOCS.md.
 - Preservar la interoperabilidad con Claude Code y las skills de `.claude/skills/`;
   coordinar mediante Git sin duplicar convenciones por proveedor.
+- Al escribir o revisar tests, seguir el procedimiento de
+  [`.claude/agents/testing-coverage.md`](.claude/agents/testing-coverage.md)
+  (el frontmatter es específico de Claude Code; el cuerpo aplica igual).
 - Actualizar la sección pertinente de DOCS.md cuando cambie una decisión
   persistente; una conversación no reemplaza su registro.
 - Ejecutar las verificaciones disponibles pertinentes antes de terminar y

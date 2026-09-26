@@ -10,8 +10,9 @@ breve al proyecto.
   aplicar los principios comunes de DOCS.md.
 - Preservar la interoperabilidad con Codex; coordinar mediante Git sin duplicar
   convenciones por proveedor.
-- Las skills disponibles en `.claude/skills/` son procedimientos especializados
-  y deben respetar DOCS.md, sin definir una arquitectura paralela.
+- Las skills disponibles en `.claude/skills/` y los subagentes de `.claude/agents/`
+  son procedimientos especializados y deben respetar DOCS.md, sin definir una
+  arquitectura paralela. Codex usa los mismos archivos vía AGENTS.md.
 - Actualizar la sección pertinente de DOCS.md cuando cambie una decisión
   persistente; una conversación no reemplaza su registro.
 - Ejecutar las verificaciones disponibles pertinentes antes de terminar y
