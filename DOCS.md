@@ -113,10 +113,13 @@ components/
     DemoToolbar.tsx              → barra de demo: volver, diseño, tipografía, color
     TemplateShell.tsx            → wrapper usado solo por PlaceholderTemplate
     PlaceholderTemplate.tsx      → placeholder sin uso en las rutas actuales
+    common.tsx                   → menú mobile e íconos de línea compartidos por los templates
     profesional/                 → template Profesional con 3 diseños
       DisenoClasico.tsx  DisenoTecnico.tsx  DisenoBoutique.tsx
-      shared.tsx                 → menú mobile, formulario mailto e íconos comunes
-    comercio/                    → secciones del template Comercio
+      shared.tsx                 → formulario mailto y datos derivados (+ reexporta common)
+    comercio/                    → template Comercio con 3 diseños
+      DisenoEditorial.tsx  DisenoPop.tsx  DisenoGaleria.tsx
+      shared.tsx                 → links de WhatsApp/Maps e íconos por rubro (+ reexporta common)
     gastronomia/                 → secciones del template Gastronomía + GrainOverlay
     bienestar/                   → secciones del template Bienestar + Counter
 
@@ -124,7 +127,7 @@ lib/
   config.ts                      → precios, textos y contacto de la LANDING de Mostrate
   templates/
     profesional.ts               → temas + fuentes + diseños + contenido de Profesional (demo)
-    comercio.ts                  → temas + contenido del template Comercio (demo)
+    comercio.ts                  → temas + fuentes + diseños + contenido de Comercio (demo)
     gastronomia.ts               → temas + fuentes + contenido de Gastronomía (demo)
     bienestar.ts                 → temas + fuentes + contenido de Bienestar (demo)
 ```
@@ -266,8 +269,8 @@ cliente que la excluya. Ver sección 9 antes de instanciar un cliente real.
 ### 🧩 Diseños por template (mismo contenido, distinta composición)
 Un template puede ofrecer varios **diseños**: layouts completos distintos que
 leen el mismo archivo de contenido, así un cliente carga sus datos una vez y
-elige el estilo. Hoy lo usa **Profesional** (3 diseños); la idea es sumarlo a los
-demás templates.
+elige el estilo. Hoy lo usan **Profesional** y **Comercio** (3 diseños cada
+uno); la idea es sumarlo a los demás templates.
 
 - [`design.ts`](components/templates/design.ts) — tipo `TemplateDesign`
   (`id`, `name`, `theme` y `font` con los que arranca) y `resolveDesign()`.
@@ -276,8 +279,12 @@ demás templates.
   `<ThemeProvider key={design.id} designs={...} design={...}>`; el `key`
   reinicia tema y fuente al cambiar de diseño.
 - Cada diseño es un componente de cliente en un solo archivo
-  (`components/templates/<slug>/Diseno<Nombre>.tsx`); la lógica común (menú
-  mobile, formulario, íconos) va en `shared.tsx` del template.
+  (`components/templates/<slug>/Diseno<Nombre>.tsx`); la lógica propia del
+  template (formulario, links de WhatsApp, íconos del rubro) va en su
+  `shared.tsx`, y lo común a todos (menú mobile, íconos de línea) en
+  [`common.tsx`](components/templates/common.tsx).
+- Los diseños de distintos templates no deben parecerse entre sí: cada rubro
+  tiene su propio lenguaje visual.
 - La vidriera de la landing y la captura de `public/previews/` muestran el
   diseño 1.
 
@@ -382,14 +389,27 @@ Sirve de **patrón de referencia** para construir los demás templates.
 Rubro: **tiendas y locales** (productos físicos, venta por WhatsApp).
 Cliente demo: **"Casa Bonita — Deco & Hogar"**.
 
-- **Estilo:** fondo crema cálido, orientado a catálogo de productos y venta
-  por WhatsApp (distinto al corporativo de Profesional).
-- **Contenido:** [`lib/templates/comercio.ts`](lib/templates/comercio.ts).
-- **Secciones** ([`components/templates/comercio/`](components/templates/comercio/)):
-  Nav (con barra de anuncio) · Hero (collage de tiles de producto) ·
-  Categorías · Productos (grid con precios) · Promo (banner de oferta) ·
-  Beneficios (envíos, medios de pago) · Local (horarios + WhatsApp) · Footer.
-- **Temas:** Mandarina · Frambuesa · Uva.
+Rediseñado el 2026-09-26 a partir de 3 variantes generadas en Stitch; tiene
+**3 diseños** sobre el mismo contenido:
+
+| Diseño | Carácter | Tema / fuente iniciales |
+|---|---|---|
+| 1 · Editorial | Crema cálido, serif con itálica de acento, foto del local 4:5 con epígrafe, fichas de producto con precio de referencia | Mandarina · Playfair |
+| 2 · Pop | Concept store: bordes gruesos en tinta, sombras sólidas desplazadas, stickers, cinta de anuncios en movimiento, botones verdes de WhatsApp, grilla "casas reales" | Mandarina · Bricolage Grotesque |
+| 3 · Galería | Sala de exposición: nav centrada, foto del local a todo el ancho, categorías como chips, productos verticales escalonados, beneficios numerados | Mandarina · Cormorant Garamond |
+
+- **Contenido:** [`lib/templates/comercio.ts`](lib/templates/comercio.ts)
+  (anuncio, hero con sellos de confianza, categorías e íconos, productos con
+  foto, promo con código, beneficios, cómo comprar, comunidad y local).
+- **WhatsApp:** `whatsapp.number` vacío = los botones llevan a `#local`. Con
+  número, cada "Comprar por WhatsApp" abre `wa.me` con el mensaje
+  `productMessage` y el nombre del producto. "Cómo llegar" abre Google Maps con
+  la dirección.
+- **Fotos:** `public/templates/comercio/` (interior y fachada del local + 6
+  productos, generadas por Stitch; provisorias hasta tener fotos reales).
+- **Temas:** Mandarina · Frambuesa · Uva. **Primarios:** Crema · Rubor · Salvia.
+  **Fuentes:** Playfair, Bricolage Grotesque, Cormorant Garamond, Plus Jakarta
+  Sans (`comercioFonts`).
 
 ### 7.3 Gastronomía
 
@@ -622,6 +642,11 @@ constituyen una integración operativa mientras no se configure el número.
   3 primarios propios por template (`<slug>Primaries`, fondo + tinta), variables `--primary*`/`--ink*` y
   la barra de demo con "Primario" y "Secundario". Fondos y tinta fijos de cada template pasaron
   a variables.
+- **2026-09-26** — Template **Comercio** rediseñado con 3 diseños (Editorial,
+  Pop, Galería) generados en Stitch, con fotos de producto y del local, links de
+  WhatsApp con mensaje por producto y link a Maps. Menú mobile e íconos pasan a
+  `components/templates/common.tsx`. Se suman Bricolage Grotesque y Cormorant
+  Garamond.
 - **2026-09-26** — Template **Profesional** rediseñado con 3 diseños (Clásico,
   Técnico, Boutique) generados en Stitch sobre el mismo contenido, elegibles con
   `?diseno=`. Nuevo motor de diseños (`design.ts`). Los controles sueltos de la
