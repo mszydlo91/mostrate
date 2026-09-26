@@ -24,11 +24,11 @@ export const bienestarFonts: TemplateFont[] = [
   { id: "playfair", name: "Playfair — editorial", heading: "var(--font-playfair)" },
 ];
 
-/* ── Colores primarios (fondo del sitio); se combinan con los temas de acento ── */
+/* ── Colores primarios (fondo oscuro + texto claro); se combinan con los temas de acento ── */
 export const bienestarPrimaries: TemplatePrimary[] = [
-  { id: "negro", name: "Negro", color: "#0A0A0A" },
-  { id: "medianoche", name: "Medianoche", color: "#080C18" },
-  { id: "ciruela", name: "Ciruela", color: "#140A18" },
+  { id: "negro", name: "Negro", color: "#0A0A0A", ink: "#F5F5F5" },
+  { id: "medianoche", name: "Medianoche", color: "#0B1226", ink: "#F5F5F5" },
+  { id: "ciruela", name: "Ciruela", color: "#1C0F26", ink: "#F5F5F5" },
 ];
 
 /* ── Temas de color (neón, energía de gimnasio) ── */

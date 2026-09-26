@@ -5,10 +5,10 @@ const { business, footer, nav } = comercio;
 
 export default function Footer() {
   return (
-    <footer className="border-t border-[#E7DECF] bg-[#EFE7DA]">
+    <footer className="border-t border-[#E7DECF] bg-[var(--primary-alt)]">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-5 py-10 sm:px-8 md:flex-row">
         <div>
-          <div className="font-[family-name:var(--tpl-font-heading)] text-lg font-extrabold text-[var(--primary)]">
+          <div className="font-[family-name:var(--tpl-font-heading)] text-lg font-extrabold text-[var(--ink)]">
             {business.name}
             <span className="text-[var(--accent)]">.</span>
           </div>

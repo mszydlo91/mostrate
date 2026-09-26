@@ -20,9 +20,9 @@ export default function Nav() {
       </div>
 
       {/* Nav */}
-      <div className="border-b border-[#E7DECF] bg-[#F5EEE3]/90 backdrop-blur">
+      <div className="border-b border-[#E7DECF] bg-[var(--primary-a90)] backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
-          <a href="#top" className="font-[family-name:var(--tpl-font-heading)] text-xl font-extrabold tracking-[-0.02em] text-[var(--primary)]">
+          <a href="#top" className="font-[family-name:var(--tpl-font-heading)] text-xl font-extrabold tracking-[-0.02em] text-[var(--ink)]">
             {business.name}
             <span className="text-[var(--accent)]">.</span>
           </a>
@@ -54,9 +54,9 @@ export default function Nav() {
             onClick={() => setOpen((v) => !v)}
             className="flex h-9 w-9 flex-col items-center justify-center gap-[5px] md:hidden"
           >
-            <span className={`block h-0.5 w-5 rounded bg-[var(--primary)] transition-transform ${open ? "translate-y-[7px] rotate-45" : ""}`} />
-            <span className={`block h-0.5 w-5 rounded bg-[var(--primary)] transition-opacity ${open ? "opacity-0" : ""}`} />
-            <span className={`block h-0.5 w-5 rounded bg-[var(--primary)] transition-transform ${open ? "-translate-y-[7px] -rotate-45" : ""}`} />
+            <span className={`block h-0.5 w-5 rounded bg-[var(--ink)] transition-transform ${open ? "translate-y-[7px] rotate-45" : ""}`} />
+            <span className={`block h-0.5 w-5 rounded bg-[var(--ink)] transition-opacity ${open ? "opacity-0" : ""}`} />
+            <span className={`block h-0.5 w-5 rounded bg-[var(--ink)] transition-transform ${open ? "-translate-y-[7px] -rotate-45" : ""}`} />
           </button>
         </div>
 
@@ -68,7 +68,7 @@ export default function Nav() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-2.5 text-sm font-medium text-[var(--primary)] hover:bg-[var(--accent-soft)]"
+                className="rounded-lg px-3 py-2.5 text-sm font-medium text-[var(--ink)] hover:bg-[var(--accent-soft)]"
               >
                 {link.label}
               </a>

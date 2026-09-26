@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export default function ComercioTemplatePage() {
   return (
     <ThemeProvider primaries={comercioPrimaries} themes={comercioThemes}>
-      <div className="min-h-screen bg-[#F5EEE3] font-inter text-[var(--primary)]">
+      <div className="min-h-screen bg-[var(--primary)] font-inter text-[var(--ink)]">
         <Nav />
         <main>
           <Hero />

@@ -24,7 +24,7 @@ export default function Promo() {
           href={waHref}
           target={whatsapp.number ? "_blank" : undefined}
           rel="noopener noreferrer"
-          className="shrink-0 rounded-full bg-white px-8 py-4 text-sm font-bold text-[var(--accent-strong)] transition-transform hover:-translate-y-0.5"
+          className="shrink-0 rounded-full bg-[var(--card)] px-8 py-4 text-sm font-bold text-[var(--accent-strong)] transition-transform hover:-translate-y-0.5"
         >
           {promo.cta.label}
         </a>

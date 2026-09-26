@@ -7,11 +7,11 @@
  */
 import type { TemplatePrimary, TemplateTheme } from "@/components/templates/theme";
 
-/* ── Colores primarios (tinta de textos sobre el fondo crema); se combinan con los temas de acento ── */
+/* ── Colores primarios (fondo crema + tinta); se combinan con los temas de acento ── */
 export const comercioPrimaries: TemplatePrimary[] = [
-  { id: "cacao", name: "Cacao", color: "#2A211A" },
-  { id: "borravino", name: "Borravino", color: "#3A1A22" },
-  { id: "musgo", name: "Musgo", color: "#26301F" },
+  { id: "crema", name: "Crema", color: "#F5EEE3", ink: "#2A211A" },
+  { id: "rubor", name: "Rubor", color: "#F8EAE6", ink: "#3A1A22" },
+  { id: "salvia", name: "Salvia", color: "#ECEFE3", ink: "#26301F" },
 ];
 
 /* ── Temas de color (vibrantes, para retail) ── */
