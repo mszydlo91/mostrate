@@ -1,35 +1,45 @@
 import type { Metadata } from "next";
 import ThemeProvider from "@/components/templates/ThemeProvider";
-import { profesionalThemes, profesional } from "@/lib/templates/profesional";
-import Nav from "@/components/templates/profesional/Nav";
-import Hero from "@/components/templates/profesional/Hero";
-import Stats from "@/components/templates/profesional/Stats";
-import Servicios from "@/components/templates/profesional/Servicios";
-import Proceso from "@/components/templates/profesional/Proceso";
-import Sobre from "@/components/templates/profesional/Sobre";
-import Contacto from "@/components/templates/profesional/Contacto";
-import Footer from "@/components/templates/profesional/Footer";
+import { resolveDesign } from "@/components/templates/design";
+import {
+  profesional,
+  profesionalDesigns,
+  profesionalFonts,
+  profesionalThemes,
+} from "@/lib/templates/profesional";
+import DisenoClasico from "@/components/templates/profesional/DisenoClasico";
+import DisenoTecnico from "@/components/templates/profesional/DisenoTecnico";
+import DisenoBoutique from "@/components/templates/profesional/DisenoBoutique";
 
 export const metadata: Metadata = {
   title: `${profesional.business.name} — ${profesional.footer.tagline}`,
   description: profesional.hero.subtitle,
 };
 
-export default function ProfesionalTemplatePage() {
+// Cada diseño lee el mismo contenido (lib/templates/profesional.ts).
+const designComponents = {
+  "1": DisenoClasico,
+  "2": DisenoTecnico,
+  "3": DisenoBoutique,
+} as const;
+
+export default function ProfesionalTemplatePage({
+  searchParams,
+}: {
+  searchParams: { diseno?: string | string[] };
+}) {
+  const design = resolveDesign(profesionalDesigns, searchParams.diseno);
+  const Design = designComponents[design.id as keyof typeof designComponents];
+
   return (
-    <ThemeProvider themes={profesionalThemes}>
-      <div className="min-h-screen bg-white font-inter text-[#16182B]">
-        <Nav />
-        <main>
-          <Hero />
-          <Stats />
-          <Servicios />
-          <Proceso />
-          <Sobre />
-          <Contacto />
-        </main>
-        <Footer />
-      </div>
+    <ThemeProvider
+      key={design.id}
+      themes={profesionalThemes}
+      fonts={profesionalFonts}
+      designs={profesionalDesigns}
+      design={design}
+    >
+      <Design />
     </ThemeProvider>
   );
 }

@@ -6,6 +6,9 @@ import {
   Playfair_Display,
   Space_Grotesk,
   Poppins,
+  Newsreader,
+  Plus_Jakarta_Sans,
+  JetBrains_Mono,
 } from "next/font/google";
 import { site } from "@/lib/config";
 import "./globals.css";
@@ -56,6 +59,30 @@ const poppins = Poppins({
   display: "swap",
 });
 
+// Fuentes del template Profesional (sus 3 diseños): serif editorial,
+// sans de texto y mono para los rótulos del diseño "Técnico".
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-newsreader",
+  display: "swap",
+});
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-jakarta",
+  display: "swap",
+});
+
+const jetbrains = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-jetbrains",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: `${site.name} — Presencia digital para tu negocio`,
   description: site.description,
@@ -75,7 +102,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${syne.variable} ${inter.variable} ${instrument.variable} ${playfair.variable} ${spaceGrotesk.variable} ${poppins.variable}`}
+      className={`${syne.variable} ${inter.variable} ${instrument.variable} ${playfair.variable} ${spaceGrotesk.variable} ${poppins.variable} ${newsreader.variable} ${jakarta.variable} ${jetbrains.variable}`}
     >
       <body>{children}</body>
     </html>
