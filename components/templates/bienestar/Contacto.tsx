@@ -6,7 +6,7 @@ import { bienestar } from "@/lib/templates/bienestar";
 const { contacto } = bienestar;
 
 const inputClass =
-  "w-full border-2 border-white/15 bg-transparent px-4 py-3 text-sm text-[#F5F5F5] outline-none transition-colors placeholder:text-[#F5F5F5]/30 focus:border-[var(--accent)]";
+  "w-full border-2 border-[var(--ink-a15)] bg-transparent px-4 py-3 text-sm text-[var(--ink)] outline-none transition-colors placeholder:text-[var(--ink-a30)] focus:border-[var(--accent)]";
 
 export default function Contacto() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -19,28 +19,34 @@ export default function Contacto() {
   }
 
   return (
-    <section id="contacto" className="border-t border-white/10 bg-[var(--primary)]">
+    <section id="contacto" className="border-t border-[var(--ink-a10)] bg-[var(--primary)]">
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-5 py-16 sm:px-8 lg:grid-cols-2 lg:py-20">
         <div>
           <span className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--accent)]">
             {contacto.label}
           </span>
-          <h2 className="mt-2 font-[family-name:var(--tpl-font-heading)] text-[clamp(1.9rem,3.4vw,2.8rem)] font-extrabold uppercase tracking-tight text-[#F5F5F5]">
+          <h2 className="mt-2 font-[family-name:var(--tpl-font-heading)] text-[clamp(1.9rem,3.4vw,2.8rem)] font-extrabold uppercase tracking-tight text-[var(--ink)]">
             {contacto.title}
           </h2>
-          <p className="mt-4 max-w-sm text-sm text-[#F5F5F5]/50">{contacto.subtitle}</p>
+          <p className="mt-4 max-w-sm text-sm text-[var(--ink-a50)]">{contacto.subtitle}</p>
 
           <div className="mt-8 space-y-2 text-sm">
-            <a href={`mailto:${contacto.email}`} className="block text-[#F5F5F5]/70 hover:text-[var(--accent)]">
+            <a href={`mailto:${contacto.email}`} className="block text-[var(--ink-a70)] hover:text-[var(--accent)]">
               {contacto.email}
             </a>
-            <div className="text-[#F5F5F5]/70">{contacto.phone}</div>
+            <div className="text-[var(--ink-a70)]">{contacto.phone}</div>
+          </div>
+
+          <div className="mt-8 border border-[var(--ink-a10)] bg-[var(--ink-a5)] p-5 text-sm">
+            <div className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--accent)]">Sede</div>
+            <p className="mt-2 font-bold text-[var(--ink)]">{contacto.sede.address}</p>
+            <p className="mt-1 text-[var(--ink-a50)]">{contacto.sede.hours}</p>
           </div>
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="b-name" className="text-xs font-bold uppercase tracking-[0.06em] text-[#F5F5F5]/45">
+            <label htmlFor="b-name" className="text-xs font-bold uppercase tracking-[0.06em] text-[var(--ink-a45)]">
               {contacto.form.name.label}
             </label>
             <input
@@ -54,7 +60,7 @@ export default function Contacto() {
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="b-email" className="text-xs font-bold uppercase tracking-[0.06em] text-[#F5F5F5]/45">
+            <label htmlFor="b-email" className="text-xs font-bold uppercase tracking-[0.06em] text-[var(--ink-a45)]">
               {contacto.form.email.label}
             </label>
             <input
@@ -68,7 +74,7 @@ export default function Contacto() {
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="b-msg" className="text-xs font-bold uppercase tracking-[0.06em] text-[#F5F5F5]/45">
+            <label htmlFor="b-msg" className="text-xs font-bold uppercase tracking-[0.06em] text-[var(--ink-a45)]">
               {contacto.form.message.label}
             </label>
             <textarea

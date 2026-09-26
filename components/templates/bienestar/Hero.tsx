@@ -18,13 +18,13 @@ export default function Hero() {
           {hero.eyebrow}
         </span>
 
-        <h1 className="mt-6 max-w-3xl font-[family-name:var(--tpl-font-heading)] text-[clamp(2.6rem,7vw,5.2rem)] font-extrabold uppercase leading-[0.98] tracking-tight text-[#F5F5F5]">
+        <h1 className="mt-6 max-w-3xl font-[family-name:var(--tpl-font-heading)] text-[clamp(2.6rem,7vw,5.2rem)] font-extrabold uppercase leading-[0.98] tracking-tight text-[var(--ink)]">
           {hero.title.before}
           <span className="text-[var(--accent)]">{hero.title.highlight}</span>
           {hero.title.after}
         </h1>
 
-        <p className="mt-6 max-w-lg text-[clamp(1rem,1.3vw,1.15rem)] leading-relaxed text-[#F5F5F5]/60">
+        <p className="mt-6 max-w-lg text-[clamp(1rem,1.3vw,1.15rem)] leading-relaxed text-[var(--ink-a60)]">
           {hero.subtitle}
         </p>
 
@@ -37,20 +37,20 @@ export default function Hero() {
           </a>
           <a
             href={hero.secondary.href}
-            className="border-2 border-[#F5F5F5]/20 px-7 py-3.5 text-sm font-extrabold uppercase tracking-[0.04em] text-[#F5F5F5] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
+            className="border-2 border-[var(--ink-a20)] px-7 py-3.5 text-sm font-extrabold uppercase tracking-[0.04em] text-[var(--ink)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
           >
             {hero.secondary.label}
           </a>
         </div>
 
         {/* Stats animados */}
-        <div className="mt-14 grid grid-cols-2 gap-6 border-t border-white/10 pt-10 sm:grid-cols-4">
+        <div className="mt-14 grid grid-cols-2 gap-6 border-y border-[var(--ink-a10)] bg-[var(--ink-a5)] px-5 py-8 sm:grid-cols-4">
           {hero.stats.map((stat) => (
-            <div key={stat.label}>
-              <div className="font-[family-name:var(--tpl-font-heading)] text-[clamp(1.8rem,3vw,2.6rem)] font-extrabold text-[#F5F5F5]">
+            <div key={stat.label} className="border-l-4 border-[var(--accent)] pl-4">
+              <div className="font-[family-name:var(--tpl-font-heading)] text-[clamp(1.8rem,3vw,2.6rem)] font-extrabold text-[var(--ink)]">
                 <Counter value={stat.num} suffix={stat.suffix} />
               </div>
-              <div className="mt-1 text-xs font-bold uppercase tracking-[0.06em] text-[#F5F5F5]/45">
+              <div className="mt-1 text-xs font-bold uppercase tracking-[0.06em] text-[var(--ink-a45)]">
                 {stat.label}
               </div>
             </div>
