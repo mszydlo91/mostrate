@@ -120,7 +120,9 @@ components/
     comercio/                    → template Comercio con 3 diseños
       DisenoEditorial.tsx  DisenoPop.tsx  DisenoGaleria.tsx
       shared.tsx                 → links de WhatsApp/Maps e íconos por rubro (+ reexporta common)
-    gastronomia/                 → secciones del template Gastronomía + GrainOverlay
+    gastronomia/                 → template Gastronomía con 3 diseños
+      DisenoCarta.tsx (secciones sueltas + GrainOverlay)  DisenoBodegon.tsx  DisenoTaberna.tsx
+      shared.tsx                 → estado de la carta, formulario de reserva, WhatsApp (+ reexporta common)
     bienestar/                   → secciones del template Bienestar + Counter
 
 lib/
@@ -128,7 +130,7 @@ lib/
   templates/
     profesional.ts               → temas + fuentes + diseños + contenido de Profesional (demo)
     comercio.ts                  → temas + fuentes + diseños + contenido de Comercio (demo)
-    gastronomia.ts               → temas + fuentes + contenido de Gastronomía (demo)
+    gastronomia.ts               → temas + fuentes + diseños + contenido de Gastronomía (demo)
     bienestar.ts                 → temas + fuentes + contenido de Bienestar (demo)
 ```
 
@@ -269,8 +271,8 @@ cliente que la excluya. Ver sección 9 antes de instanciar un cliente real.
 ### 🧩 Diseños por template (mismo contenido, distinta composición)
 Un template puede ofrecer varios **diseños**: layouts completos distintos que
 leen el mismo archivo de contenido, así un cliente carga sus datos una vez y
-elige el estilo. Hoy lo usan **Profesional** y **Comercio** (3 diseños cada
-uno); la idea es sumarlo a los demás templates.
+elige el estilo. Hoy lo usan **Profesional**, **Comercio** y **Gastronomía** (3
+diseños cada uno); la idea es sumarlo a Bienestar.
 
 - [`design.ts`](components/templates/design.ts) — tipo `TemplateDesign`
   (`id`, `name`, `theme` y `font` con los que arranca) y `resolveDesign()`.
@@ -308,8 +310,8 @@ contenido del template (ej. `profesionalThemes` en `lib/templates/profesional.ts
 cada template define 3 **primarios** (`<template>Primaries`, tipo
 `TemplatePrimary` en `theme.ts`): la base de su identidad como par **fondo +
 tinta**. Lo que se ve cambiar es el fondo: claro en Profesional (Blanco, Marfil,
-Pizarra) y Comercio (Crema, Rubor, Salvia), oscuro en Gastronomía (Carbón, Bosque,
-Chocolate) y Bienestar (Negro, Medianoche, Ciruela). Cualquier primario combina
+Pizarra) y Comercio (Crema, Rubor, Salvia), oscuro y claro en Gastronomía (Carbón, Chocolate,
+Papel) y oscuro en Bienestar (Negro, Medianoche, Ciruela). Cualquier primario combina
 con cualquier acento (9 mezclas). Las paletas son **propias de cada template** y
 las comparten los diseños de un mismo template.
 
@@ -416,48 +418,35 @@ Rediseñado el 2026-09-26 a partir de 3 variantes generadas en Stitch; tiene
 Rubro: **restaurantes, cantinas, cafés**. Cliente demo: **"Cantina Sorrento"**
 — cantina ítalo-argentina de barrio (San Telmo, CABA).
 
-- **Estilo:** deliberadamente **NO** es la landing "tipo SaaS" de los otros
-  dos templates (hero de 2 columnas + card, botones pill sólidos, grid de
-  tarjetas). Usa un lenguaje **editorial / carta de restaurante impresa**,
-  inspirado en sitios reales de restaurantes (Fabric Sushi, Kansas Grill &
-  Bar): tipografía serif grande, mucho espacio negativo, sin botones
-  rellenos (todo bordes finos o texto subrayado), fondo casi negro y cálido
-  (`#0B0906`) con una textura de grano sutil (`GrainOverlay.tsx`, SVG
-  `feTurbulence`) para que no se sienta "plano".
-- **Tipografía por defecto:** Playfair Display (serif), no Syne — es la
-  única de las 4 tipografías compartidas (`components/templates/font.ts`)
-  que transmite "carta de restaurante". Se define reordenando la lista en
-  `gastronomiaFonts` (en `lib/templates/gastronomia.ts`); el visitante
-  igual puede cambiarla desde la barra de demo.
-- **Contenido:** [`lib/templates/gastronomia.ts`](lib/templates/gastronomia.ts).
-- **Secciones** ([`components/templates/gastronomia/`](components/templates/gastronomia/)):
-  - Nav — minimal, sin botón pill; el CTA es un link con subrayado de acento.
-  - Hero — una sola columna, título enorme en itálica, regla horizontal +
-    fila subtítulo/acciones estilo masthead de revista (no el hero de 2
-    columnas con card de los otros templates).
-  - **Nosotros** — deliberadamente mínima: una frase grande en itálica + un
-    dato de contexto, sin caja, sin bio ni testimonios (a pedido explícito,
-    para no restarle protagonismo al menú).
-  - **Menú** ([`Menu.tsx`](components/templates/gastronomia/Menu.tsx)) —
-    sección central, con estética de carta impresa: índice numerado de
-    categorías (en vez de tabs con pill) y cada plato con una línea de
-    puntos entre el nombre y el precio (`border-dotted`), no tarjetas.
-    Categorías editables 100% desde `gastronomia.ts` (`menu.categories`) —
-    agregar o quitar una no toca el componente. Incluye el **toggle
-    "mostrar/ocultar precios"** (estado propio, `useState` local — distinto
-    de los selectores de la barra de demo porque es un control de contenido
-    específico de este template) y un destacado de "plato del día" que
-    reutiliza el dato `hero.card`.
-  - **Ubicación** — dirección/horarios en tipografía grande + las 3
-    modalidades (salón/reservas, retiro, delivery) como lista numerada
-    separada por líneas, sin íconos en badges de color; contenido pensado
-    como punto de partida razonable a falta de detalle del cliente real.
-  - Contacto — formulario con inputs subrayados (sin caja), orientado a
-    reservas · Footer minimal.
-- **Temas:** Terracota · Vino · Oliva (paleta cálida, de cocina). A
-  diferencia de los otros templates, el acento **nunca se usa como fondo
-  sólido de botón** — solo en texto, líneas y el destacado del menú, para
-  sostener el lenguaje editorial.
+Desde el 2026-09-26 tiene **3 diseños** sobre el mismo contenido. El 1 es el
+original, apenas refinado en Stitch; el 2 y el 3 salieron de variantes de Stitch:
+
+| Diseño | Carácter | Tema / primario / fuente iniciales |
+|---|---|---|
+| 1 · Carta | Carta impresa sobre fondo casi negro: serif grande en itálica, sin botones rellenos, líneas de puntos, foto del salón con epígrafe tipo folio, destacados Nº 01–03 | Terracota · Carbón · Playfair |
+| 2 · Bodegón | Bodegón porteño impreso: fondo claro de papel, condensada en mayúsculas, rojo de mantel, cajas de filete fino, carta en dos columnas por categoría | Vino · Papel · Oswald |
+| 3 · Taberna | Cálido y fotográfico: sans pesada con itálica liviana, mosaico de fotos con el plato del día, carta en tarjetas | Terracota · Chocolate · Plus Jakarta |
+
+- **Contenido:** [`lib/templates/gastronomia.ts`](lib/templates/gastronomia.ts)
+  (incluye destacados con descripción, fotos del salón y de platos, textos de
+  la franja de WhatsApp e íconos de las modalidades).
+- **Carta:** categorías editables desde `menu.categories` (agregar o quitar
+  una no toca los componentes). Arranca en "00 Todos" (agrupada por
+  categoría), el índice filtra por categoría y el botón muestra u oculta los
+  precios. La lógica está en `useCarta()` de
+  [`shared.tsx`](components/templates/gastronomia/shared.tsx) y la usan los 3
+  diseños; `Menu.test.tsx` la cubre a través del diseño 1.
+- **Reservas:** formulario que abre el mail con nombre, email y "día, horario
+  y cantidad de personas" (`useReserva()`). **WhatsApp:**
+  `ubicacion.whatsapp.number` vacío = los botones llevan al formulario.
+- **Fotos:** `public/templates/gastronomia/` (salón, sorrentinos, provoleta,
+  bife; generadas por Stitch, provisorias hasta tener fotos reales).
+- **Primarios:** Carbón · Chocolate (oscuros) · Papel (claro, para el
+  Bodegón). **Temas:** Terracota · Vino · Oliva. **Fuentes:** Playfair,
+  Oswald, Plus Jakarta Sans, Syne (`gastronomiaFonts`).
+- **Superficies:** los diseños usan `--primary-alt` y `--ink-a<N>` para
+  cajas y bordes (funcionan con fondo claro u oscuro); `--card` no sirve acá
+  porque siempre se aclara hacia blanco.
 
 ### 7.4 Bienestar
 
@@ -642,6 +631,12 @@ constituyen una integración operativa mientras no se configure el número.
   3 primarios propios por template (`<slug>Primaries`, fondo + tinta), variables `--primary*`/`--ink*` y
   la barra de demo con "Primario" y "Secundario". Fondos y tinta fijos de cada template pasaron
   a variables.
+- **2026-09-26** — Template **Gastronomía** con 3 diseños (Carta, Bodegón,
+  Taberna). El diseño 1 sumó foto del salón, destacados numerados, carta con
+  "Todos" y modalidades en módulos. Lógica común en `gastronomia/shared.tsx`,
+  primario claro Papel (reemplaza Bosque), fuente Oswald, fotos de platos.
+  Tintas fijas de Gastronomía pasadas a `--ink*`; se suman las
+  transparencias 15/25/30/35/45/85 a `PRIMARY_ALPHAS`.
 - **2026-09-26** — Template **Comercio** rediseñado con 3 diseños (Editorial,
   Pop, Galería) generados en Stitch, con fotos de producto y del local, links de
   WhatsApp con mensaje por producto y link a Maps. Menú mobile e íconos pasan a

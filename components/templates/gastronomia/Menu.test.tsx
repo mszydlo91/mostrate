@@ -37,4 +37,19 @@ describe("Menu (Gastronomía)", () => {
     // en pantalla), así que se elige un plato de Pastas que no se repite.
     expect(screen.getByText("Ravioles de ricota y nuez")).toBeDefined();
   });
+
+  it("arranca con toda la carta y vuelve a ella con \"Todos\"", async () => {
+    const user = userEvent.setup();
+    render(<Menu />);
+
+    // Entradas y Postres visibles a la vez.
+    expect(screen.getByText("Provoleta a la parrilla")).toBeDefined();
+    expect(screen.getByText("Flan casero")).toBeDefined();
+
+    await user.click(screen.getByRole("button", { name: /postres/i }));
+    expect(screen.queryByText("Provoleta a la parrilla")).toBeNull();
+
+    await user.click(screen.getByRole("button", { name: /todos/i }));
+    expect(screen.getByText("Provoleta a la parrilla")).toBeDefined();
+  });
 });

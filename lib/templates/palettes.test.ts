@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { profesionalPrimaries, profesionalThemes, profesionalDesigns, profesionalFonts } from "./profesional";
 import { comercioPrimaries, comercioThemes, comercioDesigns, comercioFonts } from "./comercio";
-import { gastronomiaPrimaries, gastronomiaThemes } from "./gastronomia";
+import { gastronomiaPrimaries, gastronomiaThemes, gastronomiaDesigns, gastronomiaFonts } from "./gastronomia";
 import { bienestarPrimaries, bienestarThemes } from "./bienestar";
 
 const templates = {
@@ -43,6 +43,7 @@ describe("paletas de los templates", () => {
 const withDesigns = {
   profesional: { designs: profesionalDesigns, fonts: profesionalFonts, primaries: profesionalPrimaries, themes: profesionalThemes },
   comercio: { designs: comercioDesigns, fonts: comercioFonts, primaries: comercioPrimaries, themes: comercioThemes },
+  gastronomia: { designs: gastronomiaDesigns, fonts: gastronomiaFonts, primaries: gastronomiaPrimaries, themes: gastronomiaThemes },
 };
 
 describe("diseños de los templates", () => {

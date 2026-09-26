@@ -1,35 +1,46 @@
 import type { Metadata } from "next";
 import ThemeProvider from "@/components/templates/ThemeProvider";
-import { gastronomiaPrimaries, gastronomiaThemes, gastronomiaFonts, gastronomia } from "@/lib/templates/gastronomia";
-import Nav from "@/components/templates/gastronomia/Nav";
-import Hero from "@/components/templates/gastronomia/Hero";
-import Nosotros from "@/components/templates/gastronomia/Nosotros";
-import Menu from "@/components/templates/gastronomia/Menu";
-import Ubicacion from "@/components/templates/gastronomia/Ubicacion";
-import Contacto from "@/components/templates/gastronomia/Contacto";
-import Footer from "@/components/templates/gastronomia/Footer";
-import GrainOverlay from "@/components/templates/gastronomia/GrainOverlay";
+import { resolveDesign } from "@/components/templates/design";
+import {
+  gastronomia,
+  gastronomiaDesigns,
+  gastronomiaFonts,
+  gastronomiaPrimaries,
+  gastronomiaThemes,
+} from "@/lib/templates/gastronomia";
+import DisenoCarta from "@/components/templates/gastronomia/DisenoCarta";
+import DisenoBodegon from "@/components/templates/gastronomia/DisenoBodegon";
+import DisenoTaberna from "@/components/templates/gastronomia/DisenoTaberna";
 
 export const metadata: Metadata = {
   title: `${gastronomia.business.name} — ${gastronomia.footer.tagline}`,
   description: gastronomia.hero.subtitle,
 };
 
-export default function GastronomiaTemplatePage() {
+// Cada diseño lee el mismo contenido (lib/templates/gastronomia.ts).
+const designComponents = {
+  "1": DisenoCarta,
+  "2": DisenoBodegon,
+  "3": DisenoTaberna,
+} as const;
+
+export default function GastronomiaTemplatePage({
+  searchParams,
+}: {
+  searchParams: { diseno?: string | string[] };
+}) {
+  const design = resolveDesign(gastronomiaDesigns, searchParams.diseno);
+  const Design = designComponents[design.id as keyof typeof designComponents];
   return (
-    <ThemeProvider primaries={gastronomiaPrimaries} themes={gastronomiaThemes} fonts={gastronomiaFonts}>
-      <div className="relative min-h-screen bg-[var(--primary)] font-inter text-[#F3ECE1]">
-        <GrainOverlay />
-        <Nav />
-        <main>
-          <Hero />
-          <Nosotros />
-          <Menu />
-          <Ubicacion />
-        </main>
-        <Contacto />
-        <Footer />
-      </div>
+    <ThemeProvider
+      key={design.id}
+      primaries={gastronomiaPrimaries}
+      themes={gastronomiaThemes}
+      fonts={gastronomiaFonts}
+      designs={gastronomiaDesigns}
+      design={design}
+    >
+      <Design />
     </ThemeProvider>
   );
 }

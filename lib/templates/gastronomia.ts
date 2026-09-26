@@ -11,24 +11,28 @@
  */
 import type { TemplatePrimary, TemplateTheme } from "@/components/templates/theme";
 import type { TemplateFont } from "@/components/templates/font";
+import type { TemplateDesign } from "@/components/templates/design";
 
-/**
- * Mismas 4 tipografías que el resto de los templates, pero con Playfair
- * Display (serif editorial) primera — es la que mejor transmite "carta de
- * restaurante". El visitante puede seguir cambiándola desde el FontSwitcher.
- */
+/* ── Tipografías de títulos para el selector ── */
 export const gastronomiaFonts: TemplateFont[] = [
-  { id: "playfair", name: "Playfair — editorial", heading: "var(--font-playfair)" },
+  { id: "playfair", name: "Playfair — carta", heading: "var(--font-playfair)" },
+  { id: "oswald", name: "Oswald — bodegón", heading: "var(--font-oswald)" },
+  { id: "jakarta", name: "Plus Jakarta — taberna", heading: "var(--font-jakarta)" },
   { id: "syne", name: "Syne — geométrica", heading: "var(--font-syne)" },
-  { id: "space-grotesk", name: "Space Grotesk — técnica", heading: "var(--font-space-grotesk)" },
-  { id: "poppins", name: "Poppins — amigable", heading: "var(--font-poppins)" },
 ];
 
-/* ── Colores primarios (fondo oscuro + texto claro); se combinan con los temas de acento ── */
+/* ── Diseños disponibles (mismo contenido, distinta composición) ── */
+export const gastronomiaDesigns: TemplateDesign[] = [
+  { id: "1", name: "Carta", theme: "terracota", primary: "carbon", font: "playfair" },
+  { id: "2", name: "Bodegón", theme: "vino", primary: "papel", font: "oswald" },
+  { id: "3", name: "Taberna", theme: "terracota", primary: "chocolate", font: "jakarta" },
+];
+
+/* ── Colores primarios (fondo + tinta): dos oscuros y uno claro; se combinan con los temas de acento ── */
 export const gastronomiaPrimaries: TemplatePrimary[] = [
   { id: "carbon", name: "Carbón", color: "#0B0906", ink: "#F3ECE1" },
-  { id: "bosque", name: "Bosque", color: "#0E1D15", ink: "#EEF0E6" },
   { id: "chocolate", name: "Chocolate", color: "#1F130C", ink: "#F3ECE1" },
+  { id: "papel", name: "Papel", color: "#F4ECDF", ink: "#23160F" },
 ];
 
 /* ── Temas de color (cálidos, de cocina) ── */
@@ -59,6 +63,9 @@ export const gastronomiaThemes: TemplateTheme[] = [
   },
 ];
 
+/** Íconos de las modalidades (salón, retiro, delivery); ver templates/common.tsx. */
+export type GastronomiaIcon = "utensils" | "bag" | "truck";
+
 export const gastronomia = {
   business: { name: "Cantina Sorrento", initials: "CS" },
 
@@ -83,7 +90,13 @@ export const gastronomia = {
       "Pastas caseras, parrilla y pescados del día en un salón que no cambió lo esencial desde 1998. Reservá tu mesa o pedí para retirar.",
     primary: { label: "Ver el menú", href: "#menu" },
     secondary: { label: "Reservar mesa", href: "#contacto" },
-    highlights: ["Desde 1998", "Pastas caseras", "Retiro y delivery"],
+    highlights: [
+      { title: "Desde 1998", desc: "Misma cocina y misma familia en la esquina de Bolívar." },
+      { title: "Pastas caseras", desc: "Amasadas a mano todas las mañanas, a la vista del salón." },
+      { title: "Retiro y delivery", desc: "Pedí para llevar o te lo mandamos dentro de la zona." },
+    ],
+    image: { src: "/templates/gastronomia/salon.jpg", alt: "Salón de Cantina Sorrento con luz cálida y mesas de madera" },
+    imageCaption: "El salón de la calle Bolívar",
     // Datos del mini panel decorativo del hero
     card: {
       label: "Plato del día",
@@ -91,6 +104,13 @@ export const gastronomia = {
       note: "Martes y jueves · salsa a elección",
       price: "$ 8.900",
     },
+  },
+
+  /** Fotos de platos que usan los diseños 2 y 3. */
+  fotos: {
+    sorrentinos: { src: "/templates/gastronomia/sorrentinos.jpg", alt: "Sorrentinos caseros con salsa pomodoro" },
+    provoleta: { src: "/templates/gastronomia/provoleta.jpg", alt: "Provoleta a la parrilla en sartén de hierro" },
+    bife: { src: "/templates/gastronomia/bife.jpg", alt: "Bife de chorizo a la parrilla con papas" },
   },
 
   nosotros: {
@@ -183,17 +203,17 @@ export const gastronomia = {
     ],
     options: [
       {
-        icon: "🍽️",
+        icon: "utensils" as GastronomiaIcon,
         title: "Salón y reservas",
         desc: "Mesas para 2 a 12 personas. Reservá con anticipación los fines de semana.",
       },
       {
-        icon: "🥡",
+        icon: "bag" as GastronomiaIcon,
         title: "Retiro en el local",
         desc: "Pedidos listos en 20-30 minutos. Avisamos por WhatsApp cuando está listo.",
       },
       {
-        icon: "🛵",
+        icon: "truck" as GastronomiaIcon,
         title: "Delivery propio",
         desc: "Cobertura en San Telmo, Monserrat y Barrio Sur. Consultá otras zonas.",
       },
@@ -202,6 +222,8 @@ export const gastronomia = {
       // Número internacional sin "+" ni espacios (ej: "5491122334455"). Vacío = sin link.
       number: "",
       label: "Pedir por WhatsApp",
+      title: "¿Pedís para retirar o para que te lo llevemos?",
+      text: "Tomamos pedidos por WhatsApp y te avisamos cuando sale.",
     },
   },
 
