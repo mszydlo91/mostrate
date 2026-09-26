@@ -45,7 +45,8 @@ El template **Profesional** es la referencia canónica.
    - Exportar `metadata` (title/description desde el contenido).
 
 4. **Card en la landing** — Verificar/ajustar la entrada del template en
-   `lib/config.ts → templates.items` (name, desc, tag, accent, gradient, slug).
+   `lib/config.ts → templates.items` (slug, name, desc, tag) y generar su
+   captura `public/previews/<slug>.webp` según `DOCS.md`, sección 5.
 
 5. **Verificar** — Correr `npx tsc --noEmit`. Si hay un dev server corriendo,
    revisar su log; si no, `npm run build`.

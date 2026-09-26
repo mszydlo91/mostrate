@@ -60,11 +60,28 @@ export const hero = {
     secondary: { label: "Contactar", href: "#contacto" },
   },
   stats: [
-    { num: "7 días", label: "Tiempo de entrega" },
+    { num: "Ágil", label: "De la idea a estar online" },
     { num: "100%", label: "Personalizado" },
     { num: "Sin sorpresas", label: "Precio fijo desde el día uno" },
   ],
+  // Vidriera en vivo: muestra los templates reales dentro de marcos de dispositivo.
+  stage: {
+    live: "En vivo",
+    open: "Abrir demo",
+  },
 };
+
+/* ─────────────────────────────  CINTA DE RUBROS  ───────────────────── */
+export const marquee = [
+  "Contadores",
+  "Tiendas",
+  "Restaurantes",
+  "Gimnasios",
+  "Abogados",
+  "Cafés",
+  "Nutricionistas",
+  "Coaches",
+];
 
 /* ─────────────────────────────  SERVICIOS  ─────────────────────────── */
 export const servicios = {
@@ -73,22 +90,22 @@ export const servicios = {
   subtitle: "Nos encargamos de todo el proceso, vos solo nos mandás el contenido.",
   items: [
     {
-      icon: "🎨",
+      icon: "diseno" as const,
       title: "Diseño personalizado",
       desc: "Adaptamos el template a la identidad de tu negocio: colores, tipografías, imágenes y textos.",
     },
     {
-      icon: "🌐",
+      icon: "hosting" as const,
       title: "Dominio y hosting",
       desc: "Gestionamos el dominio y el hosting por vos. Tu página disponible en internet, sin complicaciones técnicas.",
     },
     {
-      icon: "📱",
+      icon: "responsive" as const,
       title: "Diseño responsive",
       desc: "Tu página se ve bien en celular, tablet y computadora. Siempre.",
     },
     {
-      icon: "🔧",
+      icon: "mantenimiento" as const,
       title: "Mantenimiento mensual",
       desc: "Cambios de contenido, actualizaciones y soporte incluidos en el abono mensual.",
     },
@@ -101,38 +118,31 @@ export const templates = {
   title: ["Elegís el diseño,", "nosotros lo adaptamos"],
   subtitle:
     "Cuatro diseños pensados para distintos rubros. Mismo proceso, resultado único para cada cliente.",
+  cta: "Ver demo en vivo",
   items: [
     {
       slug: "profesional",
       name: "Profesional",
       desc: "Ideal para contadores, abogados, consultores.",
       tag: "Servicios profesionales",
-      accent: "#4F7FFF",
-      gradient: "linear-gradient(135deg, #1a2a4a 0%, #0d1b2e 100%)",
     },
     {
       slug: "comercio",
       name: "Comercio",
       desc: "Para tiendas, locales, productos físicos.",
       tag: "Comercio local",
-      accent: "#9B59B6",
-      gradient: "linear-gradient(135deg, #2a1a3a 0%, #1b0d2e 100%)",
     },
     {
       slug: "gastronomia",
       name: "Gastronomía",
       desc: "Restaurantes, cafés, deliveries, catering.",
       tag: "Gastronomía",
-      accent: "#E67E22",
-      gradient: "linear-gradient(135deg, #2a1a10 0%, #1a0d08 100%)",
     },
     {
       slug: "bienestar",
       name: "Bienestar",
       desc: "Gimnasios, nutricionistas, psicólogos, coaches.",
       tag: "Salud y bienestar",
-      accent: "#27AE60",
-      gradient: "linear-gradient(135deg, #1a2a1a 0%, #0d1e0d 100%)",
     },
   ],
 };
@@ -143,7 +153,10 @@ export const precios = {
   title: "Sin letras chicas",
   subtitle:
     "Un pago inicial para arrancar, y un abono mensual para que todo funcione siempre.",
-  note: "¿Tenés dudas? Hablemos antes de decidir — sin compromisos.",
+  note: {
+    question: "¿Tenés dudas?",
+    link: { label: "Hablemos antes de decidir — sin compromisos.", href: "#contacto" },
+  },
   plans: [
     {
       name: "Pago inicial",
@@ -181,6 +194,12 @@ export const contacto = {
   label: "Contacto",
   title: "¿Arrancamos?",
   subtitle: "Contanos un poco sobre tu negocio y te respondemos a la brevedad.",
+  // Rótulos de los datos de contacto (los valores salen de `contact`).
+  infoLabels: {
+    email: "Email",
+    whatsapp: "WhatsApp",
+    location: "Ubicación",
+  },
   form: {
     name: { label: "Nombre", placeholder: "Tu nombre o el de tu negocio" },
     email: { label: "Email", placeholder: "tucorreo@ejemplo.com" },

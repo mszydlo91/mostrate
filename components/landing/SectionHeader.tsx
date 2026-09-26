@@ -1,33 +1,44 @@
-import { ReactNode } from "react";
-
 type Props = {
   label: string;
-  /** Título: string simple o array de líneas (se separan con <br/>) */
+  /** Título: string simple o array de líneas (en desktop se separan con <br/>) */
   title: string | string[];
   subtitle?: string;
-  children?: ReactNode;
+  className?: string;
 };
 
-export default function SectionHeader({ label, title, subtitle }: Props) {
+export const labelClass =
+  "inline-flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-accent";
+
+export const titleClass =
+  "text-balance font-syne text-[clamp(2rem,3.6vw,3.6rem)] font-extrabold leading-[1] tracking-[-0.04em]";
+
+/** Rótulo + título grande + bajada. Cada sección decide cómo lo compone. */
+export default function SectionHeader({ label, title, subtitle, className = "" }: Props) {
   const lines = Array.isArray(title) ? title : [title];
   return (
-    <>
-      <span className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.12em] text-accent">
+    <div className={className}>
+      <span className={`${labelClass} mb-5`}>
+        <span className="h-px w-6 bg-accent" />
         {label}
       </span>
-      <h2 className="mb-4 font-syne text-[clamp(1.6rem,2.5vw,2.6rem)] font-bold leading-[1.2] tracking-[-0.02em]">
+      <h2 className={titleClass}>
         {lines.map((line, i) => (
           <span key={i}>
             {line}
-            {i < lines.length - 1 && <br />}
+            {i < lines.length - 1 && (
+              <>
+                {" "}
+                <br className="max-sm:hidden" />
+              </>
+            )}
           </span>
         ))}
       </h2>
       {subtitle && (
-        <p className="mb-14 max-w-[520px] text-[clamp(0.95rem,1.2vw,1.05rem)] text-muted">
+        <p className="mt-6 max-w-[440px] text-[clamp(0.95rem,1.2vw,1.05rem)] leading-[1.7] text-muted">
           {subtitle}
         </p>
       )}
-    </>
+    </div>
   );
 }

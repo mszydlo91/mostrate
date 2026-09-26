@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { site, nav } from "@/lib/config";
+import { nav } from "@/lib/config";
+import Logo from "./Logo";
+import Button from "./Button";
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
@@ -18,38 +20,32 @@ export default function Nav() {
 
   return (
     <>
-      <nav className="fixed inset-x-0 top-0 z-[100] border-b border-line bg-bg/85 backdrop-blur-md">
-        <div className="mx-auto flex max-w-shell items-center justify-between px-5 py-5 sm:px-[clamp(20px,4vw,60px)]">
-          <a
-            href="#hero"
-            onClick={close}
-            className="font-syne text-[clamp(1rem,1.5vw,1.2rem)] font-extrabold tracking-[-0.02em] text-content"
-          >
-            {site.logo.first}
-            <span className="text-accent">{site.logo.accent}</span>
+      <nav className="fixed inset-x-0 top-0 z-[100] border-b border-line bg-bg/75 backdrop-blur-md">
+        <div className="mx-auto flex max-w-shell items-center justify-between px-[clamp(20px,4vw,60px)] py-4">
+          <a href="#hero" onClick={close}>
+            <Logo className="text-[clamp(1.15rem,1.6vw,1.35rem)]" />
           </a>
 
           {/* Links desktop */}
-          <ul className="hidden list-none items-center gap-[clamp(16px,2.5vw,32px)] md:flex">
-            {nav.links.map((link) => (
+          <ul className="hidden list-none items-center gap-[clamp(20px,2.8vw,40px)] md:flex">
+            {nav.links.map((link, i) => (
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="text-[clamp(0.8rem,1vw,0.9rem)] font-medium text-muted transition-colors hover:text-content"
+                  className="group text-[0.9rem] font-medium text-muted transition-colors hover:text-content"
                 >
+                  <span className="mr-1 text-[0.65rem] text-accent/70 transition-colors group-hover:text-accent">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
                   {link.label}
                 </a>
               </li>
             ))}
-            <li>
-              <a
-                href={nav.cta.href}
-                className="rounded-md bg-accent px-5 py-2 text-[clamp(0.8rem,1vw,0.9rem)] font-semibold text-white transition-opacity hover:opacity-85"
-              >
-                {nav.cta.label}
-              </a>
-            </li>
           </ul>
+
+          <Button href={nav.cta.href} variant="outline" size="sm" className="max-md:!hidden">
+            {nav.cta.label}
+          </Button>
 
           {/* Hamburger */}
           <button
@@ -57,50 +53,48 @@ export default function Nav() {
             aria-label={open ? "Cerrar menú" : "Abrir menú"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="z-[200] flex h-9 w-9 flex-col items-center justify-center gap-[5px] p-1 md:hidden"
+            className="flex h-9 w-9 flex-col items-center justify-center gap-[6px] p-1 md:hidden"
           >
             <span
-              className={`block h-0.5 w-[22px] rounded bg-content transition-transform duration-300 ${
-                open ? "translate-y-[7px] rotate-45" : ""
+              className={`block h-0.5 w-[22px] bg-content transition-transform duration-300 ${
+                open ? "translate-y-[4px] rotate-45" : ""
               }`}
             />
             <span
-              className={`block h-0.5 w-[22px] rounded bg-content transition-opacity duration-300 ${
-                open ? "opacity-0" : ""
-              }`}
-            />
-            <span
-              className={`block h-0.5 w-[22px] rounded bg-content transition-transform duration-300 ${
-                open ? "-translate-y-[7px] -rotate-45" : ""
+              className={`block h-0.5 w-[22px] bg-content transition-transform duration-300 ${
+                open ? "-translate-y-[4px] -rotate-45" : ""
               }`}
             />
           </button>
         </div>
       </nav>
 
-      {/* Overlay menú mobile */}
+      {/* Overlay menú mobile. Va debajo del nav (z-90) para que el logo y el
+          botón de cerrar sigan visibles. */}
       <div
-        className={`fixed inset-0 z-[150] flex flex-col items-center justify-center gap-8 bg-bg/[0.97] transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 z-[90] flex flex-col justify-center bg-bg px-[clamp(20px,6vw,48px)] transition-opacity duration-300 md:hidden ${
           open ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
-        {nav.links.map((link) => (
-          <a
-            key={link.href}
-            href={link.href}
-            onClick={close}
-            className="font-syne text-[clamp(1.6rem,5vw,2rem)] font-bold text-content transition-colors hover:text-accent"
-          >
-            {link.label}
-          </a>
-        ))}
-        <a
-          href={nav.cta.href}
-          onClick={close}
-          className="mt-2 rounded-lg bg-accent px-9 py-3.5 text-[clamp(1rem,3vw,1.2rem)] font-syne font-bold text-white"
-        >
+        <ul className="list-none">
+          {nav.links.map((link, i) => (
+            <li key={link.href}>
+              <a
+                href={link.href}
+                onClick={close}
+                className="flex items-baseline gap-4 py-3 font-syne text-[clamp(2.6rem,12vw,3.6rem)] font-extrabold leading-none tracking-[-0.04em] text-content transition-colors hover:text-accent"
+              >
+                <span className="w-6 flex-shrink-0 font-inter text-[0.75rem] font-medium tracking-normal text-accent">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <Button href={nav.cta.href} onClick={close} full className="mt-10">
           {nav.cta.label}
-        </a>
+        </Button>
       </div>
     </>
   );
