@@ -10,6 +10,9 @@ breve al proyecto.
   aplicar los principios comunes de DOCS.md.
 - Preservar la interoperabilidad con Codex; coordinar mediante Git sin duplicar
   convenciones por proveedor.
+- Actualizar ramas con `git rebase origin/main` (nunca mergear `main` en la
+  rama) y publicar con `git push --force-with-lease`; los PR se integran con
+  "Rebase and merge". Ver DOCS.md, sección 14.
 - Las skills disponibles en `.claude/skills/` y los subagentes de `.claude/agents/`
   son procedimientos especializados y deben respetar DOCS.md, sin definir una
   arquitectura paralela. Codex usa los mismos archivos vía AGENTS.md.

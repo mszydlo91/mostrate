@@ -10,6 +10,9 @@ breve al proyecto.
   aplicar los principios comunes de DOCS.md.
 - Preservar la interoperabilidad con Claude Code y las skills de `.claude/skills/`;
   coordinar mediante Git sin duplicar convenciones por proveedor.
+- Actualizar ramas con `git rebase origin/main` (nunca mergear `main` en la
+  rama) y publicar con `git push --force-with-lease`; los PR se integran con
+  "Rebase and merge". Ver DOCS.md, sección 14.
 - Al escribir o revisar tests, seguir el procedimiento de
   [`.claude/agents/testing-coverage.md`](.claude/agents/testing-coverage.md)
   (el frontmatter es específico de Claude Code; el cuerpo aplica igual).

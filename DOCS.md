@@ -66,8 +66,8 @@ Dos formas de test conviviendo en el repo, cada una con su propósito:
   en el destacado de "Plato del día" como en la lista de Pastas. No es un
   bug, pero el test tiene que elegir un texto que no se repita en pantalla.
 
-Esta es la base real (no especulada) sobre la que va a operar el futuro
-subagente `testing-coverage`.
+Esta es la base sobre la que opera el subagente `testing-coverage`
+(ver sección 10).
 
 Verificación de tipos: `npx tsc --noEmit`. El script `npm run lint` existe,
 pero ESLint aún no está configurado: abre el asistente de configuración.
@@ -502,10 +502,10 @@ subagentes; Codex sigue el mismo archivo como procedimiento, referenciado desde
 - [x] Base de testing (Vitest + React Testing Library) instalada, con tests
       sobre el motor compartido (theme.ts, font.ts) y sobre un componente
       con estado/interacción (Menu.tsx de Gastronomía).
+- [x] Primer subagente (`testing-coverage`), usable también desde Codex vía
+      `AGENTS.md` (ver sección 10).
 - [ ] Backend real del formulario de contacto (hoy abre el cliente de mail).
 - [ ] Definir arquitectura multi-cliente (dominio por cliente).
-- [ ] Primer subagente (`testing-coverage`), una vez que haya más superficie
-      de tests para justificarlo.
 
 Las cinco páginas se prerenderizan como contenido estático. No hay CRM, backend
 de reservas/compras ni integraciones de IA: los paneles, catálogos y horarios
@@ -601,6 +601,12 @@ consecuencias; distinguir el estado implementado de propuestas y pendientes.
   ejecutores intercambiables, no dependencias arquitectónicas del producto.
 - Git es el mecanismo principal de coordinación técnica: revisar rama y cambios
   locales antes de trabajar, sin descartar ni sobrescribir trabajo ajeno.
+- **Historia lineal con rebase**: cada cambio va por encima de lo que ya existe.
+  Las ramas se actualizan con `git rebase origin/main`, nunca mergeando `main`
+  dentro de la rama; si la rama ya estaba en el remoto, se publica con
+  `git push --force-with-lease`. Los PR se integran con **Rebase and merge**
+  (GitHub configurado para no permitir merge commits ni squash). Trabajar
+  siempre en una rama propia, nunca directo sobre `main`.
 - No introducir complejidad, capas, dependencias o abstracciones sin una
   necesidad concreta. Evaluar capacidades reutilizables antes de una solución
   específica y priorizar configuración → composición → extensión → desarrollo
