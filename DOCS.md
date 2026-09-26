@@ -297,6 +297,21 @@ No saben qué tema está activo → cambiar de tema solo reescribe las variables
 **Para agregar/editar temas:** tocás el array `<template>Themes` en el archivo de
 contenido del template (ej. `profesionalThemes` en `lib/templates/profesional.ts`).
 
+**Color primario + secundario (combinables).** Además del acento (secundario),
+cada template define 3 **primarios** (`<template>Primaries`, tipo
+`TemplatePrimary` en `theme.ts`): el tono base de su identidad — la tinta en
+templates claros (Profesional, Comercio) y el fondo en los oscuros (Gastronomía,
+Bienestar). Cualquier primario combina con cualquier acento (9 mezclas). Las
+paletas son **propias de cada template** (no se repiten entre templates) y las
+comparten los diseños de un mismo template.
+
+- `primaryVars()` inyecta `--primary` y sus transparencias
+  `--primary-a5 … --primary-a90` (con `color-mix`), porque Tailwind no puede
+  aplicar `/70` sobre un color que viene de una variable.
+- Las secciones usan `text-[var(--primary)]`, `bg-[var(--primary-a80)]`, etc.;
+  para sombras, `shadow-[color:var(--primary-a5)]`.
+- Un diseño puede fijar su primario inicial con `primary` en `TemplateDesign`.
+
 ### 🔤 Sistema de tipografías (mismo patrón, para títulos)
 Igual que el theming de color, pero para la fuente de los títulos:
 
@@ -319,7 +334,7 @@ porque no son templates elegibles por el visitante.
 ### 🧰 Barra de demo de Mostrate
 [`DemoToolbar.tsx`](components/templates/DemoToolbar.tsx) — una sola barra que
 agrupa todo lo que no es del sitio del cliente: volver a Mostrate (logo + ←),
-diseño (si hay más de uno), tipografía, color y el llamado "Quiero este
+diseño (si hay más de uno), tipografía, colores primario y secundario, y el llamado "Quiero este
 template" (va a `/#contacto`). Usa la identidad de la landing (oscuro
 translúcido + azul) para leerse como herramienta de Mostrate sobre cualquier
 template, claro u oscuro. Desktop: barra abajo al centro, minimizable a una
@@ -596,6 +611,10 @@ constituyen una integración operativa mientras no se configure el número.
   Incorporación de principios comunes de arquitectura y colaboración, entradas
   breves para Codex/Claude Code y alineación de las skills existentes, sin cambios
   de comportamiento del producto.
+- **2026-09-26** — Colores primario + secundario combinables en los 4 templates:
+  3 primarios propios por template (`<slug>Primaries`), variables `--primary*` y
+  la barra de demo con "Prim." y "Sec.". El color base fijo de cada template pasó
+  a `var(--primary)`.
 - **2026-09-26** — Template **Profesional** rediseñado con 3 diseños (Clásico,
   Técnico, Boutique) generados en Stitch sobre el mismo contenido, elegibles con
   `?diseno=`. Nuevo motor de diseños (`design.ts`). Los controles sueltos de la
