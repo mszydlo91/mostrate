@@ -2,11 +2,14 @@
 
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import type { TemplateTheme } from "./theme";
+import type { TemplatePrimary, TemplateTheme } from "./theme";
 import type { TemplateFont } from "./font";
 import type { TemplateDesign } from "./design";
 
 type Props = {
+  primaries: TemplatePrimary[];
+  activePrimaryId: string;
+  onPrimary: (primary: TemplatePrimary) => void;
   themes: TemplateTheme[];
   activeThemeId: string;
   onTheme: (theme: TemplateTheme) => void;
@@ -19,8 +22,8 @@ type Props = {
 
 /**
  * Barra de demo de Mostrate: flota sobre el template y agrupa todo lo que no
- * es del sitio del cliente — volver a Mostrate, diseño, tipografía, color y
- * el llamado a contratar. Usa la identidad de la landing (oscuro + azul) para
+ * es del sitio del cliente — volver a Mostrate, diseño, tipografía, colores
+ * (primario + secundario, combinables) y el llamado a contratar. Usa la identidad de la landing (oscuro + azul) para
  * que se lea como herramienta de Mostrate sobre cualquier template.
  * Desktop: barra abajo al centro, minimizable. Mobile: píldora que abre un
  * panel inferior.
@@ -87,25 +90,44 @@ export default function DemoToolbar(props: Props) {
     </div>
   );
 
-  const colors = (
-    <div className="flex items-center gap-2" role="group" aria-label="Color">
-      {props.themes.map((t) => {
-        const active = t.id === props.activeThemeId;
+  const swatches = <T extends { id: string; name: string }>(
+    items: T[],
+    activeId: string,
+    color: (item: T) => string,
+    onPick: (item: T) => void,
+    kind: string
+  ) => (
+    <div className="flex items-center gap-1.5" role="group" aria-label={kind}>
+      {items.map((item) => {
+        const active = item.id === activeId;
         return (
           <button
-            key={t.id}
+            key={item.id}
             type="button"
-            title={t.name}
-            aria-label={`Color ${t.name}`}
+            title={`${kind}: ${item.name}`}
+            aria-label={`${kind} ${item.name}`}
             aria-pressed={active}
-            onClick={() => props.onTheme(t)}
-            style={{ backgroundColor: t.accent }}
-            className={`h-6 w-6 rounded-full transition-transform hover:scale-110 ${
+            onClick={() => onPick(item)}
+            style={{ backgroundColor: color(item) }}
+            className={`h-5 w-5 rounded-full border border-white/25 transition-transform hover:scale-110 ${
               active ? "ring-2 ring-[#F0EEE9] ring-offset-2 ring-offset-[#0F1117]" : ""
             }`}
           />
         );
       })}
+    </div>
+  );
+
+  const colors = (
+    <div className="flex flex-col gap-1.5">
+      <div className="flex items-center gap-2">
+        <span className="w-8 text-[10px] text-[#F0EEE9]/50">Prim.</span>
+        {swatches(props.primaries, props.activePrimaryId, (p) => p.color, props.onPrimary, "Color primario")}
+      </div>
+      <div className="flex items-center gap-2">
+        <span className="w-8 text-[10px] text-[#F0EEE9]/50">Sec.</span>
+        {swatches(props.themes, props.activeThemeId, (t) => t.accent, props.onTheme, "Color secundario")}
+      </div>
     </div>
   );
 
@@ -152,7 +174,7 @@ export default function DemoToolbar(props: Props) {
             </div>
             {divider}
             <div className="flex flex-col gap-1">
-              <span className={label}>Color</span>
+              <span className={label}>Colores</span>
               {colors}
             </div>
             {divider}
@@ -216,7 +238,7 @@ export default function DemoToolbar(props: Props) {
                     {fonts}
                   </div>
                   <div>
-                    <span className={`${label} mb-2 block`}>Color</span>
+                    <span className={`${label} mb-2 block`}>Colores</span>
                     {colors}
                   </div>
                 </div>

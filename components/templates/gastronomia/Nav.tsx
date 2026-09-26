@@ -9,7 +9,7 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-[100] border-b border-[#F3ECE1]/10 bg-[#0B0906]/80 backdrop-blur">
+    <header className="sticky top-0 z-[100] border-b border-[#F3ECE1]/10 bg-[var(--primary-a80)] backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-5 sm:px-8">
         <a
           href="#top"

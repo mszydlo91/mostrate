@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import ThemeProvider from "@/components/templates/ThemeProvider";
-import { comercioThemes, comercio } from "@/lib/templates/comercio";
+import { comercioPrimaries, comercioThemes, comercio } from "@/lib/templates/comercio";
 import Nav from "@/components/templates/comercio/Nav";
 import Hero from "@/components/templates/comercio/Hero";
 import Categorias from "@/components/templates/comercio/Categorias";
@@ -17,8 +17,8 @@ export const metadata: Metadata = {
 
 export default function ComercioTemplatePage() {
   return (
-    <ThemeProvider themes={comercioThemes}>
-      <div className="min-h-screen bg-[#F5EEE3] font-inter text-[#2A211A]">
+    <ThemeProvider primaries={comercioPrimaries} themes={comercioThemes}>
+      <div className="min-h-screen bg-[#F5EEE3] font-inter text-[var(--primary)]">
         <Nav />
         <main>
           <Hero />

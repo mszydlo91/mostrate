@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { themeVars, type TemplateTheme } from "./theme";
+import { themeVars, primaryVars, PRIMARY_ALPHAS, type TemplateTheme } from "./theme";
 
 const sample: TemplateTheme = {
   id: "azul",
@@ -18,5 +18,14 @@ describe("themeVars", () => {
       "--accent-soft": sample.accentSoft,
       "--accent-contrast": sample.accentContrast,
     });
+  });
+});
+
+describe("primaryVars", () => {
+  it("expone el primario y sus transparencias como variables CSS", () => {
+    const vars = primaryVars({ id: "navy", name: "Navy", color: "#16182B" }) as Record<string, string>;
+    expect(vars["--primary"]).toBe("#16182B");
+    expect(vars["--primary-a70"]).toBe("color-mix(in srgb, #16182B 70%, transparent)");
+    expect(Object.keys(vars)).toHaveLength(1 + PRIMARY_ALPHAS.length);
   });
 });

@@ -5,7 +5,14 @@
  * Estética deliberadamente distinta al template Profesional:
  * fondo crema cálido, orientado a catálogo de productos y venta por WhatsApp.
  */
-import type { TemplateTheme } from "@/components/templates/theme";
+import type { TemplatePrimary, TemplateTheme } from "@/components/templates/theme";
+
+/* ── Colores primarios (tinta de textos sobre el fondo crema); se combinan con los temas de acento ── */
+export const comercioPrimaries: TemplatePrimary[] = [
+  { id: "cacao", name: "Cacao", color: "#2A211A" },
+  { id: "borravino", name: "Borravino", color: "#3A1A22" },
+  { id: "musgo", name: "Musgo", color: "#26301F" },
+];
 
 /* ── Temas de color (vibrantes, para retail) ── */
 export const comercioThemes: TemplateTheme[] = [

@@ -1,14 +1,17 @@
 "use client";
 
 import { useState, useEffect, ReactNode } from "react";
-import type { TemplateTheme } from "./theme";
-import { themeVars } from "./theme";
+import type { TemplatePrimary, TemplateTheme } from "./theme";
+import { primaryVars, themeVars } from "./theme";
 import type { TemplateFont } from "./font";
 import { fontVars, templateFonts } from "./font";
 import type { TemplateDesign } from "./design";
 import DemoToolbar from "./DemoToolbar";
 
 type Props = {
+  /** Colores primarios (base de la identidad); se combinan con los temas. */
+  primaries: TemplatePrimary[];
+  /** Temas de acento (color secundario). */
   themes: TemplateTheme[];
   fonts?: TemplateFont[];
   /** Diseños del template; si hay más de uno se muestra el selector de diseño. */
@@ -34,6 +37,7 @@ type Props = {
  * instante dentro del iframe antes de hidratar.
  */
 export default function ThemeProvider({
+  primaries,
   themes,
   fonts = templateFonts,
   designs,
@@ -42,6 +46,9 @@ export default function ThemeProvider({
 }: Props) {
   const [activeTheme, setActiveTheme] = useState<TemplateTheme>(
     themes.find((t) => t.id === design?.theme) ?? themes[0]
+  );
+  const [activePrimary, setActivePrimary] = useState<TemplatePrimary>(
+    primaries.find((p) => p.id === design?.primary) ?? primaries[0]
   );
   const [activeFont, setActiveFont] = useState<TemplateFont>(
     fonts.find((f) => f.id === design?.font) ?? fonts[0]
@@ -53,10 +60,13 @@ export default function ThemeProvider({
   }, []);
 
   return (
-    <div style={{ ...themeVars(activeTheme), ...fontVars(activeFont) }}>
+    <div style={{ ...primaryVars(activePrimary), ...themeVars(activeTheme), ...fontVars(activeFont) }}>
       {children}
       {embedded === false && (
         <DemoToolbar
+          primaries={primaries}
+          activePrimaryId={activePrimary.id}
+          onPrimary={setActivePrimary}
           themes={themes}
           activeThemeId={activeTheme.id}
           onTheme={setActiveTheme}

@@ -4,7 +4,7 @@ const { horarios } = bienestar;
 
 export default function Horarios() {
   return (
-    <section id="horarios" className="border-t border-white/10 bg-[#0A0A0A]">
+    <section id="horarios" className="border-t border-white/10 bg-[var(--primary)]">
       <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 lg:py-20">
         <span className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--accent)]">
           {horarios.label}

@@ -9,7 +9,7 @@
  * negativo. Referencia: sitios reales de restaurantes (Fabric Sushi, Kansas
  * Grill & Bar) priorizan tipografía y fotografía por sobre componentes de UI.
  */
-import type { TemplateTheme } from "@/components/templates/theme";
+import type { TemplatePrimary, TemplateTheme } from "@/components/templates/theme";
 import type { TemplateFont } from "@/components/templates/font";
 
 /**
@@ -22,6 +22,13 @@ export const gastronomiaFonts: TemplateFont[] = [
   { id: "syne", name: "Syne — geométrica", heading: "var(--font-syne)" },
   { id: "space-grotesk", name: "Space Grotesk — técnica", heading: "var(--font-space-grotesk)" },
   { id: "poppins", name: "Poppins — amigable", heading: "var(--font-poppins)" },
+];
+
+/* ── Colores primarios (fondo del sitio); se combinan con los temas de acento ── */
+export const gastronomiaPrimaries: TemplatePrimary[] = [
+  { id: "carbon", name: "Carbón", color: "#0B0906" },
+  { id: "bosque", name: "Bosque", color: "#08110D" },
+  { id: "chocolate", name: "Chocolate", color: "#160D08" },
 ];
 
 /* ── Temas de color (cálidos, de cocina) ── */

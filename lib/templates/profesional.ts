@@ -6,9 +6,16 @@
  * venda este template a un cliente real, se clona este archivo con sus datos.
  * Todo el copy editable vive acá y lo comparten los 3 diseños del template.
  */
-import type { TemplateTheme } from "@/components/templates/theme";
+import type { TemplatePrimary, TemplateTheme } from "@/components/templates/theme";
 import type { TemplateFont } from "@/components/templates/font";
 import type { TemplateDesign } from "@/components/templates/design";
+
+/* ── Colores primarios (tinta de textos y bloques oscuros); se combinan con los temas de acento ── */
+export const profesionalPrimaries: TemplatePrimary[] = [
+  { id: "navy", name: "Navy", color: "#16182B" },
+  { id: "grafito", name: "Grafito", color: "#23262D" },
+  { id: "petroleo", name: "Petróleo", color: "#0F2A33" },
+];
 
 /* ── Temas de color disponibles para este template ── */
 export const profesionalThemes: TemplateTheme[] = [
@@ -48,9 +55,9 @@ export const profesionalFonts: TemplateFont[] = [
 
 /* ── Diseños disponibles (mismo contenido, distinta composición) ── */
 export const profesionalDesigns: TemplateDesign[] = [
-  { id: "1", name: "Clásico", theme: "azul", font: "newsreader" },
-  { id: "2", name: "Técnico", theme: "esmeralda", font: "space-grotesk" },
-  { id: "3", name: "Boutique", theme: "bordo", font: "newsreader" },
+  { id: "1", name: "Clásico", theme: "azul", primary: "navy", font: "newsreader" },
+  { id: "2", name: "Técnico", theme: "esmeralda", primary: "petroleo", font: "space-grotesk" },
+  { id: "3", name: "Boutique", theme: "bordo", primary: "navy", font: "newsreader" },
 ];
 
 export const profesional = {

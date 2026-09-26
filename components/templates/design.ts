@@ -8,8 +8,10 @@ export type TemplateDesign = {
   id: string;
   /** Nombre visible en el selector de diseños */
   name: string;
-  /** Id del tema de color con el que arranca este diseño */
+  /** Id del tema de acento (secundario) con el que arranca este diseño */
   theme?: string;
+  /** Id del color primario con el que arranca este diseño */
+  primary?: string;
   /** Id de la tipografía de títulos con la que arranca este diseño */
   font?: string;
 };

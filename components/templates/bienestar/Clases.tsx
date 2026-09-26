@@ -10,7 +10,7 @@ const intensidadClass: Record<string, string> = {
 
 export default function Clases() {
   return (
-    <section id="clases" className="border-t border-white/10 bg-[#0A0A0A]">
+    <section id="clases" className="border-t border-white/10 bg-[var(--primary)]">
       <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 lg:py-20">
         <span className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--accent)]">
           {clases.label}
@@ -22,7 +22,7 @@ export default function Clases() {
 
         <div className="mt-10 grid grid-cols-1 gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-3">
           {clases.items.map((c) => (
-            <div key={c.name} className="flex flex-col gap-3 bg-[#0A0A0A] p-6">
+            <div key={c.name} className="flex flex-col gap-3 bg-[var(--primary)] p-6">
               <div className="flex items-center justify-between">
                 <h3 className="font-[family-name:var(--tpl-font-heading)] text-lg font-extrabold uppercase text-[#F5F5F5]">
                   {c.name}

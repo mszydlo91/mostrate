@@ -37,11 +37,11 @@ function Nav() {
     <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur-md">
       <div className={`${wrap} flex h-20 items-center justify-between`}>
         <a href="#top" onClick={menu.close} className="group flex items-center gap-3.5">
-          <span className={`${heading} flex h-10 w-10 items-center justify-center rounded-xl bg-[#16182B] text-lg text-white transition-colors group-hover:bg-[var(--accent)]`}>
+          <span className={`${heading} flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--primary)] text-lg text-white transition-colors group-hover:bg-[var(--accent)]`}>
             {business.initials}
           </span>
           <span className="flex flex-col">
-            <span className={`${heading} text-xl leading-snug tracking-tight text-[#16182B]`}>{business.name}</span>
+            <span className={`${heading} text-xl leading-snug tracking-tight text-[var(--primary)]`}>{business.name}</span>
             <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">
               {business.title} · {business.university}
             </span>
@@ -68,7 +68,7 @@ function Nav() {
             onClick={menu.toggle}
             aria-label={menu.open ? "Cerrar menú" : "Abrir menú"}
             aria-expanded={menu.open}
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-[#16182B] md:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-lg text-[var(--primary)] md:hidden"
           >
             <MenuIcon open={menu.open} className="h-6 w-6" />
           </button>
@@ -78,7 +78,7 @@ function Nav() {
       {menu.open && (
         <div className="border-t border-slate-200 bg-white px-6 pb-6 md:hidden">
           {nav.links.map((l) => (
-            <a key={l.href} href={l.href} onClick={menu.close} className={`${heading} block border-b border-slate-100 py-4 text-2xl text-[#16182B]`}>
+            <a key={l.href} href={l.href} onClick={menu.close} className={`${heading} block border-b border-slate-100 py-4 text-2xl text-[var(--primary)]`}>
               {l.label}
             </a>
           ))}
@@ -105,7 +105,7 @@ function Panel() {
         <div className="mb-5 flex items-center justify-between border-b border-slate-100 pb-4">
           <div className="flex items-center gap-2.5">
             <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-emerald-500" />
-            <span className="text-xs font-semibold uppercase tracking-wider text-[#16182B]">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[var(--primary)]">
               {panel.title} · {business.name}
             </span>
           </div>
@@ -117,7 +117,7 @@ function Panel() {
             <span>{panel.label}</span>
             <span className="rounded bg-emerald-100/80 px-2 py-0.5 text-[11px] font-semibold text-emerald-700">{panel.trend}</span>
           </div>
-          <div className={`${heading} text-3xl tabular-nums tracking-tight text-[#16182B]`}>{panel.amount}</div>
+          <div className={`${heading} text-3xl tabular-nums tracking-tight text-[var(--primary)]`}>{panel.amount}</div>
           <div className="mt-3 flex h-16 items-end gap-1.5 border-t border-slate-200/60 px-1 pt-3">
             {panel.bars.map((b, i) => (
               <div
@@ -141,7 +141,7 @@ function Panel() {
         <div className="mb-5 space-y-2">
           {panel.obligations.map((o) => (
             <div key={o.label} className="flex items-center justify-between rounded-lg border border-emerald-100 bg-emerald-50/60 p-2.5">
-              <span className="flex items-center gap-2 text-xs font-medium text-[#16182B]">
+              <span className="flex items-center gap-2 text-xs font-medium text-[var(--primary)]">
                 <CheckCircleIcon className="h-4 w-4 text-emerald-600" />
                 {o.label}
               </span>
@@ -160,7 +160,7 @@ function Panel() {
             {business.owner.split(" ").map((w) => w[0]).join("")}
           </span>
           <span className="text-left">
-            <span className="block text-xs font-semibold text-[#16182B]">Supervisado por {business.owner}</span>
+            <span className="block text-xs font-semibold text-[var(--primary)]">Supervisado por {business.owner}</span>
             <span className="block text-[11px] text-slate-500">Matrícula {business.matricula}</span>
           </span>
         </div>
@@ -187,7 +187,7 @@ function Hero() {
 
         <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-7">
-            <h1 className={`${heading} mb-6 text-[clamp(2.4rem,5vw,4rem)] leading-[1.1] tracking-tight text-[#16182B]`}>
+            <h1 className={`${heading} mb-6 text-[clamp(2.4rem,5vw,4rem)] leading-[1.1] tracking-tight text-[var(--primary)]`}>
               {hero.title.before}
               <span className="italic text-[var(--accent)]">{hero.title.highlight}</span>
               {hero.title.after}
@@ -203,7 +203,7 @@ function Hero() {
               </a>
               <a
                 href={hero.secondary.href}
-                className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-6 py-3.5 text-sm font-semibold text-[#16182B] transition-colors hover:border-[#16182B]"
+                className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-6 py-3.5 text-sm font-semibold text-[var(--primary)] transition-colors hover:border-[var(--primary)]"
               >
                 {hero.secondary.label}
               </a>
@@ -211,7 +211,7 @@ function Hero() {
             <div className="grid max-w-xl grid-cols-3 gap-4 border-t border-slate-200/90 pt-6">
               {trust.map((s) => (
                 <div key={s.label}>
-                  <span className={`${heading} block text-2xl tabular-nums text-[#16182B]`}>{s.num}</span>
+                  <span className={`${heading} block text-2xl tabular-nums text-[var(--primary)]`}>{s.num}</span>
                   <span className="text-xs font-medium text-slate-500">{s.label}</span>
                 </div>
               ))}
@@ -233,7 +233,7 @@ function Servicios() {
       <div className={wrap}>
         <div className="mb-16 max-w-2xl">
           <span className={eyebrow}>{servicios.label}</span>
-          <h2 className={`${heading} mb-4 text-[clamp(2rem,4vw,3rem)] leading-tight tracking-tight text-[#16182B]`}>{servicios.title}</h2>
+          <h2 className={`${heading} mb-4 text-[clamp(2rem,4vw,3rem)] leading-tight tracking-tight text-[var(--primary)]`}>{servicios.title}</h2>
           <p className="text-base text-slate-600 sm:text-lg">{servicios.subtitle}</p>
         </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
@@ -247,7 +247,7 @@ function Servicios() {
                   <span className={`${heading} text-xs font-bold uppercase tracking-widest text-[var(--accent)]`}>Servicio {s.num}</span>
                   <span className="rounded-md border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold text-slate-700">{s.tag}</span>
                 </div>
-                <h3 className={`${heading} mb-3 text-2xl text-[#16182B] transition-colors group-hover:text-[var(--accent)] sm:text-3xl`}>{s.title}</h3>
+                <h3 className={`${heading} mb-3 text-2xl text-[var(--primary)] transition-colors group-hover:text-[var(--accent)] sm:text-3xl`}>{s.title}</h3>
                 <p className="mb-6 text-sm leading-relaxed text-slate-600 sm:text-base">{s.desc}</p>
               </div>
               <div className="flex flex-wrap gap-2 border-t border-slate-200/80 pt-6">
@@ -271,7 +271,7 @@ function Proceso() {
       <div className={wrap}>
         <div className="mx-auto mb-16 max-w-2xl text-center">
           <span className={eyebrow}>{proceso.label}</span>
-          <h2 className={`${heading} text-[clamp(2rem,4vw,2.75rem)] leading-tight tracking-tight text-[#16182B]`}>{proceso.title}</h2>
+          <h2 className={`${heading} text-[clamp(2rem,4vw,2.75rem)] leading-tight tracking-tight text-[var(--primary)]`}>{proceso.title}</h2>
         </div>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {proceso.steps.map((step) => (
@@ -280,7 +280,7 @@ function Proceso() {
                 <span className={`${heading} mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--accent-soft)] text-xl font-bold text-[var(--accent)]`}>
                   {step.num}
                 </span>
-                <h3 className={`${heading} mb-3 text-xl text-[#16182B]`}>{step.title}</h3>
+                <h3 className={`${heading} mb-3 text-xl text-[var(--primary)]`}>{step.title}</h3>
                 <p className="mb-6 text-sm leading-relaxed text-slate-600">{step.desc}</p>
               </div>
               <div className="flex items-center gap-2 border-t border-slate-100 pt-4 text-xs font-semibold text-slate-500">
@@ -305,7 +305,7 @@ function Sobre() {
           </div>
           <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3 rounded-xl border border-slate-200/80 bg-white/95 p-4 backdrop-blur-md">
             <div>
-              <span className={`${heading} block text-lg text-[#16182B]`}>{business.owner}</span>
+              <span className={`${heading} block text-lg text-[var(--primary)]`}>{business.owner}</span>
               <span className="text-xs text-slate-500">
                 {business.title} · {business.university}
               </span>
@@ -318,7 +318,7 @@ function Sobre() {
 
         <div className="lg:col-span-7">
           <span className={eyebrow}>{sobre.label}</span>
-          <h2 className={`${heading} mb-6 text-[clamp(2rem,4vw,3rem)] leading-tight tracking-tight text-[#16182B]`}>{sobre.title}</h2>
+          <h2 className={`${heading} mb-6 text-[clamp(2rem,4vw,3rem)] leading-tight tracking-tight text-[var(--primary)]`}>{sobre.title}</h2>
           <div className="mb-8 space-y-4 text-base leading-relaxed text-slate-600 sm:text-lg">
             {sobre.paragraphs.map((p) => (
               <p key={p}>{p}</p>
@@ -328,7 +328,7 @@ function Sobre() {
             {sobre.credentials.map((c) => (
               <div key={c.title} className="rounded-xl border border-slate-200 bg-slate-50 p-4">
                 <ShieldIcon className="mb-2 h-6 w-6 text-[var(--accent)]" />
-                <strong className="block text-xs font-bold uppercase tracking-wide text-[#16182B]">{c.title}</strong>
+                <strong className="block text-xs font-bold uppercase tracking-wide text-[var(--primary)]">{c.title}</strong>
                 <span className="text-xs text-slate-500">{c.detail}</span>
               </div>
             ))}
@@ -346,10 +346,10 @@ function Testimonio() {
         <span className="mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-[var(--accent-soft)] text-[var(--accent)]">
           <QuoteIcon className="h-6 w-6" />
         </span>
-        <blockquote className={`${heading} mb-8 text-[clamp(1.5rem,3.2vw,2.4rem)] italic leading-snug text-[#16182B]`}>
+        <blockquote className={`${heading} mb-8 text-[clamp(1.5rem,3.2vw,2.4rem)] italic leading-snug text-[var(--primary)]`}>
           “{testimonio.quote}”
         </blockquote>
-        <cite className="block text-base font-bold not-italic text-[#16182B]">{testimonio.author}</cite>
+        <cite className="block text-base font-bold not-italic text-[var(--primary)]">{testimonio.author}</cite>
         <span className="mt-0.5 block text-xs text-slate-500">{testimonio.role}</span>
         <div className="mt-3 flex justify-center gap-1 text-amber-500">
           {Array.from({ length: 5 }).map((_, i) => (
@@ -364,7 +364,7 @@ function Testimonio() {
 function Contacto() {
   const { field, onSubmit } = useContactForm();
   const input =
-    "w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm text-[#16182B] outline-none transition-colors placeholder:text-slate-400 focus:border-[var(--accent)]";
+    "w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm text-[var(--primary)] outline-none transition-colors placeholder:text-slate-400 focus:border-[var(--accent)]";
   const label = "mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-slate-500";
   const channels = [
     { icon: MailIcon, label: contacto.labels.email, value: contacto.email, href: `mailto:${contacto.email}` },
@@ -378,7 +378,7 @@ function Contacto() {
         <div className="flex flex-col justify-between lg:col-span-5">
           <div>
             <span className={eyebrow}>{contacto.label}</span>
-            <h2 className={`${heading} mb-4 text-[clamp(2rem,4vw,3rem)] leading-tight tracking-tight text-[#16182B]`}>{contacto.title}</h2>
+            <h2 className={`${heading} mb-4 text-[clamp(2rem,4vw,3rem)] leading-tight tracking-tight text-[var(--primary)]`}>{contacto.title}</h2>
             <p className="mb-8 text-base leading-relaxed text-slate-600">{contacto.subtitle}</p>
             <div className="mb-8 space-y-4">
               {channels.map((c) => {
@@ -389,7 +389,7 @@ function Contacto() {
                     </span>
                     <span>
                       <span className="block text-[11px] font-bold uppercase tracking-wider text-slate-400">{c.label}</span>
-                      <strong className="text-sm font-semibold text-[#16182B]">{c.value}</strong>
+                      <strong className="text-sm font-semibold text-[var(--primary)]">{c.value}</strong>
                     </span>
                   </>
                 );
@@ -414,7 +414,7 @@ function Contacto() {
 
         <div className="lg:col-span-7">
           <form onSubmit={onSubmit} className="space-y-5 rounded-2xl border border-slate-200 bg-white p-8 shadow-[0_30px_60px_-30px_rgba(22,24,43,0.3)] sm:p-10">
-            <h3 className={`${heading} text-2xl text-[#16182B]`}>{contacto.form.title}</h3>
+            <h3 className={`${heading} text-2xl text-[var(--primary)]`}>{contacto.form.title}</h3>
             <div className="grid gap-5 sm:grid-cols-2">
               <div>
                 <label htmlFor="pc1-name" className={label}>{contacto.form.name.label}</label>
@@ -455,7 +455,7 @@ function Contacto() {
 
 function Footer() {
   return (
-    <footer className="bg-[#16182B] text-white">
+    <footer className="bg-[var(--primary)] text-white">
       <div className={`${wrap} py-14`}>
         <div className="grid grid-cols-1 gap-10 border-b border-white/10 pb-10 md:grid-cols-12">
           <div className="md:col-span-6">
@@ -485,7 +485,7 @@ function Footer() {
 
 export default function DisenoClasico() {
   return (
-    <div className="min-h-screen bg-white font-[family-name:var(--font-jakarta)] text-[#16182B] antialiased">
+    <div className="min-h-screen bg-white font-[family-name:var(--font-jakarta)] text-[var(--primary)] antialiased">
       <Nav />
       <main>
         <Hero />

@@ -12,7 +12,7 @@ export default function Hero() {
             {hero.badge}
           </span>
 
-          <h1 className="mt-5 font-[family-name:var(--tpl-font-heading)] text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold leading-[1.02] tracking-[-0.03em] text-[#2A211A]">
+          <h1 className="mt-5 font-[family-name:var(--tpl-font-heading)] text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold leading-[1.02] tracking-[-0.03em] text-[var(--primary)]">
             {hero.title.before}
             <span className="text-[var(--accent)]">{hero.title.highlight}</span>
             {hero.title.after}
@@ -31,7 +31,7 @@ export default function Hero() {
             </a>
             <a
               href={hero.secondary.href}
-              className="rounded-full border border-[#D9CDB9] bg-white px-7 py-3.5 text-sm font-semibold text-[#2A211A] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
+              className="rounded-full border border-[#D9CDB9] bg-white px-7 py-3.5 text-sm font-semibold text-[var(--primary)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
             >
               {hero.secondary.label}
             </a>
@@ -58,7 +58,7 @@ export default function Hero() {
               style={{ background: tile.gradient }}
             >
               <span className="text-3xl">{tile.emoji}</span>
-              <span className="font-[family-name:var(--tpl-font-heading)] text-sm font-bold text-[#2A211A]/80">
+              <span className="font-[family-name:var(--tpl-font-heading)] text-sm font-bold text-[var(--primary-a80)]">
                 {tile.name}
               </span>
             </div>

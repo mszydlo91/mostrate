@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import ThemeProvider from "@/components/templates/ThemeProvider";
-import { gastronomiaThemes, gastronomiaFonts, gastronomia } from "@/lib/templates/gastronomia";
+import { gastronomiaPrimaries, gastronomiaThemes, gastronomiaFonts, gastronomia } from "@/lib/templates/gastronomia";
 import Nav from "@/components/templates/gastronomia/Nav";
 import Hero from "@/components/templates/gastronomia/Hero";
 import Nosotros from "@/components/templates/gastronomia/Nosotros";
@@ -17,8 +17,8 @@ export const metadata: Metadata = {
 
 export default function GastronomiaTemplatePage() {
   return (
-    <ThemeProvider themes={gastronomiaThemes} fonts={gastronomiaFonts}>
-      <div className="relative min-h-screen bg-[#0B0906] font-inter text-[#F3ECE1]">
+    <ThemeProvider primaries={gastronomiaPrimaries} themes={gastronomiaThemes} fonts={gastronomiaFonts}>
+      <div className="relative min-h-screen bg-[var(--primary)] font-inter text-[#F3ECE1]">
         <GrainOverlay />
         <Nav />
         <main>

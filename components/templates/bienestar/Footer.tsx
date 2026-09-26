@@ -5,7 +5,7 @@ const { business, footer, nav } = bienestar;
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-[#0A0A0A]">
+    <footer className="border-t border-white/10 bg-[var(--primary)]">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-5 py-10 sm:px-8 md:flex-row">
         <div>
           <div className="font-[family-name:var(--tpl-font-heading)] text-sm font-extrabold uppercase tracking-tight text-[#F5F5F5]">

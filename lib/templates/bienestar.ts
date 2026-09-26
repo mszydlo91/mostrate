@@ -13,7 +13,7 @@
  *   tipografía bold en mayúsculas, números grandes animados — energía de
  *   marketing de gimnasio (inspirado en sitios reales como onfit.com.ar).
  */
-import type { TemplateTheme } from "@/components/templates/theme";
+import type { TemplatePrimary, TemplateTheme } from "@/components/templates/theme";
 import type { TemplateFont } from "@/components/templates/font";
 
 /** Space Grotesk (técnica/bold) primero — es la que mejor transmite "gym". */
@@ -22,6 +22,13 @@ export const bienestarFonts: TemplateFont[] = [
   { id: "poppins", name: "Poppins — amigable", heading: "var(--font-poppins)" },
   { id: "syne", name: "Syne — geométrica", heading: "var(--font-syne)" },
   { id: "playfair", name: "Playfair — editorial", heading: "var(--font-playfair)" },
+];
+
+/* ── Colores primarios (fondo del sitio); se combinan con los temas de acento ── */
+export const bienestarPrimaries: TemplatePrimary[] = [
+  { id: "negro", name: "Negro", color: "#0A0A0A" },
+  { id: "medianoche", name: "Medianoche", color: "#080C18" },
+  { id: "ciruela", name: "Ciruela", color: "#140A18" },
 ];
 
 /* ── Temas de color (neón, energía de gimnasio) ── */
