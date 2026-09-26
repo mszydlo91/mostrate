@@ -60,7 +60,7 @@ export const hero = {
     secondary: { label: "Contactar", href: "#contacto" },
   },
   stats: [
-    { num: "Ágil", label: "De la idea a estar online" },
+    { num: "A tiempo", label: "Entregas en el plazo pactado" },
     { num: "100%", label: "Personalizado" },
     { num: "Sin sorpresas", label: "Precio fijo desde el día uno" },
   ],
