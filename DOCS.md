@@ -467,6 +467,16 @@ generadores ejecutables. Deben respetar las convenciones de este documento.
 | `nuevo-template` | Scaffold completo de un template nuevo siguiendo el patrón de Profesional. |
 | `nuevo-cliente` | Generar la instancia de un cliente a partir de un template existente. |
 
+### Subagentes
+
+Subagentes de proyecto en `.claude/agents/`. Claude Code los invoca como
+subagentes; Codex sigue el mismo archivo como procedimiento, referenciado desde
+[`AGENTS.md`](AGENTS.md). No se duplican por proveedor.
+
+| Subagente | Para qué |
+|---|---|
+| `testing-coverage` | Escribir tests (funciones puras o componentes con estado), correr la suite y reportar gaps de cobertura, según las convenciones de la sección 2. |
+
 *(Se irán agregando más a medida que aparezcan tareas repetitivas.)*
 
 ---
