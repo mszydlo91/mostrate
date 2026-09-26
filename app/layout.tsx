@@ -11,6 +11,7 @@ import {
   JetBrains_Mono,
   Bricolage_Grotesque,
   Cormorant_Garamond,
+  Oswald,
 } from "next/font/google";
 import { site } from "@/lib/config";
 import "./globals.css";
@@ -101,6 +102,13 @@ const cormorant = Cormorant_Garamond({
   display: "swap",
 });
 
+const oswald = Oswald({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-oswald",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: `${site.name} — Presencia digital para tu negocio`,
   description: site.description,
@@ -120,7 +128,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${syne.variable} ${inter.variable} ${instrument.variable} ${playfair.variable} ${spaceGrotesk.variable} ${poppins.variable} ${newsreader.variable} ${jakarta.variable} ${jetbrains.variable} ${bricolage.variable} ${cormorant.variable}`}
+      className={`${syne.variable} ${inter.variable} ${instrument.variable} ${playfair.variable} ${spaceGrotesk.variable} ${poppins.variable} ${newsreader.variable} ${jakarta.variable} ${jetbrains.variable} ${bricolage.variable} ${cormorant.variable} ${oswald.variable}`}
     >
       <body>{children}</body>
     </html>

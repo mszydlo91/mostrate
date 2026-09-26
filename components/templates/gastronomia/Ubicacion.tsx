@@ -1,63 +1,82 @@
+"use client";
+
 import { gastronomia } from "@/lib/templates/gastronomia";
+import { ChatIcon, optionIcon, waHref, waTarget } from "./shared";
 
 const { ubicacion } = gastronomia;
 
-const waHref = ubicacion.whatsapp.number
-  ? `https://wa.me/${ubicacion.whatsapp.number}`
-  : "#contacto";
-
 export default function Ubicacion() {
   return (
-    <section id="ubicacion" className="border-b border-[#F3ECE1]/10">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-5 py-16 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:py-20">
-        {/* Dirección + horarios, en tipografía grande */}
-        <div>
-          <span className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--accent)]">
-            {ubicacion.label}
-          </span>
-          <h2 className="mt-2 font-[family-name:var(--tpl-font-heading)] text-[clamp(2rem,4vw,3rem)] font-bold italic text-[#F3ECE1]">
-            {ubicacion.title}
-          </h2>
-          <p className="mt-4 max-w-sm text-sm text-[#F3ECE1]/50">{ubicacion.subtitle}</p>
+    <section id="ubicacion" className="border-b border-[var(--ink-a10)] bg-[var(--primary-alt)]">
+      <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 lg:py-24">
+        <span className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--accent)]">
+          {ubicacion.label}
+        </span>
+        <h2 className="mt-2 font-[family-name:var(--tpl-font-heading)] text-[clamp(2rem,4vw,3rem)] font-bold italic text-[var(--ink)]">
+          {ubicacion.title}
+        </h2>
+        <p className="mt-4 max-w-sm text-sm text-[var(--ink-a50)]">{ubicacion.subtitle}</p>
 
-          <p className="mt-10 font-[family-name:var(--tpl-font-heading)] text-2xl text-[#F3ECE1]">
-            {ubicacion.address}
-          </p>
+        {/* Dirección y horarios, con filete lateral */}
+        <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="border-l-2 border-[var(--accent)] pl-4">
+            <p className="text-xs uppercase tracking-[0.14em] text-[var(--ink-a45)]">Dirección</p>
+            <p className="mt-1 font-[family-name:var(--tpl-font-heading)] text-2xl text-[var(--ink)]">
+              {ubicacion.address}
+            </p>
+          </div>
+          <div className="border-l-2 border-[var(--ink-a20)] pl-4">
+            <p className="text-xs uppercase tracking-[0.14em] text-[var(--ink-a45)]">Horarios</p>
+            <ul className="mt-1 space-y-1">
+              {ubicacion.hours.map((h) => (
+                <li key={h.day} className="flex justify-between gap-6 text-sm text-[var(--ink-a60)]">
+                  <span>{h.day}</span>
+                  <span className="text-[var(--ink-a85)]">{h.time}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
 
-          <ul className="mt-6 space-y-1.5 border-t border-[#F3ECE1]/10 pt-6">
-            {ubicacion.hours.map((h) => (
-              <li key={h.day} className="flex justify-between gap-6 text-sm text-[#F3ECE1]/60">
-                <span>{h.day}</span>
-                <span className="text-[#F3ECE1]/85">{h.time}</span>
-              </li>
-            ))}
-          </ul>
+        {/* Modalidades en módulos de filete fino */}
+        <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+          {ubicacion.options.map((opt, i) => {
+            const Icon = optionIcon[opt.icon];
+            return (
+              <div key={opt.title} className="border border-[var(--ink-a15)] bg-[var(--primary-a50)] p-7">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold uppercase tracking-[0.12em] text-[var(--accent)]">
+                    Modalidad {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <Icon className="h-5 w-5 text-[var(--ink-a40)]" />
+                </div>
+                <h3 className="mt-4 font-[family-name:var(--tpl-font-heading)] text-lg font-semibold text-[var(--ink)]">
+                  {opt.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--ink-a50)]">{opt.desc}</p>
+              </div>
+            );
+          })}
+        </div>
 
+        {/* Franja de pedido por WhatsApp */}
+        <div className="mt-10 flex flex-col items-start justify-between gap-6 border border-[var(--ink-a20)] p-7 md:flex-row md:items-center">
+          <div className="flex items-center gap-4">
+            <ChatIcon className="h-7 w-7 shrink-0 text-[var(--accent)]" />
+            <div>
+              <p className="font-[family-name:var(--tpl-font-heading)] text-lg text-[var(--ink)]">
+                {ubicacion.whatsapp.title}
+              </p>
+              <p className="text-sm text-[var(--ink-a50)]">{ubicacion.whatsapp.text}</p>
+            </div>
+          </div>
           <a
             href={waHref}
-            target={ubicacion.whatsapp.number ? "_blank" : undefined}
-            rel="noopener noreferrer"
-            className="mt-9 inline-block border-b border-[var(--accent)] pb-0.5 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent)] transition-opacity hover:opacity-70"
+            {...waTarget}
+            className="shrink-0 border border-[var(--accent)] px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent)] transition-colors hover:bg-[var(--accent)] hover:text-[var(--accent-contrast)]"
           >
             {ubicacion.whatsapp.label} ↗
           </a>
-        </div>
-
-        {/* Modalidades, como lista separada por líneas — sin íconos en badge */}
-        <div className="divide-y divide-[#F3ECE1]/10 border-t border-[#F3ECE1]/10 lg:border-t-0">
-          {ubicacion.options.map((opt, i) => (
-            <div key={opt.title} className="flex gap-5 py-6 first:pt-0">
-              <span className="text-xs font-normal text-[#F3ECE1]/35">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <div>
-                <h3 className="font-[family-name:var(--tpl-font-heading)] text-base font-semibold text-[#F3ECE1]">
-                  {opt.title}
-                </h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-[#F3ECE1]/50">{opt.desc}</p>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </section>

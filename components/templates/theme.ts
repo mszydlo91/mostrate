@@ -47,7 +47,7 @@ export type TemplatePrimary = {
 };
 
 /** Transparencias disponibles como `var(--primary-a<N>)` y `var(--ink-a<N>)`. */
-export const PRIMARY_ALPHAS = [5, 10, 20, 40, 50, 60, 70, 80, 90] as const;
+export const PRIMARY_ALPHAS = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 85, 90] as const;
 
 const mix = (a: string, pct: number, b: string) => `color-mix(in srgb, ${a} ${pct}%, ${b})`;
 

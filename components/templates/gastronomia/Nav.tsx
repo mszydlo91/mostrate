@@ -9,11 +9,11 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-[100] border-b border-[#F3ECE1]/10 bg-[var(--primary-a80)] backdrop-blur">
+    <header className="sticky top-0 z-[100] border-b border-[var(--ink-a10)] bg-[var(--primary-a80)] backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-5 sm:px-8">
         <a
           href="#top"
-          className="font-[family-name:var(--tpl-font-heading)] text-lg font-bold uppercase tracking-[0.14em] text-[#F3ECE1]"
+          className="font-[family-name:var(--tpl-font-heading)] text-lg font-bold uppercase tracking-[0.14em] text-[var(--ink)]"
         >
           {business.name}
         </a>
@@ -24,7 +24,7 @@ export default function Nav() {
             <a
               key={link.href}
               href={link.href}
-              className="text-xs font-medium uppercase tracking-[0.14em] text-[#F3ECE1]/55 transition-colors hover:text-[var(--accent)]"
+              className="text-xs font-medium uppercase tracking-[0.14em] text-[var(--ink-a50)] transition-colors hover:text-[var(--accent)]"
             >
               {link.label}
             </a>
@@ -46,17 +46,17 @@ export default function Nav() {
           className="flex h-9 w-9 flex-col items-center justify-center gap-[5px] md:hidden"
         >
           <span
-            className={`block h-px w-5 bg-[#F3ECE1] transition-transform ${
+            className={`block h-px w-5 bg-[var(--ink)] transition-transform ${
               open ? "translate-y-[6px] rotate-45" : ""
             }`}
           />
           <span
-            className={`block h-px w-5 bg-[#F3ECE1] transition-opacity ${
+            className={`block h-px w-5 bg-[var(--ink)] transition-opacity ${
               open ? "opacity-0" : ""
             }`}
           />
           <span
-            className={`block h-px w-5 bg-[#F3ECE1] transition-transform ${
+            className={`block h-px w-5 bg-[var(--ink)] transition-transform ${
               open ? "-translate-y-[6px] -rotate-45" : ""
             }`}
           />
@@ -65,7 +65,7 @@ export default function Nav() {
 
       {/* Panel mobile */}
       <div
-        className={`overflow-hidden border-t border-[#F3ECE1]/10 transition-all md:hidden ${
+        className={`overflow-hidden border-t border-[var(--ink-a10)] transition-all md:hidden ${
           open ? "max-h-80" : "max-h-0 border-t-0"
         }`}
       >
@@ -75,7 +75,7 @@ export default function Nav() {
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="py-2.5 text-sm font-medium uppercase tracking-[0.1em] text-[#F3ECE1]"
+              className="py-2.5 text-sm font-medium uppercase tracking-[0.1em] text-[var(--ink)]"
             >
               {link.label}
             </a>
