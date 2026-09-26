@@ -22,10 +22,13 @@ describe("themeVars", () => {
 });
 
 describe("primaryVars", () => {
-  it("expone el primario y sus transparencias como variables CSS", () => {
-    const vars = primaryVars({ id: "navy", name: "Navy", color: "#16182B" }) as Record<string, string>;
-    expect(vars["--primary"]).toBe("#16182B");
-    expect(vars["--primary-a70"]).toBe("color-mix(in srgb, #16182B 70%, transparent)");
-    expect(Object.keys(vars)).toHaveLength(1 + PRIMARY_ALPHAS.length);
+  it("expone fondo, tinta, superficies y transparencias como variables CSS", () => {
+    const vars = primaryVars({ id: "blanco", name: "Blanco", color: "#FFFFFF", ink: "#16182B" }) as Record<string, string>;
+    expect(vars["--primary"]).toBe("#FFFFFF");
+    expect(vars["--ink"]).toBe("#16182B");
+    expect(vars["--primary-alt"]).toBe("color-mix(in srgb, #FFFFFF 94%, #16182B)");
+    expect(vars["--card"]).toBe("color-mix(in srgb, #FFFFFF 25%, #FFFFFF)");
+    expect(vars["--ink-a70"]).toBe("color-mix(in srgb, #16182B 70%, transparent)");
+    expect(Object.keys(vars)).toHaveLength(7 + PRIMARY_ALPHAS.length * 2);
   });
 });

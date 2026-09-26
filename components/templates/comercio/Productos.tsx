@@ -6,13 +6,13 @@ const waHref = whatsapp.number ? `https://wa.me/${whatsapp.number}` : "#local";
 
 export default function Productos() {
   return (
-    <section id="productos" className="bg-[#F5EEE3]">
+    <section id="productos" className="bg-[var(--primary)]">
       <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:py-24">
         <div className="max-w-2xl">
           <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--accent)]">
             {productos.label}
           </span>
-          <h2 className="mt-2 font-[family-name:var(--tpl-font-heading)] text-[clamp(1.8rem,3vw,2.6rem)] font-bold tracking-[-0.02em] text-[var(--primary)]">
+          <h2 className="mt-2 font-[family-name:var(--tpl-font-heading)] text-[clamp(1.8rem,3vw,2.6rem)] font-bold tracking-[-0.02em] text-[var(--ink)]">
             {productos.title}
           </h2>
           <p className="mt-3 text-[clamp(0.95rem,1.2vw,1.05rem)] text-[#6E6152]">
@@ -24,7 +24,7 @@ export default function Productos() {
           {productos.items.map((prod) => (
             <div
               key={prod.name}
-              className="group overflow-hidden rounded-3xl border border-[#E7DECF] bg-white transition-all hover:-translate-y-1 hover:shadow-[0_24px_50px_-24px_rgba(42,33,26,0.35)]"
+              className="group overflow-hidden rounded-3xl border border-[#E7DECF] bg-[var(--card)] transition-all hover:-translate-y-1 hover:shadow-[0_24px_50px_-24px_rgba(42,33,26,0.35)]"
             >
               {/* Imagen (tile) */}
               <div
@@ -43,7 +43,7 @@ export default function Productos() {
 
               {/* Info */}
               <div className="p-5">
-                <h3 className="font-[family-name:var(--tpl-font-heading)] text-base font-bold leading-snug text-[var(--primary)]">
+                <h3 className="font-[family-name:var(--tpl-font-heading)] text-base font-bold leading-snug text-[var(--ink)]">
                   {prod.name}
                 </h3>
                 <div className="mt-3 flex items-center justify-between">
@@ -54,7 +54,7 @@ export default function Productos() {
                     href={waHref}
                     target={whatsapp.number ? "_blank" : undefined}
                     rel="noopener noreferrer"
-                    className="rounded-full border border-[#E7DECF] px-4 py-2 text-xs font-semibold text-[var(--primary)] transition-colors hover:border-[var(--accent)] hover:bg-[var(--accent-soft)] hover:text-[var(--accent)]"
+                    className="rounded-full border border-[#E7DECF] px-4 py-2 text-xs font-semibold text-[var(--ink)] transition-colors hover:border-[var(--accent)] hover:bg-[var(--accent-soft)] hover:text-[var(--accent)]"
                   >
                     Consultar
                   </a>

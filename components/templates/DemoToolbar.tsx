@@ -97,7 +97,7 @@ export default function DemoToolbar(props: Props) {
     onPick: (item: T) => void,
     kind: string
   ) => (
-    <div className="flex items-center gap-1.5" role="group" aria-label={kind}>
+    <div className="flex h-8 items-center gap-2 px-1" role="group" aria-label={kind}>
       {items.map((item) => {
         const active = item.id === activeId;
         return (
@@ -118,18 +118,8 @@ export default function DemoToolbar(props: Props) {
     </div>
   );
 
-  const colors = (
-    <div className="flex flex-col gap-1.5">
-      <div className="flex items-center gap-2">
-        <span className="w-8 text-[10px] text-[#F0EEE9]/50">Prim.</span>
-        {swatches(props.primaries, props.activePrimaryId, (p) => p.color, props.onPrimary, "Color primario")}
-      </div>
-      <div className="flex items-center gap-2">
-        <span className="w-8 text-[10px] text-[#F0EEE9]/50">Sec.</span>
-        {swatches(props.themes, props.activeThemeId, (t) => t.accent, props.onTheme, "Color secundario")}
-      </div>
-    </div>
-  );
+  const primaryColors = swatches(props.primaries, props.activePrimaryId, (p) => p.color, props.onPrimary, "Color primario");
+  const secondaryColors = swatches(props.themes, props.activeThemeId, (t) => t.accent, props.onTheme, "Color secundario");
 
   const label = "text-[10px] font-semibold uppercase tracking-[0.14em] text-[#F0EEE9]/40";
   const divider = <span aria-hidden className="h-8 w-px bg-white/10" />;
@@ -173,9 +163,13 @@ export default function DemoToolbar(props: Props) {
               {fonts}
             </div>
             {divider}
-            <div className="flex flex-col gap-1">
-              <span className={label}>Colores</span>
-              {colors}
+            <div className="flex flex-col gap-0.5">
+              <span className={`${label} pl-1`}>Primario</span>
+              {primaryColors}
+            </div>
+            <div className="flex flex-col gap-0.5">
+              <span className={`${label} pl-1`}>Secundario</span>
+              {secondaryColors}
             </div>
             {divider}
             <span className="hidden lg:inline-flex">{cta}</span>
@@ -232,14 +226,18 @@ export default function DemoToolbar(props: Props) {
                     <div className="flex flex-wrap">{designs}</div>
                   </div>
                 )}
-                <div className="flex items-end justify-between gap-4">
+                <div>
+                  <span className={`${label} mb-1.5 block`}>Tipografía</span>
+                  {fonts}
+                </div>
+                <div className="flex gap-8">
                   <div>
-                    <span className={`${label} mb-1.5 block`}>Tipografía</span>
-                    {fonts}
+                    <span className={`${label} mb-1 block`}>Primario</span>
+                    {primaryColors}
                   </div>
                   <div>
-                    <span className={`${label} mb-2 block`}>Colores</span>
-                    {colors}
+                    <span className={`${label} mb-1 block`}>Secundario</span>
+                    {secondaryColors}
                   </div>
                 </div>
                 <div className="[&>a]:flex [&>a]:w-full [&>a]:justify-center [&>a]:py-3">{cta}</div>

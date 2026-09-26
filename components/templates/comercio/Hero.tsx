@@ -4,7 +4,7 @@ const { hero } = comercio;
 
 export default function Hero() {
   return (
-    <section id="top" className="bg-[#F5EEE3]">
+    <section id="top" className="bg-[var(--primary)]">
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-5 py-14 sm:px-8 lg:grid-cols-[1fr_1fr] lg:py-20">
         {/* Texto */}
         <div>
@@ -12,7 +12,7 @@ export default function Hero() {
             {hero.badge}
           </span>
 
-          <h1 className="mt-5 font-[family-name:var(--tpl-font-heading)] text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold leading-[1.02] tracking-[-0.03em] text-[var(--primary)]">
+          <h1 className="mt-5 font-[family-name:var(--tpl-font-heading)] text-[clamp(2.4rem,5.5vw,4rem)] font-extrabold leading-[1.02] tracking-[-0.03em] text-[var(--ink)]">
             {hero.title.before}
             <span className="text-[var(--accent)]">{hero.title.highlight}</span>
             {hero.title.after}
@@ -31,7 +31,7 @@ export default function Hero() {
             </a>
             <a
               href={hero.secondary.href}
-              className="rounded-full border border-[#D9CDB9] bg-white px-7 py-3.5 text-sm font-semibold text-[var(--primary)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
+              className="rounded-full border border-[#D9CDB9] bg-[var(--card)] px-7 py-3.5 text-sm font-semibold text-[var(--ink)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
             >
               {hero.secondary.label}
             </a>
@@ -58,7 +58,7 @@ export default function Hero() {
               style={{ background: tile.gradient }}
             >
               <span className="text-3xl">{tile.emoji}</span>
-              <span className="font-[family-name:var(--tpl-font-heading)] text-sm font-bold text-[var(--primary-a80)]">
+              <span className="font-[family-name:var(--tpl-font-heading)] text-sm font-bold text-[var(--ink-a80)]">
                 {tile.name}
               </span>
             </div>

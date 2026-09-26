@@ -31,31 +31,50 @@ export function themeVars(theme: TemplateTheme): React.CSSProperties {
 }
 
 /**
- * Color primario: el tono base de la identidad del template (la "tinta" en
- * templates claros, el fondo en templates oscuros). Se combina libremente con
- * los temas de acento (secundario): cada template define 3 primarios pensados
- * para ir bien con sus 3 acentos.
+ * Color primario: la base de la identidad del template, definida como par
+ * fondo + tinta. Lo que más se ve cambiar es el fondo (claro en Profesional y
+ * Comercio, oscuro en Gastronomía y Bienestar). Se combina libremente con los
+ * temas de acento (secundario); cada template define 3 primarios propios.
  */
 export type TemplatePrimary = {
   id: string;
   /** Nombre visible en la barra de demo */
   name: string;
-  /** Color base (hex) */
+  /** Color de fondo del sitio (hex) */
   color: string;
+  /** Color de tinta: textos y bloques de contraste sobre ese fondo (hex) */
+  ink: string;
 };
 
-/** Transparencias disponibles como `var(--primary-a<N>)`. */
+/** Transparencias disponibles como `var(--primary-a<N>)` y `var(--ink-a<N>)`. */
 export const PRIMARY_ALPHAS = [5, 10, 20, 40, 50, 60, 70, 80, 90] as const;
 
+const mix = (a: string, pct: number, b: string) => `color-mix(in srgb, ${a} ${pct}%, ${b})`;
+
 /**
- * Convierte un primario en variables CSS: `--primary` y sus versiones con
- * transparencia (`--primary-a70`, etc.), porque Tailwind no puede aplicar
- * `/70` sobre un color que viene de una variable.
+ * Convierte un primario en variables CSS:
+ * - `--primary` (fondo), `--primary-alt` (superficie alternativa, un poco
+ *   hacia la tinta) y `--primary-light` (un poco hacia el blanco).
+ * - `--ink` (tinta).
+ * - `--card` (cards y formularios: el fondo muy aclarado), `--card-alt` (cajas
+ *   internas, etiquetas, inputs) y `--line` (bordes y divisores).
+ * - Transparencias `--primary-a<N>` y `--ink-a<N>`, porque Tailwind no puede
+ *   aplicar `/70` sobre un color que viene de una variable.
  */
 export function primaryVars(primary: TemplatePrimary): React.CSSProperties {
-  const vars: Record<string, string> = { "--primary": primary.color };
+  const vars: Record<string, string> = {
+    "--primary": primary.color,
+    "--primary-alt": mix(primary.color, 94, primary.ink),
+    "--primary-light": mix(primary.color, 55, "#FFFFFF"),
+    "--ink": primary.ink,
+    // Superficies que acompañan al fondo (cards, cajas internas, bordes).
+    "--card": mix(primary.color, 25, "#FFFFFF"),
+    "--card-alt": mix(mix(primary.color, 25, "#FFFFFF"), 95, primary.ink),
+    "--line": mix(primary.color, 86, primary.ink),
+  };
   for (const a of PRIMARY_ALPHAS) {
-    vars[`--primary-a${a}`] = `color-mix(in srgb, ${primary.color} ${a}%, transparent)`;
+    vars[`--primary-a${a}`] = mix(primary.color, a, "transparent");
+    vars[`--ink-a${a}`] = mix(primary.ink, a, "transparent");
   }
   return vars as React.CSSProperties;
 }

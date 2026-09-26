@@ -32,9 +32,9 @@ const { business, nav, hero, stats, servicios, proceso, sobre, testimonio, conta
 
 const heading = "font-[family-name:var(--tpl-font-heading)]";
 const wrap = "mx-auto max-w-7xl px-6 md:px-12";
-const ink = "text-[var(--primary)]";
-const soft = "text-[var(--primary-a70)]";
-const line = "border-[#EDE7E1]";
+const ink = "text-[var(--ink)]";
+const soft = "text-[var(--ink-a70)]";
+const line = "border-[var(--line)]";
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
@@ -48,7 +48,7 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 function Nav() {
   const menu = useMobileMenu();
   return (
-    <header className={`sticky top-0 z-50 border-b ${line} bg-white/95 shadow-[0_2px_12px_rgba(22,24,43,0.03)] backdrop-blur-md`}>
+    <header className={`sticky top-0 z-50 border-b ${line} bg-[var(--primary-a90)] shadow-[0_2px_12px_rgba(22,24,43,0.03)] backdrop-blur-md`}>
       <div className={`${wrap} flex h-20 items-center justify-between`}>
         <a href="#top" onClick={menu.close} className="group flex items-center gap-3.5">
           <span className={`${heading} flex h-10 w-10 items-center justify-center rounded border border-[var(--accent-soft)] bg-[var(--accent-soft)] text-base tracking-widest text-[var(--accent)] transition-colors group-hover:border-[var(--accent)]`}>
@@ -56,7 +56,7 @@ function Nav() {
           </span>
           <span className="flex flex-col">
             <span className={`${heading} text-xl leading-tight tracking-tight md:text-2xl ${ink}`}>{business.name}</span>
-            <span className="text-[11px] font-semibold uppercase tracking-widest text-[var(--primary-a60)]">{footer.tagline}</span>
+            <span className="text-[11px] font-semibold uppercase tracking-widest text-[var(--ink-a60)]">{footer.tagline}</span>
           </span>
         </a>
 
@@ -65,7 +65,7 @@ function Nav() {
             <a
               key={l.href}
               href={l.href}
-              className="border-b-2 border-transparent pb-0.5 text-xs uppercase tracking-widest text-[var(--primary-a80)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
+              className="border-b-2 border-transparent pb-0.5 text-xs uppercase tracking-widest text-[var(--ink-a80)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
             >
               {l.label}
             </a>
@@ -92,7 +92,7 @@ function Nav() {
       </div>
 
       {menu.open && (
-        <div className={`border-t ${line} bg-white px-6 pb-6 md:hidden`}>
+        <div className={`border-t ${line} bg-[var(--card)] px-6 pb-6 md:hidden`}>
           {nav.links.map((l) => (
             <a key={l.href} href={l.href} onClick={menu.close} className={`${heading} block border-b ${line} py-4 text-2xl ${ink}`}>
               {l.label}
@@ -115,7 +115,7 @@ function Hero() {
   const { panel } = hero;
   const last = panel.bars.length - 1;
   return (
-    <section id="top" className={`overflow-hidden border-b ${line} bg-gradient-to-b from-[#F7EFE6]/70 to-white pb-20 pt-10 md:py-24`}>
+    <section id="top" className={`overflow-hidden border-b ${line} bg-gradient-to-b from-[var(--primary-alt)] to-[var(--primary)] pb-20 pt-10 md:py-24`}>
       <div className={`${wrap} grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-10`}>
         <div className="lg:col-span-6">
           <span className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-[var(--accent-soft)] bg-[var(--accent-soft)] px-3.5 py-1.5 text-xs font-medium text-[var(--accent)]">
@@ -136,11 +136,11 @@ function Hero() {
               {hero.primary.label}
               <ArrowIcon className="h-4 w-4" />
             </a>
-            <a href={hero.secondary.href} className={`inline-flex items-center rounded border border-[var(--primary-a20)] bg-white px-7 py-3.5 text-sm font-semibold ${ink} transition-colors hover:border-[var(--primary)]`}>
+            <a href={hero.secondary.href} className={`inline-flex items-center rounded border border-[var(--ink-a20)] bg-[var(--card)] px-7 py-3.5 text-sm font-semibold ${ink} transition-colors hover:border-[var(--ink)]`}>
               {hero.secondary.label}
             </a>
           </div>
-          <div className={`grid grid-cols-3 gap-4 border-t ${line} pt-6 text-[var(--primary-a80)]`}>
+          <div className={`grid grid-cols-3 gap-4 border-t ${line} pt-6 text-[var(--ink-a80)]`}>
             {hero.highlights.map((h) => (
               <span key={h} className="flex items-center gap-2 text-xs font-medium">
                 <CheckCircleIcon className="h-5 w-5 flex-shrink-0 text-[var(--accent)]" />
@@ -151,19 +151,19 @@ function Hero() {
         </div>
 
         <div className="lg:col-span-6">
-          <div className={`rounded-2xl border ${line} bg-white p-2.5 shadow-xl shadow-[color:var(--primary-a5)]`}>
+          <div className={`rounded-2xl border ${line} bg-[var(--card)] p-2.5 shadow-xl shadow-[color:var(--ink-a5)]`}>
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl sm:aspect-[16/11]">
               <Image src={sobre.photo.src} alt={sobre.photo.alt} fill priority sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover object-top" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[var(--primary-a50)] via-transparent to-transparent" />
-              <span className="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-[var(--primary)] shadow-sm backdrop-blur-md">
+              <div className="absolute inset-0 bg-gradient-to-t from-[var(--ink-a50)] via-transparent to-transparent" />
+              <span className="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-[var(--card)] px-3 py-1.5 text-xs font-semibold text-[var(--ink)] shadow-sm backdrop-blur-md">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
                 {contacto.location}
               </span>
             </div>
 
-            <div className="relative z-10 mx-2 -mt-12 rounded-xl border border-[var(--accent-soft)] bg-white p-5 shadow-2xl shadow-[color:var(--primary-a10)] sm:mx-4 sm:p-6">
+            <div className="relative z-10 mx-2 -mt-12 rounded-xl border border-[var(--accent-soft)] bg-[var(--card)] p-5 shadow-2xl shadow-[color:var(--ink-a10)] sm:mx-4 sm:p-6">
               <div className={`mb-4 flex items-center justify-between border-b ${line} pb-3`}>
-                <span className="text-xs font-semibold uppercase tracking-wider text-[var(--primary)]">{panel.title}</span>
+                <span className="text-xs font-semibold uppercase tracking-wider text-[var(--ink)]">{panel.title}</span>
                 <span className="rounded bg-[var(--accent-soft)] px-2.5 py-0.5 text-[11px] font-medium text-[var(--accent)]">{panel.status}</span>
               </div>
               <div className="mb-4 flex flex-wrap items-baseline justify-between gap-2">
@@ -176,7 +176,7 @@ function Hero() {
                   {panel.trend}
                 </span>
               </div>
-              <div className="mb-4 grid h-8 grid-cols-6 items-end gap-1.5 rounded bg-[#F7EFE6]/70 p-1.5">
+              <div className="mb-4 grid h-8 grid-cols-6 items-end gap-1.5 rounded bg-[var(--card-alt)] p-1.5">
                 {panel.bars.map((b, i) => (
                   <div
                     key={b.month}
@@ -208,7 +208,7 @@ function Hero() {
 
 function Stats() {
   return (
-    <section className={`border-b ${line} bg-white py-10`}>
+    <section className={`border-b ${line} bg-[var(--primary)] py-10`}>
       <div className={`${wrap} grid grid-cols-2 gap-8 md:grid-cols-4`}>
         {stats.map((s, i) => (
           <div key={s.label} className={`flex flex-col md:px-6 ${i > 0 ? `md:border-l ${line}` : ""}`}>
@@ -223,7 +223,7 @@ function Stats() {
 
 function Servicios() {
   return (
-    <section id="servicios" className={`border-b ${line} bg-white py-20 md:py-28`}>
+    <section id="servicios" className={`border-b ${line} bg-[var(--primary)] py-20 md:py-28`}>
       <div className={wrap}>
         <div className="mb-16 max-w-2xl">
           <Eyebrow>{servicios.label}</Eyebrow>
@@ -234,7 +234,7 @@ function Servicios() {
           {servicios.items.map((s) => (
             <article
               key={s.title}
-              className={`group flex flex-col justify-between rounded-xl border ${line} bg-white p-8 shadow-[0_4px_20px_rgba(22,24,43,0.03)] transition-colors hover:border-[var(--accent)] sm:p-10`}
+              className={`group flex flex-col justify-between rounded-xl border ${line} bg-[var(--card)] p-8 shadow-[0_4px_20px_rgba(22,24,43,0.03)] transition-colors hover:border-[var(--accent)] sm:p-10`}
             >
               <div>
                 <div className={`mb-6 flex items-center justify-between gap-3 border-b ${line} pb-4`}>
@@ -245,7 +245,7 @@ function Servicios() {
                 </div>
                 <h3 className={`${heading} mb-3 text-2xl ${ink} transition-colors group-hover:text-[var(--accent)]`}>{s.title}</h3>
                 <p className={`mb-6 text-sm leading-relaxed md:text-base ${soft}`}>{s.desc}</p>
-                <ul className="mb-6 space-y-2.5 text-sm text-[var(--primary-a80)]">
+                <ul className="mb-6 space-y-2.5 text-sm text-[var(--ink-a80)]">
                   {s.details.map((d) => (
                     <li key={d} className="flex items-center gap-2">
                       <CheckIcon className="h-4 w-4 flex-shrink-0 text-[var(--accent)]" />
@@ -269,7 +269,7 @@ function Servicios() {
 
 function Proceso() {
   return (
-    <section id="proceso" className={`border-b ${line} bg-[#FBF8F4] py-20 md:py-28`}>
+    <section id="proceso" className={`border-b ${line} bg-[var(--primary-alt)] py-20 md:py-28`}>
       <div className={wrap}>
         <div className="mb-14 max-w-2xl">
           <Eyebrow>{proceso.label}</Eyebrow>
@@ -277,7 +277,7 @@ function Proceso() {
         </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {proceso.steps.map((step) => (
-            <div key={step.num} className={`flex flex-col justify-between rounded-xl border ${line} bg-white p-8`}>
+            <div key={step.num} className={`flex flex-col justify-between rounded-xl border ${line} bg-[var(--card)] p-8`}>
               <div>
                 <span className={`${heading} mb-4 block text-3xl text-[var(--accent)]`}>{step.num}</span>
                 <h3 className={`${heading} mb-3 text-xl ${ink}`}>{step.title}</h3>
@@ -294,7 +294,7 @@ function Proceso() {
 
 function Sobre() {
   return (
-    <section id="sobre" className={`border-b ${line} bg-white py-20 md:py-28`}>
+    <section id="sobre" className={`border-b ${line} bg-[var(--primary)] py-20 md:py-28`}>
       <div className={`${wrap} grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16`}>
         <div className="lg:col-span-7">
           <Eyebrow>{sobre.label}</Eyebrow>
@@ -304,13 +304,13 @@ function Sobre() {
               <p key={p}>{p}</p>
             ))}
           </div>
-          <div className={`grid grid-cols-1 gap-4 rounded-xl border ${line} bg-[#FBF8F4] p-5 sm:grid-cols-3`}>
+          <div className={`grid grid-cols-1 gap-4 rounded-xl border ${line} bg-[var(--card-alt)] p-5 sm:grid-cols-3`}>
             {sobre.credentials.map((c) => (
               <div key={c.title} className="flex items-start gap-2.5">
                 <ShieldIcon className="mt-0.5 h-5 w-5 flex-shrink-0 text-[var(--accent)]" />
                 <span>
                   <strong className={`block text-xs font-bold uppercase tracking-wide ${ink}`}>{c.title}</strong>
-                  <span className="text-xs text-[var(--primary-a60)]">{c.detail}</span>
+                  <span className="text-xs text-[var(--ink-a60)]">{c.detail}</span>
                 </span>
               </div>
             ))}
@@ -318,7 +318,7 @@ function Sobre() {
         </div>
 
         <div className="lg:col-span-5">
-          <figure className="relative overflow-hidden rounded-2xl bg-[var(--primary)] p-8 text-white shadow-2xl sm:p-10">
+          <figure className="relative overflow-hidden rounded-2xl bg-[var(--ink)] p-8 text-white shadow-2xl sm:p-10">
             <div aria-hidden className="absolute -bottom-16 -right-16 h-56 w-56 rounded-full bg-[var(--accent)] opacity-25 blur-3xl" />
             <span className="mb-6 flex h-10 w-10 items-center justify-center rounded bg-white/10">
               <QuoteIcon className="h-5 w-5" />
@@ -337,14 +337,14 @@ function Sobre() {
 
 function Testimonio() {
   return (
-    <section className={`border-b ${line} bg-[#FBF8F4] py-20 md:py-24`}>
+    <section className={`border-b ${line} bg-[var(--primary-alt)] py-20 md:py-24`}>
       <div className="mx-auto max-w-4xl px-6 text-center md:px-12">
-        <span className="mx-auto mb-6 flex h-10 w-10 items-center justify-center rounded-full border border-[var(--accent-soft)] bg-white text-[var(--accent)]">
+        <span className="mx-auto mb-6 flex h-10 w-10 items-center justify-center rounded-full border border-[var(--accent-soft)] bg-[var(--card)] text-[var(--accent)]">
           <QuoteIcon className="h-5 w-5" />
         </span>
         <blockquote className={`${heading} mb-8 text-[clamp(1.5rem,3.2vw,2.3rem)] leading-snug ${ink}`}>“{testimonio.quote}”</blockquote>
         <cite className="block font-semibold not-italic text-[var(--accent)]">{testimonio.author}</cite>
-        <span className="text-xs text-[var(--primary-a60)]">{testimonio.role}</span>
+        <span className="text-xs text-[var(--ink-a60)]">{testimonio.role}</span>
         <div className="mt-3 flex justify-center gap-1 text-amber-500">
           {Array.from({ length: 5 }).map((_, i) => (
             <StarIcon key={i} className="h-4 w-4" />
@@ -357,8 +357,8 @@ function Testimonio() {
 
 function Contacto() {
   const { field, onSubmit } = useContactForm();
-  const input = `w-full rounded border ${line} bg-[#FBF8F4] px-4 py-3 text-sm ${ink} outline-none transition-colors placeholder:text-[var(--primary-a40)] focus:border-[var(--accent)] focus:bg-white`;
-  const label = "mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-[var(--primary-a70)]";
+  const input = `w-full rounded border ${line} bg-[var(--card-alt)] px-4 py-3 text-sm ${ink} outline-none transition-colors placeholder:text-[var(--ink-a40)] focus:border-[var(--accent)] focus:bg-[var(--card)]`;
+  const label = "mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-[var(--ink-a70)]";
   const channels = [
     { icon: MailIcon, label: contacto.labels.email, value: contacto.email, href: `mailto:${contacto.email}` },
     { icon: PhoneIcon, label: contacto.labels.phone, value: contacto.phone, href: phoneHref },
@@ -366,7 +366,7 @@ function Contacto() {
   ];
 
   return (
-    <section id="contacto" className="bg-white py-20 md:py-28">
+    <section id="contacto" className="bg-[var(--primary)] py-20 md:py-28">
       <div className={`${wrap} grid grid-cols-1 gap-12 lg:grid-cols-12`}>
         <div className="flex flex-col justify-between lg:col-span-5">
           <div>
@@ -381,7 +381,7 @@ function Contacto() {
                       <c.icon className="h-5 w-5" />
                     </span>
                     <span>
-                      <span className="block text-[11px] font-bold uppercase tracking-wider text-[var(--primary-a50)]">{c.label}</span>
+                      <span className="block text-[11px] font-bold uppercase tracking-wider text-[var(--ink-a50)]">{c.label}</span>
                       <strong className={`text-sm font-semibold ${ink}`}>{c.value}</strong>
                     </span>
                   </>
@@ -395,14 +395,14 @@ function Contacto() {
               })}
             </div>
           </div>
-          <p className="flex items-start gap-2.5 rounded-lg border border-[var(--accent-soft)] bg-[var(--accent-soft)] p-4 text-xs text-[var(--primary-a80)]">
+          <p className="flex items-start gap-2.5 rounded-lg border border-[var(--accent-soft)] bg-[var(--accent-soft)] p-4 text-xs text-[var(--ink-a80)]">
             <LockIcon className="mt-0.5 h-4 w-4 flex-shrink-0 text-[var(--accent)]" />
             {contacto.privacy}
           </p>
         </div>
 
         <div className="lg:col-span-7">
-          <form onSubmit={onSubmit} className={`space-y-5 rounded-2xl border ${line} bg-white p-8 shadow-xl shadow-[color:var(--primary-a5)] sm:p-10`}>
+          <form onSubmit={onSubmit} className={`space-y-5 rounded-2xl border ${line} bg-[var(--card)] p-8 shadow-xl shadow-[color:var(--ink-a5)] sm:p-10`}>
             <h3 className={`${heading} text-2xl ${ink}`}>{contacto.form.title}</h3>
             <div>
               <label htmlFor="pc3-name" className={label}>{contacto.form.name.label}</label>
@@ -432,7 +432,7 @@ function Contacto() {
               {contacto.form.submit}
               <ArrowIcon className="h-4 w-4" />
             </button>
-            <p className="text-center text-xs text-[var(--primary-a50)]">{contacto.form.note}</p>
+            <p className="text-center text-xs text-[var(--ink-a50)]">{contacto.form.note}</p>
           </form>
         </div>
       </div>
@@ -442,7 +442,7 @@ function Contacto() {
 
 function Footer() {
   return (
-    <footer className="bg-[var(--primary)] text-white">
+    <footer className="bg-[var(--ink)] text-white">
       <div className={`${wrap} py-14`}>
         <div className="grid grid-cols-1 gap-10 border-b border-white/10 pb-10 md:grid-cols-12">
           <div className="md:col-span-6">
@@ -472,7 +472,7 @@ function Footer() {
 
 export default function DisenoBoutique() {
   return (
-    <div className="min-h-screen bg-white font-[family-name:var(--font-jakarta)] text-[var(--primary)] antialiased">
+    <div className="min-h-screen bg-[var(--primary)] font-[family-name:var(--font-jakarta)] text-[var(--ink)] antialiased">
       <Nav />
       <main>
         <Hero />

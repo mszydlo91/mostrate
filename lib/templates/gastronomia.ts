@@ -24,11 +24,11 @@ export const gastronomiaFonts: TemplateFont[] = [
   { id: "poppins", name: "Poppins — amigable", heading: "var(--font-poppins)" },
 ];
 
-/* ── Colores primarios (fondo del sitio); se combinan con los temas de acento ── */
+/* ── Colores primarios (fondo oscuro + texto claro); se combinan con los temas de acento ── */
 export const gastronomiaPrimaries: TemplatePrimary[] = [
-  { id: "carbon", name: "Carbón", color: "#0B0906" },
-  { id: "bosque", name: "Bosque", color: "#08110D" },
-  { id: "chocolate", name: "Chocolate", color: "#160D08" },
+  { id: "carbon", name: "Carbón", color: "#0B0906", ink: "#F3ECE1" },
+  { id: "bosque", name: "Bosque", color: "#0E1D15", ink: "#EEF0E6" },
+  { id: "chocolate", name: "Chocolate", color: "#1F130C", ink: "#F3ECE1" },
 ];
 
 /* ── Temas de color (cálidos, de cocina) ── */
