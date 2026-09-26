@@ -7,7 +7,10 @@ description: Scaffold completo de un template de cliente nuevo para Mostrate (ej
 
 Crea un template de cliente nuevo siguiendo la arquitectura ya establecida en el
 proyecto (ver `DOCS.md` secciones 6-8 y principios comunes de la sección 14).
-El template **Profesional** es la referencia canónica.
+El template **Profesional** es la referencia canónica: contenido en
+`lib/templates/profesional.ts` y, si el template ofrece varios diseños,
+un componente por diseño (`components/templates/<slug>/Diseno<Nombre>.tsx`)
+con la lógica común en `shared.tsx` (ver `DOCS.md`, sección 6).
 
 ## Datos que necesito (preguntar si faltan)
 - **slug**: identificador en kebab-case. Verificar si existe la ruta
@@ -57,9 +60,9 @@ El template **Profesional** es la referencia canónica.
 
 ## Checklist de calidad
 - [ ] Se ve claramente distinto a los otros templates.
-- [ ] Los 3 temas cambian todo el acento en vivo (probar el ThemeSwitcher).
+- [ ] Los 3 temas cambian todo el acento en vivo (probar el color en la barra de demo).
 - [ ] Responsive en mobile/tablet/desktop.
 - [ ] `tsc --noEmit` sin errores.
 - [ ] Textos editables nuevos centralizados según `DOCS.md`, sección 6.
-- [ ] Los títulos responden al FontSwitcher.
+- [ ] Los títulos responden al selector de tipografía de la barra de demo.
 - [ ] DOCS.md actualizado.

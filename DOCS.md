@@ -108,15 +108,14 @@ components/
   templates/                     → motor + piezas reutilizables de los templates
     theme.ts                     → tipo TemplateTheme + helper de variables CSS
     font.ts                      → tipo TemplateFont + variables CSS + fuentes compartidas
-    ThemeProvider.tsx            → aplica tema/fuente y monta controles de demo
-    ThemeSwitcher.tsx            → control flotante de 3 temas
-    FontSwitcher.tsx             → control flotante de tipografías
-    BackToSite.tsx               → enlace de vuelta a Mostrate
+    design.ts                    → tipo TemplateDesign + resolveDesign (?diseno=)
+    ThemeProvider.tsx            → aplica tema/fuente y monta la barra de demo
+    DemoToolbar.tsx              → barra de demo: volver, diseño, tipografía, color
     TemplateShell.tsx            → wrapper usado solo por PlaceholderTemplate
     PlaceholderTemplate.tsx      → placeholder sin uso en las rutas actuales
-    profesional/                 → secciones del template Profesional
-      Nav.tsx  Hero.tsx  Stats.tsx  Servicios.tsx
-      Proceso.tsx  Sobre.tsx  Contacto.tsx  Footer.tsx
+    profesional/                 → template Profesional con 3 diseños
+      DisenoClasico.tsx  DisenoTecnico.tsx  DisenoBoutique.tsx
+      shared.tsx                 → menú mobile, formulario mailto e íconos comunes
     comercio/                    → secciones del template Comercio
     gastronomia/                 → secciones del template Gastronomía + GrainOverlay
     bienestar/                   → secciones del template Bienestar + Counter
@@ -124,7 +123,7 @@ components/
 lib/
   config.ts                      → precios, textos y contacto de la LANDING de Mostrate
   templates/
-    profesional.ts               → temas + contenido del template Profesional (demo)
+    profesional.ts               → temas + fuentes + diseños + contenido de Profesional (demo)
     comercio.ts                  → temas + contenido del template Comercio (demo)
     gastronomia.ts               → temas + fuentes + contenido de Gastronomía (demo)
     bienestar.ts                 → temas + fuentes + contenido de Bienestar (demo)
@@ -261,8 +260,26 @@ Cada template es **visualmente distinto** a propósito, para mostrar versatilida
 Actualmente las secciones importan su contenido demo directamente; no reciben
 contenido de clientes por props. `ThemeProvider` usa estado local e inyecta
 variables CSS, sin React Context ni persistencia de la selección. Siempre monta
-los selectores y el enlace a Mostrate: no hay un modo de publicación de cliente
-que excluya esos controles. Ver sección 9 antes de instanciar un cliente real.
+la barra de demo (salvo embebido en un iframe): no hay un modo de publicación de
+cliente que la excluya. Ver sección 9 antes de instanciar un cliente real.
+
+### 🧩 Diseños por template (mismo contenido, distinta composición)
+Un template puede ofrecer varios **diseños**: layouts completos distintos que
+leen el mismo archivo de contenido, así un cliente carga sus datos una vez y
+elige el estilo. Hoy lo usa **Profesional** (3 diseños); la idea es sumarlo a los
+demás templates.
+
+- [`design.ts`](components/templates/design.ts) — tipo `TemplateDesign`
+  (`id`, `name`, `theme` y `font` con los que arranca) y `resolveDesign()`.
+- El diseño activo viaja en la URL: `/templates/<slug>?diseno=<id>` (sin
+  parámetro, el primero). La página elige el componente y monta
+  `<ThemeProvider key={design.id} designs={...} design={...}>`; el `key`
+  reinicia tema y fuente al cambiar de diseño.
+- Cada diseño es un componente de cliente en un solo archivo
+  (`components/templates/<slug>/Diseno<Nombre>.tsx`); la lógica común (menú
+  mobile, formulario, íconos) va en `shared.tsx` del template.
+- La vidriera de la landing y la captura de `public/previews/` muestran el
+  diseño 1.
 
 ### 🎨 Sistema de theming (3 temas por template)
 Motor reutilizable en `components/templates/`:
@@ -270,9 +287,8 @@ Motor reutilizable en `components/templates/`:
 - [`theme.ts`](components/templates/theme.ts) — define el tipo `TemplateTheme`
   (`accent`, `accentStrong`, `accentSoft`, `accentContrast`) y `themeVars()`.
 - [`ThemeProvider.tsx`](components/templates/ThemeProvider.tsx) — guarda el tema
-  activo, lo inyecta como **variables CSS** sobre un wrapper y monta el selector.
-- [`ThemeSwitcher.tsx`](components/templates/ThemeSwitcher.tsx) — control flotante
-  (abajo a la derecha) para previsualizar los 3 temas.
+  activo, lo inyecta como **variables CSS** sobre un wrapper y monta la barra de
+  demo, donde se elige el tema.
 
 **Cómo lo consumen las secciones:** usan `var(--accent)`, `var(--accent-strong)`,
 `var(--accent-soft)`, `var(--accent-contrast)` (ej. `bg-[var(--accent)]`).
@@ -291,8 +307,8 @@ Igual que el theming de color, pero para la fuente de los títulos:
   junto a Syne/Inter.
 - `ThemeProvider` inyecta la fuente activa como `--tpl-font-heading` (usa
   `templateFonts` por defecto si el template no pasa su propio array).
-- [`FontSwitcher.tsx`](components/templates/FontSwitcher.tsx) — control
-  flotante (arriba del de temas) para previsualizar las 4 tipografías.
+- Un template puede pasar su propia lista (ej. `profesionalFonts`, con
+  Newsreader y Plus Jakarta Sans además de las compartidas).
 
 **Cómo lo consumen las secciones:** los títulos usan
 `font-[family-name:var(--tpl-font-heading)]` en vez de una clase `font-syne`
@@ -300,10 +316,16 @@ fija. La landing de Mostrate y `PlaceholderTemplate` no usan esto — tienen
 tipografía fija a propósito (Syne en ambos),
 porque no son templates elegibles por el visitante.
 
-### ↩️ Volver a Mostrate
-[`BackToSite.tsx`](components/templates/BackToSite.tsx) — link flotante
-(abajo a la izquierda) que monta automáticamente `ThemeProvider` en todo
-template, para no quedar "encerrado" dentro de la demo.
+### 🧰 Barra de demo de Mostrate
+[`DemoToolbar.tsx`](components/templates/DemoToolbar.tsx) — una sola barra que
+agrupa todo lo que no es del sitio del cliente: volver a Mostrate (logo + ←),
+diseño (si hay más de uno), tipografía, color y el llamado "Quiero este
+template" (va a `/#contacto`). Usa la identidad de la landing (oscuro
+translúcido + azul) para leerse como herramienta de Mostrate sobre cualquier
+template, claro u oscuro. Desktop: barra abajo al centro, minimizable a una
+píldora. Mobile: píldora "Personalizar demo" que abre un panel inferior.
+Reemplaza a los antiguos controles sueltos (ThemeSwitcher, FontSwitcher,
+BackToSite).
 
 ---
 
@@ -312,15 +334,26 @@ template, para no quedar "encerrado" dentro de la demo.
 ### 7.1 Profesional (referencia)
 
 Rubro: **servicios profesionales** (contadores, abogados, consultores).
-Cliente demo: **"Estudio Rivas — Contador Público"**.
+Cliente demo: **"Estudio Rivas — Contador Público"** (Martín Rivas).
 
-- **Estilo:** fondo claro/corporativo (distinto al dark de Mostrate).
-- **Contenido:** [`lib/templates/profesional.ts`](lib/templates/profesional.ts).
-- **Secciones** ([`components/templates/profesional/`](components/templates/profesional/)):
-  Nav (sticky claro) · Hero (2 columnas + mini-panel financiero) · Stats (barra
-  color pleno) · Servicios (grid tipo tabla) · Proceso (3 pasos) · Sobre
-  (bio + testimonio superpuesto) · Contacto (form mailto) · Footer.
-- **Temas:** Azul ejecutivo · Esmeralda · Bordó.
+Rediseñado el 2026-09-26 a partir de 3 variantes generadas en Stitch; tiene
+**3 diseños** (ver "Diseños por template", sección 6) sobre el mismo contenido:
+
+| Diseño | Carácter | Tema / fuente iniciales |
+|---|---|---|
+| 1 · Clásico | Blanco y navy, serif con itálica de acento, panel del cliente protagonista, servicios en grilla 7/5 | Azul ejecutivo · Newsreader |
+| 2 · Técnico | Grilla estricta con reglas finas, rótulos monoespaciados, panel tipo terminal, servicios en dos catálogos | Esmeralda · Space Grotesk |
+| 3 · Boutique | Cálido, foto con el panel superpuesto, pilares con listas, frase del profesional en bloque oscuro | Bordó · Newsreader |
+
+- **Contenido:** [`lib/templates/profesional.ts`](lib/templates/profesional.ts)
+  (incluye el panel del hero, detalles y grupo de cada servicio, foto,
+  credenciales y el área del formulario).
+- **Foto:** `public/templates/profesional/retrato.jpg` (retrato generado por
+  Stitch, provisorio hasta tener fotos reales). Aparece una sola vez por diseño.
+- **Funcionalidad:** nav sticky con menú mobile, anclas, formulario que abre el
+  mail con nombre, email, área y mensaje; teléfono como link `tel:`.
+- **Temas:** Azul ejecutivo · Esmeralda · Bordó. **Fuentes:** Newsreader, Space
+  Grotesk, Playfair, Plus Jakarta Sans (`profesionalFonts`).
 
 Sirve de **patrón de referencia** para construir los demás templates.
 
@@ -355,7 +388,7 @@ Rubro: **restaurantes, cantinas, cafés**. Cliente demo: **"Cantina Sorrento"**
   única de las 4 tipografías compartidas (`components/templates/font.ts`)
   que transmite "carta de restaurante". Se define reordenando la lista en
   `gastronomiaFonts` (en `lib/templates/gastronomia.ts`); el visitante
-  igual puede cambiarla desde el FontSwitcher.
+  igual puede cambiarla desde la barra de demo.
 - **Contenido:** [`lib/templates/gastronomia.ts`](lib/templates/gastronomia.ts).
 - **Secciones** ([`components/templates/gastronomia/`](components/templates/gastronomia/)):
   - Nav — minimal, sin botón pill; el CTA es un link con subrayado de acento.
@@ -372,7 +405,7 @@ Rubro: **restaurantes, cantinas, cafés**. Cliente demo: **"Cantina Sorrento"**
     Categorías editables 100% desde `gastronomia.ts` (`menu.categories`) —
     agregar o quitar una no toca el componente. Incluye el **toggle
     "mostrar/ocultar precios"** (estado propio, `useState` local — distinto
-    de ThemeSwitcher/FontSwitcher porque es un control de contenido
+    de los selectores de la barra de demo porque es un control de contenido
     específico de este template) y un destacado de "plato del día" que
     reutiliza el dato `hero.card`.
   - **Ubicación** — dirección/horarios en tipografía grande + las 3
@@ -563,6 +596,11 @@ constituyen una integración operativa mientras no se configure el número.
   Incorporación de principios comunes de arquitectura y colaboración, entradas
   breves para Codex/Claude Code y alineación de las skills existentes, sin cambios
   de comportamiento del producto.
+- **2026-09-26** — Template **Profesional** rediseñado con 3 diseños (Clásico,
+  Técnico, Boutique) generados en Stitch sobre el mismo contenido, elegibles con
+  `?diseno=`. Nuevo motor de diseños (`design.ts`). Los controles sueltos de la
+  demo se reemplazan por una barra única de Mostrate (`DemoToolbar`). Se suman
+  las fuentes Newsreader, Plus Jakarta Sans y JetBrains Mono.
 - **2026-09-23** — Rediseño de la landing de Mostrate con concepto de
   "vidriera en vivo": los templates reales se muestran funcionando en iframes
   dentro del hero (selector de rubro, boceto que "se arma" al cargar), cinta de
