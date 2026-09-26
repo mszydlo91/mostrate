@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
-import { Syne, Inter, Playfair_Display, Space_Grotesk, Poppins } from "next/font/google";
+import {
+  Syne,
+  Inter,
+  Instrument_Serif,
+  Playfair_Display,
+  Space_Grotesk,
+  Poppins,
+} from "next/font/google";
 import { site } from "@/lib/config";
 import "./globals.css";
 
@@ -14,6 +21,15 @@ const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+// Serif itálica de acento de la landing (palabras destacadas en títulos).
+const instrument = Instrument_Serif({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+  variable: "--font-instrument",
   display: "swap",
 });
 
@@ -59,7 +75,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${syne.variable} ${inter.variable} ${playfair.variable} ${spaceGrotesk.variable} ${poppins.variable}`}
+      className={`${syne.variable} ${inter.variable} ${instrument.variable} ${playfair.variable} ${spaceGrotesk.variable} ${poppins.variable}`}
     >
       <body>{children}</body>
     </html>

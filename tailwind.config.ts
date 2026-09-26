@@ -20,6 +20,8 @@ const config: Config = {
       fontFamily: {
         syne: ["var(--font-syne)", "sans-serif"],
         inter: ["var(--font-inter)", "sans-serif"],
+        // Serif itálica de acento para palabras destacadas de la landing.
+        serif: ["var(--font-instrument)", "Georgia", "serif"],
       },
       borderRadius: {
         DEFAULT: "12px",
@@ -39,11 +41,16 @@ const config: Config = {
           from: { opacity: "0", transform: "translateY(12px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         pulse: "pulse 2s infinite",
         "underline-in": "underline-in 0.6s 0.4s cubic-bezier(0.4,0,0.2,1) forwards",
         "fade-up": "fade-up 0.6s ease forwards",
+        marquee: "marquee 40s linear infinite",
       },
     },
   },

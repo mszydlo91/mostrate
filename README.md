@@ -34,6 +34,8 @@ app/
 components/
   landing/                → componentes de la landing (Nav, Hero, Servicios, ...)
   templates/              → componentes reutilizables para templates de clientes
+public/
+  previews/               → capturas de las demos para la galería de templates
 lib/
   config.ts               → precios, contenido comercial y contacto de la landing
   templates/              → contenido demo y temas de cada template
@@ -48,7 +50,7 @@ componentes. Las demos usan `lib/templates/<slug>.ts`; ver
 
 - **Precios:** objeto `pricing` (`inicial` / `mensual`).
 - **Contacto:** objeto `contact` (email, WhatsApp, ubicación).
-- **Secciones:** `hero`, `servicios`, `templates`, `precios`, `contacto`, `footer`.
+- **Secciones:** `hero`, `marquee`, `servicios`, `templates`, `precios`, `contacto`, `footer`.
 
 ## Deploy en Vercel
 

@@ -31,7 +31,8 @@
   }
   .animate-underline-in,
   .animate-pulse,
-  .animate-fade-up {
+  .animate-fade-up,
+  .animate-marquee {
     animation: none !important;
   }
   /* Dejar el subrayado visible sin animación */
