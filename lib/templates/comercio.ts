@@ -1,11 +1,12 @@
 /**
  * Contenido del template "Comercio" (tiendas, locales, productos físicos).
  *
- * Cliente de ejemplo: "Casa Bonita — Deco & Hogar".
- * Estética deliberadamente distinta al template Profesional:
- * fondo crema cálido, orientado a catálogo de productos y venta por WhatsApp.
+ * Cliente de ejemplo: "Casa Bonita — Deco & Hogar". Orientado a catálogo de
+ * productos y venta por WhatsApp. Todo el copy lo comparten los 3 diseños.
  */
 import type { TemplatePrimary, TemplateTheme } from "@/components/templates/theme";
+import type { TemplateFont } from "@/components/templates/font";
+import type { TemplateDesign } from "@/components/templates/design";
 
 /* ── Colores primarios (fondo crema + tinta); se combinan con los temas de acento ── */
 export const comercioPrimaries: TemplatePrimary[] = [
@@ -42,8 +43,28 @@ export const comercioThemes: TemplateTheme[] = [
   },
 ];
 
+/* ── Tipografías de títulos para el selector ── */
+export const comercioFonts: TemplateFont[] = [
+  { id: "playfair", name: "Playfair — editorial", heading: "var(--font-playfair)" },
+  { id: "bricolage", name: "Bricolage — pop", heading: "var(--font-bricolage)" },
+  { id: "cormorant", name: "Cormorant — galería", heading: "var(--font-cormorant)" },
+  { id: "jakarta", name: "Plus Jakarta — moderna", heading: "var(--font-jakarta)" },
+];
+
+/* ── Diseños disponibles (mismo contenido, distinta composición) ── */
+export const comercioDesigns: TemplateDesign[] = [
+  { id: "1", name: "Editorial", theme: "mandarina", primary: "crema", font: "playfair" },
+  { id: "2", name: "Pop", theme: "mandarina", primary: "crema", font: "bricolage" },
+  { id: "3", name: "Galería", theme: "mandarina", primary: "crema", font: "cormorant" },
+];
+
+/** Íconos disponibles para categorías y beneficios (ver comercio/shared.tsx). */
+export type ComercioIcon =
+  | "vase" | "sofa" | "lamp" | "utensils" | "plant" | "gift"
+  | "truck" | "card" | "refresh" | "chat";
+
 export const comercio = {
-  business: { name: "Casa Bonita", initials: "CB" },
+  business: { name: "Casa Bonita", initials: "CB", tagline: "Deco & Hogar · Palermo" },
 
   announcement: "Envíos a todo el país · 3 cuotas sin interés · Cambios sin cargo",
 
@@ -51,19 +72,23 @@ export const comercio = {
     // Número internacional sin "+" ni espacios (ej: "5491122334455"). Vacío = sin link.
     number: "",
     label: "Comprar por WhatsApp",
+    // Mensaje precargado al consultar un producto ({producto} se reemplaza).
+    productMessage: "Hola! Quiero consultar por: {producto}",
   },
 
   nav: {
     links: [
       { label: "Productos", href: "#productos" },
       { label: "Categorías", href: "#categorias" },
+      { label: "Cómo comprar", href: "#como-comprar" },
       { label: "El local", href: "#local" },
     ],
     cta: { label: "WhatsApp", href: "#local" },
   },
 
   hero: {
-    badge: "🌷 Nueva colección primavera",
+    badge: "Nueva colección primavera",
+    sticker: "Hecho a mano",
     title: {
       before: "Objetos lindos para una ",
       highlight: "casa con alma",
@@ -73,26 +98,26 @@ export const comercio = {
       "Decoración, textiles y regalos elegidos a mano. Comprá online o pasá por el local — te ayudamos a que todo combine.",
     primary: { label: "Ver productos", href: "#productos" },
     secondary: { label: "Escribinos", href: "#local" },
-    trust: ["Envío en 48 hs", "Cambios sin cargo", "Cuotas sin interés"],
-    // Collage de tiles del hero
-    tiles: [
-      { name: "Cerámicas", emoji: "🏺", gradient: "linear-gradient(135deg,#F6D9C4,#EFC3A0)" },
-      { name: "Textiles", emoji: "🧺", gradient: "linear-gradient(135deg,#E7DCF2,#D3BEE9)" },
-      { name: "Velas", emoji: "🕯️", gradient: "linear-gradient(135deg,#DCEBDD,#BFDCC2)" },
-      { name: "Regalos", emoji: "🎁", gradient: "linear-gradient(135deg,#F0D9E0,#E3B9C7)" },
+    trust: [
+      { icon: "truck" as ComercioIcon, title: "Envío en 48 hs", desc: "A todo el país" },
+      { icon: "refresh" as ComercioIcon, title: "Cambios sin cargo", desc: "30 días de garantía" },
+      { icon: "card" as ComercioIcon, title: "Cuotas sin interés", desc: "Con todas las tarjetas" },
     ],
+    image: { src: "/templates/comercio/local.jpg", alt: "Interior del local de Casa Bonita en Palermo" },
+    imageCaption: "El local · Av. Siempreviva 742, Palermo",
   },
 
   categorias: {
     label: "Categorías",
     title: "Encontrá lo que buscás",
+    subtitle: "Piezas elegidas una por una para que cada rincón de tu casa hable de vos.",
     items: [
-      { name: "Decoración", emoji: "🪞" },
-      { name: "Textil & Hogar", emoji: "🛋️" },
-      { name: "Iluminación", emoji: "💡" },
-      { name: "Cocina", emoji: "🍽️" },
-      { name: "Plantas", emoji: "🪴" },
-      { name: "Regalos", emoji: "🎁" },
+      { name: "Decoración", desc: "Floreros y objetos", icon: "vase" as ComercioIcon },
+      { name: "Textil & Hogar", desc: "Mantas y almohadones", icon: "sofa" as ComercioIcon },
+      { name: "Iluminación", desc: "Luz cálida y suave", icon: "lamp" as ComercioIcon },
+      { name: "Cocina", desc: "Gres y vajilla", icon: "utensils" as ComercioIcon },
+      { name: "Plantas", desc: "Macetas de barro", icon: "plant" as ComercioIcon },
+      { name: "Regalos", desc: "Sets armados", icon: "gift" as ComercioIcon },
     ],
   },
 
@@ -100,29 +125,54 @@ export const comercio = {
     label: "Destacados",
     title: "Lo más elegido de la temporada",
     subtitle: "Precios de referencia. Escribinos por WhatsApp para comprar o consultar stock.",
+    priceLabel: "Precio de referencia",
     items: [
-      { name: "Jarrón de cerámica artesanal", price: "$ 18.900", tag: "Nuevo", emoji: "🏺", gradient: "linear-gradient(135deg,#F6D9C4,#EFC3A0)" },
-      { name: "Manta de algodón tejida", price: "$ 24.500", tag: "", emoji: "🧶", gradient: "linear-gradient(135deg,#D9E4F0,#B9CDE8)" },
-      { name: "Set de velas aromáticas", price: "$ 9.800", tag: "Oferta", emoji: "🕯️", gradient: "linear-gradient(135deg,#DCEBDD,#BFDCC2)" },
-      { name: "Lámpara de mesa minimal", price: "$ 32.000", tag: "", emoji: "💡", gradient: "linear-gradient(135deg,#E7DCF2,#D3BEE9)" },
-      { name: "Espejo de ratán redondo", price: "$ 27.400", tag: "Nuevo", emoji: "🪞", gradient: "linear-gradient(135deg,#F3E0D0,#E7C9AE)" },
-      { name: "Vajilla de gres (6 piezas)", price: "$ 41.900", tag: "", emoji: "🍽️", gradient: "linear-gradient(135deg,#F0D9E0,#E3B9C7)" },
+      { name: "Jarrón de cerámica artesanal", category: "Cerámica", desc: "Gres mate con textura arenada, ideal para follaje seco.", price: "$ 18.900", tag: "Nuevo", image: "/templates/comercio/jarron.jpg" },
+      { name: "Manta de algodón tejida", category: "Textil", desc: "Algodón en telar manual con flecos peinados.", price: "$ 24.500", tag: "", image: "/templates/comercio/manta.jpg" },
+      { name: "Set de velas aromáticas", category: "Aromas", desc: "Cera de soja en frascos ámbar reutilizables.", price: "$ 9.800", tag: "Oferta", image: "/templates/comercio/velas.jpg" },
+      { name: "Lámpara de mesa minimal", category: "Iluminación", desc: "Pantalla de lino y base de madera maciza.", price: "$ 32.000", tag: "", image: "/templates/comercio/lampara.jpg" },
+      { name: "Espejo de ratán redondo", category: "Deco de pared", desc: "Fibras naturales trenzadas a mano, 65 cm.", price: "$ 27.400", tag: "Nuevo", image: "/templates/comercio/espejo.jpg" },
+      { name: "Vajilla de gres (6 piezas)", category: "Mesa", desc: "Esmalte moteado, apta microondas.", price: "$ 41.900", tag: "", image: "/templates/comercio/vajilla.jpg" },
     ],
   },
 
   promo: {
     badge: "Solo por esta semana",
     title: "20% OFF en tu primera compra",
+    code: "BIENVENIDA",
     subtitle: "Usá el código BIENVENIDA al escribirnos y arrancá tu casa nueva con onda.",
     cta: { label: "Aprovechar ahora", href: "#local" },
   },
 
   beneficios: {
+    label: "Comprar es simple",
+    title: "Todo pensado para que compres tranquilo",
     items: [
-      { icon: "🚚", title: "Envíos a todo el país", desc: "Despachamos en 48 hs hábiles." },
-      { icon: "💳", title: "Todos los medios", desc: "Tarjetas, transferencia y cuotas." },
-      { icon: "🔄", title: "Cambios fáciles", desc: "Tenés 30 días para cambiar." },
-      { icon: "💬", title: "Atención cercana", desc: "Te asesoramos por WhatsApp." },
+      { icon: "truck" as ComercioIcon, title: "Envíos a todo el país", desc: "Despachamos en 48 hs hábiles." },
+      { icon: "card" as ComercioIcon, title: "Todos los medios", desc: "Tarjetas, transferencia y cuotas." },
+      { icon: "refresh" as ComercioIcon, title: "Cambios fáciles", desc: "Tenés 30 días para cambiar." },
+      { icon: "chat" as ComercioIcon, title: "Atención cercana", desc: "Te asesoramos por WhatsApp." },
+    ],
+  },
+
+  comoComprar: {
+    label: "Cómo comprar",
+    title: "Comprar en Casa Bonita es así de fácil",
+    steps: [
+      { num: "01", title: "Elegí tus piezas", desc: "Mirá el catálogo o pasá por el local y anotá lo que te guste." },
+      { num: "02", title: "Escribinos por WhatsApp", desc: "Te confirmamos stock, medidas y te mandamos fotos reales." },
+      { num: "03", title: "Pagá y recibí", desc: "Con tarjeta o transferencia. Retirás en el local o te lo enviamos." },
+    ],
+  },
+
+  comunidad: {
+    title: "Casa Bonita en casas reales",
+    subtitle: "Etiquetanos con #MiCasaBonita",
+    images: [
+      { src: "/templates/comercio/espejo.jpg", alt: "Espejo de ratán en un living" },
+      { src: "/templates/comercio/lampara.jpg", alt: "Lámpara en un rincón de lectura" },
+      { src: "/templates/comercio/manta.jpg", alt: "Manta tejida sobre un sillón" },
+      { src: "/templates/comercio/vajilla.jpg", alt: "Vajilla de gres en una mesa" },
     ],
   },
 
@@ -138,9 +188,13 @@ export const comercio = {
     address: "Av. Siempreviva 742, Palermo, CABA",
     instagram: "@casabonita.deco",
     email: "hola@casabonita.com.ar",
+    labels: { address: "Dirección", hours: "Horarios", contact: "Contacto" },
+    mapsLabel: "Cómo llegar",
+    image: { src: "/templates/comercio/fachada.jpg", alt: "Fachada de Casa Bonita desde la vereda" },
   },
 
   footer: {
     tagline: "Deco & Hogar · CABA, Argentina",
+    description: "Objetos, textiles y regalos elegidos a mano para casas con alma.",
   },
 };

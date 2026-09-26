@@ -1,35 +1,46 @@
 import type { Metadata } from "next";
 import ThemeProvider from "@/components/templates/ThemeProvider";
-import { comercioPrimaries, comercioThemes, comercio } from "@/lib/templates/comercio";
-import Nav from "@/components/templates/comercio/Nav";
-import Hero from "@/components/templates/comercio/Hero";
-import Categorias from "@/components/templates/comercio/Categorias";
-import Productos from "@/components/templates/comercio/Productos";
-import Promo from "@/components/templates/comercio/Promo";
-import Beneficios from "@/components/templates/comercio/Beneficios";
-import Local from "@/components/templates/comercio/Local";
-import Footer from "@/components/templates/comercio/Footer";
+import { resolveDesign } from "@/components/templates/design";
+import {
+  comercio,
+  comercioDesigns,
+  comercioFonts,
+  comercioPrimaries,
+  comercioThemes,
+} from "@/lib/templates/comercio";
+import DisenoEditorial from "@/components/templates/comercio/DisenoEditorial";
+import DisenoPop from "@/components/templates/comercio/DisenoPop";
+import DisenoGaleria from "@/components/templates/comercio/DisenoGaleria";
 
 export const metadata: Metadata = {
   title: `${comercio.business.name} — ${comercio.footer.tagline}`,
   description: comercio.hero.subtitle,
 };
 
-export default function ComercioTemplatePage() {
+// Cada diseño lee el mismo contenido (lib/templates/comercio.ts).
+const designComponents = {
+  "1": DisenoEditorial,
+  "2": DisenoPop,
+  "3": DisenoGaleria,
+} as const;
+
+export default function ComercioTemplatePage({
+  searchParams,
+}: {
+  searchParams: { diseno?: string | string[] };
+}) {
+  const design = resolveDesign(comercioDesigns, searchParams.diseno);
+  const Design = designComponents[design.id as keyof typeof designComponents];
   return (
-    <ThemeProvider primaries={comercioPrimaries} themes={comercioThemes}>
-      <div className="min-h-screen bg-[var(--primary)] font-inter text-[var(--ink)]">
-        <Nav />
-        <main>
-          <Hero />
-          <Categorias />
-          <Productos />
-          <Promo />
-          <Beneficios />
-          <Local />
-        </main>
-        <Footer />
-      </div>
+    <ThemeProvider
+      key={design.id}
+      primaries={comercioPrimaries}
+      themes={comercioThemes}
+      fonts={comercioFonts}
+      designs={comercioDesigns}
+      design={design}
+    >
+      <Design />
     </ThemeProvider>
   );
 }

@@ -9,6 +9,8 @@ import {
   Newsreader,
   Plus_Jakarta_Sans,
   JetBrains_Mono,
+  Bricolage_Grotesque,
+  Cormorant_Garamond,
 } from "next/font/google";
 import { site } from "@/lib/config";
 import "./globals.css";
@@ -83,6 +85,22 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 
+// Fuentes del template Comercio: grotesca "pop" y serif de galería.
+const bricolage = Bricolage_Grotesque({
+  subsets: ["latin"],
+  weight: ["500", "700", "800"],
+  variable: "--font-bricolage",
+  display: "swap",
+});
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: `${site.name} — Presencia digital para tu negocio`,
   description: site.description,
@@ -102,7 +120,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${syne.variable} ${inter.variable} ${instrument.variable} ${playfair.variable} ${spaceGrotesk.variable} ${poppins.variable} ${newsreader.variable} ${jakarta.variable} ${jetbrains.variable}`}
+      className={`${syne.variable} ${inter.variable} ${instrument.variable} ${playfair.variable} ${spaceGrotesk.variable} ${poppins.variable} ${newsreader.variable} ${jakarta.variable} ${jetbrains.variable} ${bricolage.variable} ${cormorant.variable}`}
     >
       <body>{children}</body>
     </html>
