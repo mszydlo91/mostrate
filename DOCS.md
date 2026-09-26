@@ -123,7 +123,9 @@ components/
     gastronomia/                 → template Gastronomía con 3 diseños
       DisenoCarta.tsx (secciones sueltas + GrainOverlay)  DisenoBodegon.tsx  DisenoTaberna.tsx
       shared.tsx                 → estado de la carta, formulario de reserva, WhatsApp (+ reexporta common)
-    bienestar/                   → secciones del template Bienestar + Counter
+    bienestar/                   → template Bienestar con 3 diseños
+      DisenoNucleo.tsx (secciones sueltas + Counter)  DisenoCalma.tsx  DisenoDeportivo.tsx
+      shared.tsx                 → formulario de clase de prueba, intensidad por clase (+ reexporta common)
 
 lib/
   config.ts                      → precios, textos y contacto de la LANDING de Mostrate
@@ -131,7 +133,7 @@ lib/
     profesional.ts               → temas + fuentes + diseños + contenido de Profesional (demo)
     comercio.ts                  → temas + fuentes + diseños + contenido de Comercio (demo)
     gastronomia.ts               → temas + fuentes + diseños + contenido de Gastronomía (demo)
-    bienestar.ts                 → temas + fuentes + contenido de Bienestar (demo)
+    bienestar.ts                 → temas + fuentes + diseños + contenido de Bienestar (demo)
 ```
 
 ---
@@ -271,8 +273,7 @@ cliente que la excluya. Ver sección 9 antes de instanciar un cliente real.
 ### 🧩 Diseños por template (mismo contenido, distinta composición)
 Un template puede ofrecer varios **diseños**: layouts completos distintos que
 leen el mismo archivo de contenido, así un cliente carga sus datos una vez y
-elige el estilo. Hoy lo usan **Profesional**, **Comercio** y **Gastronomía** (3
-diseños cada uno); la idea es sumarlo a Bienestar.
+elige el estilo. Lo usan los 4 templates (3 diseños cada uno).
 
 - [`design.ts`](components/templates/design.ts) — tipo `TemplateDesign`
   (`id`, `name`, `theme` y `font` con los que arranca) y `resolveDesign()`.
@@ -311,7 +312,7 @@ cada template define 3 **primarios** (`<template>Primaries`, tipo
 `TemplatePrimary` en `theme.ts`): la base de su identidad como par **fondo +
 tinta**. Lo que se ve cambiar es el fondo: claro en Profesional (Blanco, Marfil,
 Pizarra) y Comercio (Crema, Rubor, Salvia), oscuro y claro en Gastronomía (Carbón, Chocolate,
-Papel) y oscuro en Bienestar (Negro, Medianoche, Ciruela). Cualquier primario combina
+Papel) y Bienestar (Negro, Medianoche, Niebla). Cualquier primario combina
 con cualquier acento (9 mezclas). Las paletas son **propias de cada template** y
 las comparten los diseños de un mismo template.
 
@@ -452,34 +453,31 @@ original, apenas refinado en Stitch; el 2 y el 3 salieron de variantes de Stitch
 
 Rubro: **gimnasios, estudios de entrenamiento, nutricionistas, coaches**.
 Cliente demo: **"Núcleo Training Club"** — estudio boutique de entrenamiento
-funcional en Palermo, CABA. Inspirado en sitios reales de gimnasios (ej.
-onfit.com.ar): estadísticas dinámicas, catálogo de clases con intensidad,
-horarios y planes.
+funcional en Palermo, CABA.
 
-- **Estilo:** cuarto lenguaje visual del proyecto, deliberadamente **bold y
-  atlético** — nada que ver con los otros tres. Negro puro (`#0A0A0A`) +
-  acento neón usado como **fondo sólido** de botones (lo opuesto a
-  Gastronomía), tipografía en mayúsculas con tracking apretado, y bloques
-  angulares con `clip-path` (cortes en diagonal en botones, tarjetas y
-  badges) en vez de bordes redondeados o hairlines.
-- **Tipografía por defecto:** Space Grotesk (técnica/bold) — reordenada en
-  `bienestarFonts`, igual mecanismo que `gastronomiaFonts`.
-- **Contenido:** [`lib/templates/bienestar.ts`](lib/templates/bienestar.ts).
-- **Secciones** ([`components/templates/bienestar/`](components/templates/bienestar/)):
-  - Nav — CTA en botón sólido con corner-cut.
-  - Hero — título gigante en mayúsculas + bloque de acento angular
-    decorativo de fondo + **stats animados** (`Counter.tsx`, cuentan desde 0
-    al montar, respeta `prefers-reduced-motion`).
-  - **Clases** — grid de modalidades con badge de intensidad (Alta/Media/Baja,
-    codificado por color). Editable 100% desde `bienestar.ts` (`clases.items`).
-  - **Horarios** — grilla semanal (día × franjas horarias), la única sección
-    de este tipo en todo el proyecto; contenido en `horarios.days`.
-  - **Coaches** — grid de entrenadores con iniciales en badge angular.
-  - **Planes** — pricing de 3 planes, la tarjeta destacada (`featured`) usa
-    fondo sólido de acento + corner-cut; mismo patrón conceptual que la
-    sección Precios de la landing de Mostrate pero con esta estética.
-  - Contacto (orientado a "clase de prueba gratis") · Footer.
-- **Temas:** Lima · Naranja · Cian (paleta neón, energía de gimnasio).
+Desde el 2026-09-26 tiene **3 diseños** sobre el mismo contenido. El 1 es el
+original, refinado en Stitch; el 2 y el 3 salieron de variantes de Stitch:
+
+| Diseño | Carácter | Tema / primario / fuente iniciales |
+|---|---|---|
+| 1 · Núcleo | Negro + neón, mayúsculas bold, bloques cortados en diagonal (`clip-path`), stats animados en franja con barra de acento, clases con duración y cupo, horarios con intensidad | Lima · Negro · Space Grotesk |
+| 2 · Calma | Estudio boutique luminoso: fondo claro, formas redondeadas, fotos con luz natural, "Tu primera vez en Núcleo" en 3 pasos, coaches con iniciales | Lima · Niebla · DM Sans |
+| 3 · Deportivo | Revista de marca deportiva: condensada en itálica, fotografía de acción, clases en lista numerada junto a una foto, retratos de coaches | Naranja · Medianoche · Barlow Condensed |
+
+- **Contenido:** [`lib/templates/bienestar.ts`](lib/templates/bienestar.ts)
+  (clases con intensidad, duración y cupo; horarios; coaches con foto;
+  "primera vez"; planes; sede del contacto; fotos).
+- **Stats animados:** `Counter.tsx` (cuentan desde 0 al montar, respeta
+  `prefers-reduced-motion`), usados por los 3 diseños.
+- **Formulario:** abre el mail con los datos para coordinar la clase de
+  prueba (`usePrueba()` en
+  [`shared.tsx`](components/templates/bienestar/shared.tsx)); la intensidad
+  de cada franja horaria sale de `clases.items` (`intensidadDe()`).
+- **Fotos:** `public/templates/bienestar/` (estudio, grupo, acción, boxeo y
+  retratos de coaches; generadas por Stitch, provisorias hasta tener fotos reales).
+- **Primarios:** Negro · Medianoche (oscuros) · Niebla (claro, para Calma;
+  reemplaza Ciruela). **Temas:** Lima · Naranja · Cian. **Fuentes:** Space
+  Grotesk, DM Sans, Barlow Condensed, Syne (`bienestarFonts`).
 
 ---
 
@@ -631,6 +629,12 @@ constituyen una integración operativa mientras no se configure el número.
   3 primarios propios por template (`<slug>Primaries`, fondo + tinta), variables `--primary*`/`--ink*` y
   la barra de demo con "Primario" y "Secundario". Fondos y tinta fijos de cada template pasaron
   a variables.
+- **2026-09-26** — Template **Bienestar** con 3 diseños (Núcleo, Calma,
+  Deportivo). El diseño 1 sumó franja de stats, duración y cupo por clase,
+  horarios con intensidad y sede en contacto. Lógica común en
+  `bienestar/shared.tsx`, primario claro Niebla (reemplaza Ciruela), fuentes
+  DM Sans y Barlow Condensed, fotos del estudio y de los coaches. Tintas y
+  bordes fijos de Bienestar pasados a `--ink*`.
 - **2026-09-26** — Template **Gastronomía** con 3 diseños (Carta, Bodegón,
   Taberna). El diseño 1 sumó foto del salón, destacados numerados, carta con
   "Todos" y modalidades en módulos. Lógica común en `gastronomia/shared.tsx`,

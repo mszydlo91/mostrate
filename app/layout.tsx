@@ -12,6 +12,8 @@ import {
   Bricolage_Grotesque,
   Cormorant_Garamond,
   Oswald,
+  DM_Sans,
+  Barlow_Condensed,
 } from "next/font/google";
 import { site } from "@/lib/config";
 import "./globals.css";
@@ -109,6 +111,22 @@ const oswald = Oswald({
   display: "swap",
 });
 
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-dmsans",
+  display: "swap",
+});
+
+const barlow = Barlow_Condensed({
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  style: ["normal", "italic"],
+  variable: "--font-barlow",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: `${site.name} — Presencia digital para tu negocio`,
   description: site.description,
@@ -128,7 +146,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${syne.variable} ${inter.variable} ${instrument.variable} ${playfair.variable} ${spaceGrotesk.variable} ${poppins.variable} ${newsreader.variable} ${jakarta.variable} ${jetbrains.variable} ${bricolage.variable} ${cormorant.variable} ${oswald.variable}`}
+      className={`${syne.variable} ${inter.variable} ${instrument.variable} ${playfair.variable} ${spaceGrotesk.variable} ${poppins.variable} ${newsreader.variable} ${jakarta.variable} ${jetbrains.variable} ${bricolage.variable} ${cormorant.variable} ${oswald.variable} ${dmSans.variable} ${barlow.variable}`}
     >
       <body>{children}</body>
     </html>

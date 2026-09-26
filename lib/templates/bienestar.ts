@@ -15,20 +15,28 @@
  */
 import type { TemplatePrimary, TemplateTheme } from "@/components/templates/theme";
 import type { TemplateFont } from "@/components/templates/font";
+import type { TemplateDesign } from "@/components/templates/design";
 
-/** Space Grotesk (técnica/bold) primero — es la que mejor transmite "gym". */
+/* ── Tipografías de títulos para el selector ── */
 export const bienestarFonts: TemplateFont[] = [
   { id: "space-grotesk", name: "Space Grotesk — técnica", heading: "var(--font-space-grotesk)" },
-  { id: "poppins", name: "Poppins — amigable", heading: "var(--font-poppins)" },
+  { id: "dmsans", name: "DM Sans — calma", heading: "var(--font-dmsans)" },
+  { id: "barlow", name: "Barlow Condensed — deportiva", heading: "var(--font-barlow)" },
   { id: "syne", name: "Syne — geométrica", heading: "var(--font-syne)" },
-  { id: "playfair", name: "Playfair — editorial", heading: "var(--font-playfair)" },
 ];
 
-/* ── Colores primarios (fondo oscuro + texto claro); se combinan con los temas de acento ── */
+/* ── Diseños disponibles (mismo contenido, distinta composición) ── */
+export const bienestarDesigns: TemplateDesign[] = [
+  { id: "1", name: "Núcleo", theme: "lima", primary: "negro", font: "space-grotesk" },
+  { id: "2", name: "Calma", theme: "lima", primary: "niebla", font: "dmsans" },
+  { id: "3", name: "Deportivo", theme: "naranja", primary: "medianoche", font: "barlow" },
+];
+
+/* ── Colores primarios (fondo + tinta): dos oscuros y uno claro; se combinan con los temas de acento ── */
 export const bienestarPrimaries: TemplatePrimary[] = [
   { id: "negro", name: "Negro", color: "#0A0A0A", ink: "#F5F5F5" },
   { id: "medianoche", name: "Medianoche", color: "#0B1226", ink: "#F5F5F5" },
-  { id: "ciruela", name: "Ciruela", color: "#1C0F26", ink: "#F5F5F5" },
+  { id: "niebla", name: "Niebla", color: "#F1F2EC", ink: "#1B1D18" },
 ];
 
 /* ── Temas de color (neón, energía de gimnasio) ── */
@@ -72,6 +80,13 @@ export const bienestar = {
     cta: { label: "Clase de prueba", href: "#contacto" },
   },
 
+  /** Fotos que usan los diseños 2 y 3 (generadas por Stitch). */
+  fotos: {
+    estudio: { src: "/templates/bienestar/estudio.jpg", alt: "Estudio luminoso con una alumna estirando sobre la colchoneta" },
+    grupo: { src: "/templates/bienestar/grupo.jpg", alt: "Grupo entrenando funcional en el estudio" },
+    boxeo: { src: "/templates/bienestar/boxeo.jpg", alt: "Boxeador golpeando la bolsa con polvo de magnesio en el aire" },
+  },
+
   hero: {
     eyebrow: "Entrenamiento funcional · Palermo, CABA",
     title: {
@@ -96,12 +111,12 @@ export const bienestar = {
     title: "Elegí tu forma de entrenar",
     subtitle: "Todas las clases están incluidas en cualquier plan — probá las que quieras.",
     items: [
-      { name: "Funcional", intensidad: "Alta", desc: "Circuitos de fuerza y resistencia con implementos." },
-      { name: "Cross Training", intensidad: "Alta", desc: "Entrenamiento variado de alta intensidad." },
-      { name: "Boxeo", intensidad: "Alta", desc: "Técnica de boxeo más acondicionamiento físico." },
-      { name: "Spinning", intensidad: "Media", desc: "Cardio en bici fija al ritmo de la música." },
-      { name: "Pilates", intensidad: "Baja", desc: "Control, postura y fortalecimiento del core." },
-      { name: "Yoga", intensidad: "Baja", desc: "Movilidad, respiración y recuperación activa." },
+      { name: "Funcional", intensidad: "Alta", desc: "Circuitos de fuerza y resistencia con implementos.", duracion: "50 min", cupo: "16" },
+      { name: "Cross Training", intensidad: "Alta", desc: "Entrenamiento variado de alta intensidad.", duracion: "60 min", cupo: "14" },
+      { name: "Boxeo", intensidad: "Alta", desc: "Técnica de boxeo más acondicionamiento físico.", duracion: "55 min", cupo: "12" },
+      { name: "Spinning", intensidad: "Media", desc: "Cardio en bici fija al ritmo de la música.", duracion: "45 min", cupo: "20" },
+      { name: "Pilates", intensidad: "Baja", desc: "Control, postura y fortalecimiento del core.", duracion: "50 min", cupo: "10" },
+      { name: "Yoga", intensidad: "Baja", desc: "Movilidad, respiración y recuperación activa.", duracion: "60 min", cupo: "15" },
     ],
   },
 
@@ -124,10 +139,20 @@ export const bienestar = {
     label: "Coaches",
     title: "El equipo que te acompaña",
     items: [
-      { name: "Fede Aranda", specialty: "Funcional y fuerza", initials: "FA" },
-      { name: "Kari Suárez", specialty: "Yoga y movilidad", initials: "KS" },
-      { name: "Nico Paz", specialty: "Boxeo y HIIT", initials: "NP" },
-      { name: "Sole Duarte", specialty: "Nutrición deportiva", initials: "SD" },
+      { name: "Fede Aranda", specialty: "Funcional y fuerza", initials: "FA", photo: "/templates/bienestar/coach-fa.jpg" },
+      { name: "Kari Suárez", specialty: "Yoga y movilidad", initials: "KS", photo: "/templates/bienestar/coach-ks.jpg" },
+      { name: "Nico Paz", specialty: "Boxeo y HIIT", initials: "NP", photo: "/templates/bienestar/coach-np.jpg" },
+      { name: "Sole Duarte", specialty: "Nutrición deportiva", initials: "SD", photo: "/templates/bienestar/coach-sd.jpg" },
+    ],
+  },
+
+  primeraVez: {
+    label: "Sin complicaciones",
+    title: "Tu primera vez en Núcleo",
+    steps: [
+      { title: "Elegí clase y horario", desc: "Mirá la grilla y elegí la disciplina que más te tiente." },
+      { title: "Completá el formulario", desc: "Te escribimos para confirmar el día y resolver dudas." },
+      { title: "Vení 10 minutos antes", desc: "Te prestamos lo que haga falta y te mostramos el club." },
     ],
   },
 
@@ -166,6 +191,10 @@ export const bienestar = {
     subtitle: "Dejanos tus datos y te contactamos para coordinar tu primera clase, sin cargo.",
     email: "hola@nucleotraining.com.ar",
     phone: "+54 9 11 3333-2222",
+    sede: {
+      address: "Gorriti 5480, Palermo Soho, CABA",
+      hours: "Lunes a viernes 06:30 a 21:30 · Sábados 09:00 a 14:00",
+    },
     form: {
       name: { label: "Nombre", placeholder: "Tu nombre" },
       email: { label: "Email", placeholder: "tucorreo@ejemplo.com" },

@@ -1,35 +1,46 @@
 import type { Metadata } from "next";
 import ThemeProvider from "@/components/templates/ThemeProvider";
-import { bienestarPrimaries, bienestarThemes, bienestarFonts, bienestar } from "@/lib/templates/bienestar";
-import Nav from "@/components/templates/bienestar/Nav";
-import Hero from "@/components/templates/bienestar/Hero";
-import Clases from "@/components/templates/bienestar/Clases";
-import Horarios from "@/components/templates/bienestar/Horarios";
-import Coaches from "@/components/templates/bienestar/Coaches";
-import Planes from "@/components/templates/bienestar/Planes";
-import Contacto from "@/components/templates/bienestar/Contacto";
-import Footer from "@/components/templates/bienestar/Footer";
+import { resolveDesign } from "@/components/templates/design";
+import {
+  bienestar,
+  bienestarDesigns,
+  bienestarFonts,
+  bienestarPrimaries,
+  bienestarThemes,
+} from "@/lib/templates/bienestar";
+import DisenoNucleo from "@/components/templates/bienestar/DisenoNucleo";
+import DisenoCalma from "@/components/templates/bienestar/DisenoCalma";
+import DisenoDeportivo from "@/components/templates/bienestar/DisenoDeportivo";
 
 export const metadata: Metadata = {
   title: `${bienestar.business.name} — ${bienestar.footer.tagline}`,
   description: bienestar.hero.subtitle,
 };
 
-export default function BienestarTemplatePage() {
+// Cada diseño lee el mismo contenido (lib/templates/bienestar.ts).
+const designComponents = {
+  "1": DisenoNucleo,
+  "2": DisenoCalma,
+  "3": DisenoDeportivo,
+} as const;
+
+export default function BienestarTemplatePage({
+  searchParams,
+}: {
+  searchParams: { diseno?: string | string[] };
+}) {
+  const design = resolveDesign(bienestarDesigns, searchParams.diseno);
+  const Design = designComponents[design.id as keyof typeof designComponents];
   return (
-    <ThemeProvider primaries={bienestarPrimaries} themes={bienestarThemes} fonts={bienestarFonts}>
-      <div className="min-h-screen bg-[var(--primary)] font-inter text-[#F5F5F5]">
-        <Nav />
-        <main>
-          <Hero />
-          <Clases />
-          <Horarios />
-          <Coaches />
-          <Planes />
-        </main>
-        <Contacto />
-        <Footer />
-      </div>
+    <ThemeProvider
+      key={design.id}
+      primaries={bienestarPrimaries}
+      themes={bienestarThemes}
+      fonts={bienestarFonts}
+      designs={bienestarDesigns}
+      design={design}
+    >
+      <Design />
     </ThemeProvider>
   );
 }
