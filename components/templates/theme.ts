@@ -29,3 +29,33 @@ export function themeVars(theme: TemplateTheme): React.CSSProperties {
     ["--accent-contrast" as string]: theme.accentContrast,
   };
 }
+
+/**
+ * Color primario: el tono base de la identidad del template (la "tinta" en
+ * templates claros, el fondo en templates oscuros). Se combina libremente con
+ * los temas de acento (secundario): cada template define 3 primarios pensados
+ * para ir bien con sus 3 acentos.
+ */
+export type TemplatePrimary = {
+  id: string;
+  /** Nombre visible en la barra de demo */
+  name: string;
+  /** Color base (hex) */
+  color: string;
+};
+
+/** Transparencias disponibles como `var(--primary-a<N>)`. */
+export const PRIMARY_ALPHAS = [5, 10, 20, 40, 50, 60, 70, 80, 90] as const;
+
+/**
+ * Convierte un primario en variables CSS: `--primary` y sus versiones con
+ * transparencia (`--primary-a70`, etc.), porque Tailwind no puede aplicar
+ * `/70` sobre un color que viene de una variable.
+ */
+export function primaryVars(primary: TemplatePrimary): React.CSSProperties {
+  const vars: Record<string, string> = { "--primary": primary.color };
+  for (const a of PRIMARY_ALPHAS) {
+    vars[`--primary-a${a}`] = `color-mix(in srgb, ${primary.color} ${a}%, transparent)`;
+  }
+  return vars as React.CSSProperties;
+}

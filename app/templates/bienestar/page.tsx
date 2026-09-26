@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import ThemeProvider from "@/components/templates/ThemeProvider";
-import { bienestarThemes, bienestarFonts, bienestar } from "@/lib/templates/bienestar";
+import { bienestarPrimaries, bienestarThemes, bienestarFonts, bienestar } from "@/lib/templates/bienestar";
 import Nav from "@/components/templates/bienestar/Nav";
 import Hero from "@/components/templates/bienestar/Hero";
 import Clases from "@/components/templates/bienestar/Clases";
@@ -17,8 +17,8 @@ export const metadata: Metadata = {
 
 export default function BienestarTemplatePage() {
   return (
-    <ThemeProvider themes={bienestarThemes} fonts={bienestarFonts}>
-      <div className="min-h-screen bg-[#0A0A0A] font-inter text-[#F5F5F5]">
+    <ThemeProvider primaries={bienestarPrimaries} themes={bienestarThemes} fonts={bienestarFonts}>
+      <div className="min-h-screen bg-[var(--primary)] font-inter text-[#F5F5F5]">
         <Nav />
         <main>
           <Hero />

@@ -11,7 +11,7 @@ export default function Categorias() {
             <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--accent)]">
               {categorias.label}
             </span>
-            <h2 className="mt-2 font-[family-name:var(--tpl-font-heading)] text-[clamp(1.6rem,2.6vw,2.2rem)] font-bold tracking-[-0.02em] text-[#2A211A]">
+            <h2 className="mt-2 font-[family-name:var(--tpl-font-heading)] text-[clamp(1.6rem,2.6vw,2.2rem)] font-bold tracking-[-0.02em] text-[var(--primary)]">
               {categorias.title}
             </h2>
           </div>
@@ -27,7 +27,7 @@ export default function Categorias() {
               <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--accent-soft)] text-2xl transition-transform group-hover:scale-110">
                 {cat.emoji}
               </span>
-              <span className="text-sm font-semibold text-[#2A211A]">
+              <span className="text-sm font-semibold text-[var(--primary)]">
                 {cat.name}
               </span>
             </a>

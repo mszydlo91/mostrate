@@ -12,7 +12,7 @@ export default function Productos() {
           <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--accent)]">
             {productos.label}
           </span>
-          <h2 className="mt-2 font-[family-name:var(--tpl-font-heading)] text-[clamp(1.8rem,3vw,2.6rem)] font-bold tracking-[-0.02em] text-[#2A211A]">
+          <h2 className="mt-2 font-[family-name:var(--tpl-font-heading)] text-[clamp(1.8rem,3vw,2.6rem)] font-bold tracking-[-0.02em] text-[var(--primary)]">
             {productos.title}
           </h2>
           <p className="mt-3 text-[clamp(0.95rem,1.2vw,1.05rem)] text-[#6E6152]">
@@ -43,7 +43,7 @@ export default function Productos() {
 
               {/* Info */}
               <div className="p-5">
-                <h3 className="font-[family-name:var(--tpl-font-heading)] text-base font-bold leading-snug text-[#2A211A]">
+                <h3 className="font-[family-name:var(--tpl-font-heading)] text-base font-bold leading-snug text-[var(--primary)]">
                   {prod.name}
                 </h3>
                 <div className="mt-3 flex items-center justify-between">
@@ -54,7 +54,7 @@ export default function Productos() {
                     href={waHref}
                     target={whatsapp.number ? "_blank" : undefined}
                     rel="noopener noreferrer"
-                    className="rounded-full border border-[#E7DECF] px-4 py-2 text-xs font-semibold text-[#2A211A] transition-colors hover:border-[var(--accent)] hover:bg-[var(--accent-soft)] hover:text-[var(--accent)]"
+                    className="rounded-full border border-[#E7DECF] px-4 py-2 text-xs font-semibold text-[var(--primary)] transition-colors hover:border-[var(--accent)] hover:bg-[var(--accent-soft)] hover:text-[var(--accent)]"
                   >
                     Consultar
                   </a>

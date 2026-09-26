@@ -5,7 +5,7 @@ const { hero } = bienestar;
 
 export default function Hero() {
   return (
-    <section id="top" className="relative overflow-hidden bg-[#0A0A0A]">
+    <section id="top" className="relative overflow-hidden bg-[var(--primary)]">
       {/* Bloque angular de acento, decorativo */}
       <div
         aria-hidden

@@ -5,6 +5,7 @@ import {
   profesional,
   profesionalDesigns,
   profesionalFonts,
+  profesionalPrimaries,
   profesionalThemes,
 } from "@/lib/templates/profesional";
 import DisenoClasico from "@/components/templates/profesional/DisenoClasico";
@@ -34,6 +35,7 @@ export default function ProfesionalTemplatePage({
   return (
     <ThemeProvider
       key={design.id}
+      primaries={profesionalPrimaries}
       themes={profesionalThemes}
       fonts={profesionalFonts}
       designs={profesionalDesigns}
