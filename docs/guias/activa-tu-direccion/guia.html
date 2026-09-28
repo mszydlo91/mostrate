@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Activá la dirección de tu página — Mostrate</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=block" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 18mm 18mm 16mm; }
+  :root {
+    --ink: #0F1117;
+    --muted: #5B5E68;
+    --line: #E4E2DC;
+    --paper: #FFFFFF;
+    --soft: #F6F5F1;
+    --accent: #4F7FFF;
+    --accent-dim: #EDF2FF;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--paper); color: var(--ink); }
+  body { font-family: Inter, sans-serif; font-size: 10.5pt; line-height: 1.55;
+         -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  b, strong { font-weight: 600; }
+  a { color: var(--accent); text-decoration: none; font-weight: 600; }
+
+  .brand { display: flex; justify-content: space-between; align-items: baseline;
+           padding-bottom: 10pt; border-bottom: 1px solid var(--line); margin-bottom: 22pt; }
+  .logo { font-family: Syne, sans-serif; font-weight: 800; font-size: 17pt; letter-spacing: -0.03em; }
+  .logo span { color: var(--accent); }
+  .brand small { color: var(--muted); font-size: 8.5pt; }
+
+  h1 { font-family: Syne, sans-serif; font-weight: 700; font-size: 22pt; line-height: 1.15;
+       letter-spacing: -0.02em; margin: 0 0 12pt; }
+  h1 em { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; color: var(--accent); letter-spacing: 0; }
+  .lead { font-size: 11.5pt; margin: 0 0 12pt; }
+  .promise { background: var(--accent-dim); border-left: 3px solid var(--accent);
+             padding: 9pt 12pt; border-radius: 0 8px 8px 0; margin: 0 0 16pt; font-weight: 500; }
+
+  h2 { font-family: Syne, sans-serif; font-weight: 700; font-size: 13pt; letter-spacing: -0.01em; margin: 0 0 8pt; }
+
+  .prep { border: 1px solid var(--line); border-radius: 12px; padding: 14pt 16pt; margin-bottom: 14pt; break-inside: avoid; }
+  .prep ul { margin: 0 0 10pt; padding-left: 16pt; }
+  .prep li { margin: 2pt 0; }
+  .code { display: flex; align-items: center; justify-content: space-between;
+          background: var(--ink); color: #F0EEE9; border-radius: 8px; padding: 10pt 14pt; margin: 4pt 0 10pt; }
+  .code b { font-family: Syne, sans-serif; font-weight: 700; font-size: 15pt; letter-spacing: 0.04em; }
+  .code small { color: rgba(240,238,233,.6); font-size: 8.5pt; }
+  .note { color: var(--muted); margin: 0; }
+
+  .step { display: grid; grid-template-columns: 30pt 1fr; gap: 0 10pt; padding: 11pt 0;
+          border-top: 1px solid var(--line); break-inside: avoid; }
+  .num { width: 24pt; height: 24pt; border-radius: 50%; background: var(--accent); color: #fff;
+         font-family: Syne, sans-serif; font-weight: 700; font-size: 11pt;
+         display: flex; align-items: center; justify-content: center; }
+  .step h2 { margin-top: 2pt; }
+  .step h2 small { font-family: Inter, sans-serif; font-weight: 500; font-size: 8.5pt; color: var(--muted);
+                   display: block; letter-spacing: 0; margin-bottom: 1pt; text-transform: uppercase; }
+  .step p, .step ol { margin: 0 0 6pt; }
+  .step ol { padding-left: 16pt; }
+  figure { margin: 8pt 0 0; border: 1px solid var(--line); border-radius: 10px; background: var(--soft);
+           padding: 6pt; }
+  figure img { display: block; max-width: 100%; max-height: 50mm; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #fff; }
+  figure.tall img { max-height: 72mm; }
+  figcaption { font-size: 8pt; color: var(--muted); padding: 5pt 2pt 0; }
+
+  .done { background: var(--ink); color: #F0EEE9; border-radius: 12px; padding: 13pt 18pt; margin: 6pt 0 14pt; break-inside: avoid; }
+  .done h2 { font-size: 16pt; color: #fff; }
+  .done h2 span { color: var(--accent); }
+  .done p { margin: 0 0 6pt; }
+  .done p:last-child { margin: 0; color: rgba(240,238,233,.7); }
+
+  .help { break-inside: avoid; }
+  .help ul { list-style: none; padding: 0; margin: 8pt 0 0; }
+  .help li { border: 1px solid var(--line); border-radius: 8px; padding: 6pt 12pt; margin-bottom: 5pt; }
+  .help li .q { display: block; font-weight: 600; }
+  .credit { margin-top: 8pt; font-size: 7.5pt; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="brand">
+  <div class="logo">mos<span>trate</span></div>
+  <small>Cómo autorizar a Mostrate a gestionar tu dominio</small>
+</div>
+
+<h1>Activá la dirección de tu página en <em>5 minutos</em></h1>
+<p class="lead">Para que tu página tenga su dirección propia (por ejemplo <b>tunegocio.com.ar</b>), necesitamos que nos des permiso una sola vez. Son 7 pasos cortos y después no tenés que hacer nada más.</p>
+<p class="promise">La dirección queda a tu nombre. Tu clave no se la pasás a nadie: la escribís vos.</p>
+
+<section class="prep">
+  <h2>Antes de empezar, tené a mano</h2>
+  <ul>
+    <li>Tu <b>CUIT</b> (el número que usás para el monotributo o para facturar).</li>
+    <li>Tu <b>clave fiscal</b> (la de ARCA, ex AFIP).</li>
+    <li>Este número, que lo vas a copiar en el paso 4:</li>
+  </ul>
+  <div class="code"><b>20-36319384-7</b><small>CUIT de Mostrate</small></div>
+  <p class="note">Si preferís no hacerlo solo, escribinos y lo hacemos juntos por videollamada.</p>
+</section>
+
+<section class="step">
+  <div class="num">1</div>
+  <div>
+    <h2><small>Paso 1 de 7</small>Abrí la página</h2>
+    <p>Tocá este link: <a href="https://nic.ar/ingreso">nic.ar/ingreso</a></p>
+    <p>Tocá el botón <b>N° de CUIT/CUIL y Clave Fiscal</b>.</p>
+    <figure><img src="nic/Apoder-PH-a-PH-2-22025_0.png" alt=""><figcaption>Así se ve en NIC Argentina</figcaption></figure>
+  </div>
+</section>
+
+<section class="step">
+  <div class="num">2</div>
+  <div>
+    <h2><small>Paso 2 de 7</small>Entrá con tu clave</h2>
+    <p>Escribí tu CUIT y tu clave fiscal, igual que cuando entrás a ARCA.</p>
+  </div>
+</section>
+
+<section class="step">
+  <div class="num">3</div>
+  <div>
+    <h2><small>Paso 3 de 7</small>Tocá “Apoderados”</h2>
+    <p>Está en el menú de arriba.</p>
+    <figure><img src="nic/Apoder-PH-a-PH-3.png" alt=""><figcaption>Así se ve en NIC Argentina</figcaption></figure>
+  </div>
+</section>
+
+<section class="step">
+  <div class="num">4</div>
+  <div>
+    <h2><small>Paso 4 de 7</small>Pegá nuestro número</h2>
+    <p>En el buscador que dice <b>Apoderados por mí</b>, pegá el número del principio (<b style="white-space:nowrap">20-36319384-7</b>) y tocá la <b>lupa</b>.</p>
+    <figure><img src="nic/Apoder-PH-a-PH-4.png" alt=""><figcaption>Así se ve en NIC Argentina</figcaption></figure>
+  </div>
+</section>
+
+<section class="step">
+  <div class="num">5</div>
+  <div>
+    <h2><small>Paso 5 de 7</small>Tocá “Agregar”</h2>
+    <p>Va a aparecer el nombre <b>Marcos David Szydlo</b>. Tocá <b>Agregar</b>.</p>
+    <figure><img src="nic/Apoder-PH-a-PH-5.png" alt=""><figcaption>Así se ve en NIC Argentina (el nombre de la imagen es un ejemplo)</figcaption></figure>
+  </div>
+</section>
+
+<section class="step">
+  <div class="num">6</div>
+  <div>
+    <h2><small>Paso 6 de 7</small>Elegí “Selección de Trámites”</h2>
+    <ol>
+      <li>Tocá <b>Selección de Trámites</b>.</li>
+      <li>Tildá la casilla <b>Permitir la visualización de mis Notificaciones Externas</b>.</li>
+    </ol>
+    <p>Lo demás dejalo como está.</p>
+    <figure class="tall"><img src="nic/Apoder-PH-a-PH-8.png" alt=""><figcaption>Así se ve en NIC Argentina</figcaption></figure>
+  </div>
+</section>
+
+<section class="step">
+  <div class="num">7</div>
+  <div>
+    <h2><small>Paso 7 de 7</small>Marcá los trámites y confirmá</h2>
+    <ol>
+      <li>En el buscador, escribí <b>NIC Argentina</b>.</li>
+      <li>Tildá <b>todos</b> los que aparecen.</li>
+      <li>Tocá <b>Confirmar</b>.</li>
+    </ol>
+    <figure class="tall"><img src="nic/Apoder-PH-a-PH-91.png" alt=""><figcaption>Así se ve en NIC Argentina</figcaption></figure>
+  </div>
+</section>
+
+<section class="done">
+  <h2>¡Listo<span>!</span></h2>
+  <p>Mandanos un WhatsApp y del resto nos ocupamos nosotros: registramos la dirección a tu nombre, la conectamos con tu página y la renovamos cada año.</p>
+  <p>El costo del dominio lo cobra NIC Argentina y lo incluimos en tu presupuesto.</p>
+</section>
+
+<section class="help">
+  <h2>¿Te trabaste?</h2>
+  <p>No pasa nada. Escribinos y lo terminamos juntos!</p>
+  <ul>
+    <li><span class="q">No me acuerdo la clave fiscal</span>Se recupera desde la app <b>Mi ARCA</b> en el celular. Si tenés contador, él te la puede dar.</li>
+    <li><span class="q">Me dice que la clave no tiene nivel suficiente</span>Avisanos y te decimos cómo subirlo.</li>
+    <li><span class="q">Quiero sacar el permiso más adelante</span>Se saca cuando quieras desde el mismo lugar. La dirección sigue siendo tuya.</li>
+  </ul>
+</section>
+
+<p class="credit">Capturas: NIC Argentina (licencia Creative Commons BY 2.5 AR).</p>
+
+</body>
+</html>

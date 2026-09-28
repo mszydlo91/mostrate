@@ -146,7 +146,28 @@ lib/
     comercio.ts                  → temas + fuentes + diseños + contenido de Comercio (demo)
     gastronomia.ts               → temas + fuentes + diseños + contenido de Gastronomía (demo)
     bienestar.ts                 → temas + fuentes + diseños + contenido de Bienestar (demo)
+
+docs/guias/                      → fuentes (HTML + imágenes) de las guías en PDF para clientes
+public/guias/                    → PDFs generados, servidos en /guias/<nombre>.pdf
 ```
+
+### Guías para clientes
+
+Cada guía vive en `docs/guias/<nombre>/guia.html`, con sus imágenes al lado, y
+se exporta a `public/guias/<nombre>.pdf` para mandarle el link al cliente. El
+PDF lleva las imágenes adentro, sin links externos. Para regenerarlo, con
+Chrome instalado (la página se pasa como URL `file:///` con ruta absoluta;
+con ruta relativa Chrome no la encuentra):
+
+```
+chrome --headless=new --no-pdf-header-footer --virtual-time-budget=15000 \
+  --print-to-pdf=public/guias/<nombre>.pdf \
+  "file:///<ruta-del-repo>/docs/guias/<nombre>/guia.html"
+```
+
+- `activa-tu-direccion` → cómo autorizar a Mostrate como apoderado en NIC
+  Argentina para registrar y gestionar el dominio del cliente. Capturas de NIC
+  Argentina (CC BY 2.5 AR).
 
 ---
 
@@ -680,6 +701,9 @@ constituyen una integración operativa mientras no se configure el número.
   `templates.cta`, `contacto.infoLabels` y `precios.note` (pregunta + link),
   y los íconos de servicios pasaron de emoji a claves. `ThemeProvider` oculta
   los controles de demo cuando está embebido.
+- **2026-09-27** — Guía para clientes **Activá la dirección de tu página**
+  (apoderamiento en NIC Argentina) con la marca de Mostrate y las capturas
+  dentro del PDF. Fuente en `docs/guias/`, PDF en `public/guias/`.
 
 ---
 
