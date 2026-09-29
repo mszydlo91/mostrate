@@ -1,134 +1,174 @@
 import type { Metadata } from "next";
-import {
-  Syne,
-  Inter,
-  Instrument_Serif,
-  Playfair_Display,
-  Space_Grotesk,
-  Poppins,
-  Plus_Jakarta_Sans,
-  JetBrains_Mono,
-  Bricolage_Grotesque,
-  Cormorant_Garamond,
-  Oswald,
-  DM_Sans,
-  Barlow_Condensed,
-} from "next/font/google";
 import localFont from "next/font/local";
 import { site } from "@/lib/config";
 import "./globals.css";
 
-const syne = Syne({
-  subsets: ["latin"],
-  weight: ["400", "600", "700", "800"],
+// Todas las fuentes se sirven desde app/fonts/ (woff2 de Google Fonts, subset
+// latin) en vez de next/font/google: Google a veces responde con URLs sin
+// extensión y el loader de next/font/google rompe el build de forma
+// intermitente (ver DOCS.md, sección 2). Cada entrada de `src` replica una
+// cara del CSS de Google: mismos pesos y estilos, aunque el archivo sea variable.
+
+const syne = localFont({
+  src: [
+    { path: "./fonts/syne-latin.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/syne-latin.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/syne-latin.woff2", weight: "700", style: "normal" },
+    { path: "./fonts/syne-latin.woff2", weight: "800", style: "normal" },
+  ],
   variable: "--font-syne",
   display: "swap",
 });
 
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+const inter = localFont({
+  src: [
+    { path: "./fonts/inter-latin.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/inter-latin.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/inter-latin.woff2", weight: "600", style: "normal" },
+  ],
   variable: "--font-inter",
   display: "swap",
 });
 
 // Serif itálica de acento de la landing (palabras destacadas en títulos).
-const instrument = Instrument_Serif({
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
+const instrument = localFont({
+  src: [
+    { path: "./fonts/instrument-serif-latin-400.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/instrument-serif-latin-italic-400.woff2", weight: "400", style: "italic" },
+  ],
   variable: "--font-instrument",
   display: "swap",
+  adjustFontFallback: "Times New Roman",
 });
 
 // Fuentes de título alternativas para el selector de tipografías de los
 // templates de clientes (ver components/templates/font.ts).
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["600", "700"],
+const playfair = localFont({
+  src: [
+    { path: "./fonts/playfair-display-latin.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/playfair-display-latin.woff2", weight: "700", style: "normal" },
+  ],
   variable: "--font-playfair",
   display: "swap",
+  adjustFontFallback: "Times New Roman",
 });
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["500", "700"],
+const spaceGrotesk = localFont({
+  src: [
+    { path: "./fonts/space-grotesk-latin.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/space-grotesk-latin.woff2", weight: "700", style: "normal" },
+  ],
   variable: "--font-space-grotesk",
   display: "swap",
 });
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["600", "700"],
+const poppins = localFont({
+  src: [
+    { path: "./fonts/poppins-latin-600.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/poppins-latin-700.woff2", weight: "700", style: "normal" },
+  ],
   variable: "--font-poppins",
   display: "swap",
 });
 
 // Fuentes del template Profesional (sus 3 diseños): serif editorial,
 // sans de texto y mono para los rótulos del diseño "Técnico".
-// Newsreader se sirve desde el repo (woff2 variable del subset latin, tal como
-// lo entrega Google Fonts v26): Google a veces responde con URLs sin extensión
-// para esta fuente y next/font/google rompe el build (ver DOCS.md).
 const newsreader = localFont({
   src: [
-    { path: "./fonts/newsreader-latin.woff2", style: "normal" },
-    { path: "./fonts/newsreader-latin-italic.woff2", style: "italic" },
+    { path: "./fonts/newsreader-latin.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/newsreader-latin.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/newsreader-latin.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/newsreader-latin-italic.woff2", weight: "400", style: "italic" },
+    { path: "./fonts/newsreader-latin-italic.woff2", weight: "500", style: "italic" },
+    { path: "./fonts/newsreader-latin-italic.woff2", weight: "600", style: "italic" },
   ],
-  weight: "400 600",
   variable: "--font-newsreader",
   display: "swap",
   adjustFontFallback: "Times New Roman",
 });
 
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+const jakarta = localFont({
+  src: [
+    { path: "./fonts/plus-jakarta-sans-latin.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/plus-jakarta-sans-latin.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/plus-jakarta-sans-latin.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/plus-jakarta-sans-latin.woff2", weight: "700", style: "normal" },
+  ],
   variable: "--font-jakarta",
   display: "swap",
 });
 
-const jetbrains = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+const jetbrains = localFont({
+  src: [
+    { path: "./fonts/jetbrains-mono-latin.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/jetbrains-mono-latin.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/jetbrains-mono-latin.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/jetbrains-mono-latin.woff2", weight: "700", style: "normal" },
+  ],
   variable: "--font-jetbrains",
   display: "swap",
 });
 
 // Fuentes del template Comercio: grotesca "pop" y serif de galería.
-const bricolage = Bricolage_Grotesque({
-  subsets: ["latin"],
-  weight: ["500", "700", "800"],
+const bricolage = localFont({
+  src: [
+    { path: "./fonts/bricolage-grotesque-latin.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/bricolage-grotesque-latin.woff2", weight: "700", style: "normal" },
+    { path: "./fonts/bricolage-grotesque-latin.woff2", weight: "800", style: "normal" },
+  ],
   variable: "--font-bricolage",
   display: "swap",
 });
 
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
+const cormorant = localFont({
+  src: [
+    { path: "./fonts/cormorant-garamond-latin.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/cormorant-garamond-latin.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/cormorant-garamond-latin.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/cormorant-garamond-latin-italic.woff2", weight: "400", style: "italic" },
+    { path: "./fonts/cormorant-garamond-latin-italic.woff2", weight: "500", style: "italic" },
+    { path: "./fonts/cormorant-garamond-latin-italic.woff2", weight: "600", style: "italic" },
+  ],
   variable: "--font-cormorant",
   display: "swap",
+  adjustFontFallback: "Times New Roman",
 });
 
-const oswald = Oswald({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+const oswald = localFont({
+  src: [
+    { path: "./fonts/oswald-latin.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/oswald-latin.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/oswald-latin.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/oswald-latin.woff2", weight: "700", style: "normal" },
+  ],
   variable: "--font-oswald",
   display: "swap",
 });
 
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "700"],
-  style: ["normal", "italic"],
+const dmSans = localFont({
+  src: [
+    { path: "./fonts/dm-sans-latin.woff2", weight: "300", style: "normal" },
+    { path: "./fonts/dm-sans-latin.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/dm-sans-latin.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/dm-sans-latin.woff2", weight: "700", style: "normal" },
+    { path: "./fonts/dm-sans-latin-italic.woff2", weight: "300", style: "italic" },
+    { path: "./fonts/dm-sans-latin-italic.woff2", weight: "400", style: "italic" },
+    { path: "./fonts/dm-sans-latin-italic.woff2", weight: "500", style: "italic" },
+    { path: "./fonts/dm-sans-latin-italic.woff2", weight: "700", style: "italic" },
+  ],
   variable: "--font-dmsans",
   display: "swap",
 });
 
-const barlow = Barlow_Condensed({
-  subsets: ["latin"],
-  weight: ["600", "700", "800"],
-  style: ["normal", "italic"],
+const barlow = localFont({
+  src: [
+    { path: "./fonts/barlow-condensed-latin-600.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/barlow-condensed-latin-700.woff2", weight: "700", style: "normal" },
+    { path: "./fonts/barlow-condensed-latin-800.woff2", weight: "800", style: "normal" },
+    { path: "./fonts/barlow-condensed-latin-italic-600.woff2", weight: "600", style: "italic" },
+    { path: "./fonts/barlow-condensed-latin-italic-700.woff2", weight: "700", style: "italic" },
+    { path: "./fonts/barlow-condensed-latin-italic-800.woff2", weight: "800", style: "italic" },
+  ],
   variable: "--font-barlow",
   display: "swap",
 });

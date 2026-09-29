@@ -31,7 +31,7 @@ Este repo contiene **dos cosas distintas**:
 | Framework | **Next.js 15** (App Router) + **React 19** |
 | Estilos | **Tailwind CSS** 3 |
 | Lenguaje | **TypeScript** (strict) |
-| Fuentes | **Syne** + **Inter** + **Instrument Serif** (itálica de acento) para la landing; títulos configurables en templates (sección 6), vía `next/font/google`, salvo **Newsreader**, que se sirve desde `app/fonts/` con `next/font/local` (ver abajo) |
+| Fuentes | **Syne** + **Inter** + **Instrument Serif** (itálica de acento) para la landing; títulos configurables en templates (sección 6). Todas alojadas en `app/fonts/` y cargadas con `next/font/local` (ver abajo) |
 | Testing | **Vitest** + **React Testing Library** (jsdom), alias `@/*` vía `vite-tsconfig-paths` |
 | Deploy | **Vercel** como destino documentado; estado remoto no verificado desde el repo |
 
@@ -75,14 +75,32 @@ parámetros con prefijo `_` se permiten sin usar). `next lint` queda deprecado
 en Next 16; al migrar, pasar al CLI de ESLint.
 No hay workflows de CI versionados actualmente.
 
-**Newsreader alojada en el repo.** Google Fonts a veces responde a Newsreader
-con URLs dinámicas sin extensión (`fonts.gstatic.com/l/font?kit=…`) y el loader
-de `next/font/google` falla con `TypeError: Cannot read properties of null
-(reading '1')`, de forma intermitente. Por eso `app/layout.tsx` la carga con
-`next/font/local` desde `app/fonts/` (woff2 variables de Google Fonts v26,
-subset latin, eje `wght`, normal e itálica). Glifos fuera del subset latin
-(p. ej. vietnamita o latin-ext como "ő") caen a la serif de respaldo. Para
-cambiar pesos o subsets hay que volver a bajar los archivos de Google.
+**Fuentes alojadas en el repo (no usar `next/font/google`).** Google Fonts a
+veces responde con URLs dinámicas sin extensión
+(`fonts.gstatic.com/l/font?kit=…`) y el loader de `next/font/google` falla con
+`TypeError: Cannot read properties of null (reading '1')`, de forma
+intermitente y con cualquier fuente (se vio con Newsreader y Space Grotesk; el
+loader sigue igual en Next 15.5.26 y 16.3.6). Por eso `app/layout.tsx` carga
+las 14 fuentes con `next/font/local` desde `app/fonts/`, y el build no depende
+de la red:
+- Son los mismos woff2 que sirve Google, **solo el subset latin** (cubre el
+  español). Glifos fuera de ese subset (p. ej. latin-ext como "ő", cirílico,
+  vietnamita) caen a la fuente de respaldo.
+- Cada entrada de `src` replica una cara del CSS de Google: mismo peso y
+  estilo, aunque varias apunten al mismo archivo variable. No declarar rangos
+  ("400 800"): un peso no pedido se vería distinto que con Google.
+- Nombres: `<familia>-latin[-italic][-<peso>].woff2` (el peso solo en fuentes
+  estáticas, con un archivo por peso).
+- Para sumar una fuente o un peso: pedir a
+  `https://fonts.googleapis.com/css2?family=<Familia>:wght@<pesos>&display=swap`
+  con un User-Agent de Chrome, tomar las URLs `.woff2` del bloque `/* latin */`
+  (si vienen como `/l/font?kit=`, reintentar) y agregar las entradas en
+  `layout.tsx`. Serif: `adjustFontFallback: "Times New Roman"`.
+
+**`overrides` de PostCSS.** Next 15.5 trae fijada `postcss@8.4.31` (con
+vulnerabilidades corregidas en 8.5.23). `package.json` la fuerza a la misma
+versión que usa el proyecto (`"overrides": { "next": { "postcss": "$postcss" } }`).
+Quitarlo cuando Next traiga una versión corregida (Next 16 ya trae 8.5.23).
 
 ---
 
@@ -91,7 +109,7 @@ cambiar pesos o subsets hay que volver a bajar los archivos de Google.
 ```
 app/
   layout.tsx                     → carga fuentes, metadata global, estilos
-  fonts/                         → woff2 de Newsreader (next/font/local, ver sección 2)
+  fonts/                         → woff2 de todas las fuentes (next/font/local, ver sección 2)
   globals.css                    → base de Tailwind + reduced-motion + scroll offset
   page.tsx                       → LANDING de Mostrate (ensambla las secciones)
   templates/
@@ -689,6 +707,12 @@ constituyen una integración operativa mientras no se configure el número.
   pasa a ser asíncrono; `JSX.Element` → `React.JSX.Element` por los tipos de
   React 19. ESLint configurado por primera vez. Newsreader pasa a
   `next/font/local` para evitar un fallo intermitente del build (sección 2).
+- **2026-09-28** — Seguridad: PostCSS de Next forzado a la versión del proyecto
+  (`overrides` en `package.json`; Next 15.5 trae fijada 8.4.31, vulnerable) y
+  `undici` actualizado; `npm audit` sin vulnerabilidades. El fallo de fuentes
+  apareció también con Space Grotesk, así que las 14 fuentes pasan a
+  `app/fonts/` con `next/font/local` (mismos archivos y caras que Google,
+  subset latin).
 - **2026-09-23** — Rediseño de la landing de Mostrate con concepto de
   "vidriera en vivo": los templates reales se muestran funcionando en iframes
   dentro del hero (selector de rubro, boceto que "se arma" al cargar), cinta de
