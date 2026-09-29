@@ -19,9 +19,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# local env files
-.env*.local
-.env
+# env files (cualquier variante); solo se versiona la plantilla sin valores reales
+.env*
+!.env.example
 
 # vercel
 .vercel
