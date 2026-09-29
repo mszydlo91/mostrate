@@ -24,12 +24,13 @@ const designComponents = {
   "3": DisenoGaleria,
 } as const;
 
-export default function ComercioTemplatePage({
+export default async function ComercioTemplatePage({
   searchParams,
 }: {
-  searchParams: { diseno?: string | string[] };
+  searchParams: Promise<{ diseno?: string | string[] }>;
 }) {
-  const design = resolveDesign(comercioDesigns, searchParams.diseno);
+  const { diseno } = await searchParams;
+  const design = resolveDesign(comercioDesigns, diseno);
   const Design = designComponents[design.id as keyof typeof designComponents];
   return (
     <ThemeProvider

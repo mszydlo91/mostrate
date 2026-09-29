@@ -28,14 +28,14 @@ Este repo contiene **dos cosas distintas**:
 
 | Pieza | Tecnología |
 |---|---|
-| Framework | **Next.js 14** (App Router) |
+| Framework | **Next.js 15** (App Router) + **React 19** |
 | Estilos | **Tailwind CSS** 3 |
 | Lenguaje | **TypeScript** (strict) |
-| Fuentes | **Syne** + **Inter** + **Instrument Serif** (itálica de acento) para la landing; títulos configurables en templates (sección 6), vía `next/font/google` |
+| Fuentes | **Syne** + **Inter** + **Instrument Serif** (itálica de acento) para la landing; títulos configurables en templates (sección 6), vía `next/font/google`, salvo **Newsreader**, que se sirve desde `app/fonts/` con `next/font/local` (ver abajo) |
 | Testing | **Vitest** + **React Testing Library** (jsdom), alias `@/*` vía `vite-tsconfig-paths` |
 | Deploy | **Vercel** como destino documentado; estado remoto no verificado desde el repo |
 
-Requisito de la versión instalada de Next.js: Node >=18.17.0. Comandos:
+Requisito de la versión instalada de Next.js: Node ^18.18.0, ^19.8.0 o >=20. Comandos:
 
 ```bash
 npm install     # instalar dependencias
@@ -69,9 +69,20 @@ Dos formas de test conviviendo en el repo, cada una con su propósito:
 Esta es la base sobre la que opera el subagente `testing-coverage`
 (ver sección 10).
 
-Verificación de tipos: `npx tsc --noEmit`. El script `npm run lint` existe,
-pero ESLint aún no está configurado: abre el asistente de configuración.
+Verificación de tipos: `npx tsc --noEmit`. Lint: `npm run lint` (ESLint 9 con
+`eslint.config.mjs`: `next/core-web-vitals` + `next/typescript`; los
+parámetros con prefijo `_` se permiten sin usar). `next lint` queda deprecado
+en Next 16; al migrar, pasar al CLI de ESLint.
 No hay workflows de CI versionados actualmente.
+
+**Newsreader alojada en el repo.** Google Fonts a veces responde a Newsreader
+con URLs dinámicas sin extensión (`fonts.gstatic.com/l/font?kit=…`) y el loader
+de `next/font/google` falla con `TypeError: Cannot read properties of null
+(reading '1')`, de forma intermitente. Por eso `app/layout.tsx` la carga con
+`next/font/local` desde `app/fonts/` (woff2 variables de Google Fonts v26,
+subset latin, eje `wght`, normal e itálica). Glifos fuera del subset latin
+(p. ej. vietnamita o latin-ext como "ő") caen a la serif de respaldo. Para
+cambiar pesos o subsets hay que volver a bajar los archivos de Google.
 
 ---
 
@@ -80,6 +91,7 @@ No hay workflows de CI versionados actualmente.
 ```
 app/
   layout.tsx                     → carga fuentes, metadata global, estilos
+  fonts/                         → woff2 de Newsreader (next/font/local, ver sección 2)
   globals.css                    → base de Tailwind + reduced-motion + scroll offset
   page.tsx                       → LANDING de Mostrate (ensambla las secciones)
   templates/
@@ -567,9 +579,9 @@ subagentes; Codex sigue el mismo archivo como procedimiento, referenciado desde
 - [ ] Backend real del formulario de contacto (hoy abre el cliente de mail).
 - [ ] Definir arquitectura multi-cliente (dominio por cliente).
 
-La landing y los templates se prerenderizan como contenido estático, salvo
-`/templates/profesional`, que se renderiza en el servidor por pedido porque lee
-`?diseno=` de la URL. No hay CRM, backend
+La landing se prerenderiza como contenido estático; las cuatro rutas
+`/templates/*` se renderizan en el servidor por pedido porque leen `?diseno=`
+de la URL (`searchParams`, asíncrono desde Next 15). No hay CRM, backend
 de reservas/compras ni integraciones de IA: los paneles, catálogos y horarios
 son contenido de demostración. Los formularios abren `mailto:`. Los números de
 WhatsApp están vacíos en la landing, Comercio y Gastronomía; los enlaces no
@@ -651,6 +663,11 @@ constituyen una integración operativa mientras no se configure el número.
   `?diseno=`. Nuevo motor de diseños (`design.ts`). Los controles sueltos de la
   demo se reemplazan por una barra única de Mostrate (`DemoToolbar`). Se suman
   las fuentes Newsreader, Plus Jakarta Sans y JetBrains Mono.
+- **2026-09-28** — Actualización a Next.js 15.5 + React 19 (reemplaza el PR de
+  Dependabot que solo subía `next`). `searchParams` de las páginas de templates
+  pasa a ser asíncrono; `JSX.Element` → `React.JSX.Element` por los tipos de
+  React 19. ESLint configurado por primera vez. Newsreader pasa a
+  `next/font/local` para evitar un fallo intermitente del build (sección 2).
 - **2026-09-23** — Rediseño de la landing de Mostrate con concepto de
   "vidriera en vivo": los templates reales se muestran funcionando en iframes
   dentro del hero (selector de rubro, boceto que "se arma" al cargar), cinta de

@@ -41,7 +41,7 @@ export const waTarget = whatsapp.number
 
 export const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(local.address)}`;
 
-export const iconFor: Record<ComercioIcon, (p: React.SVGProps<SVGSVGElement>) => JSX.Element> = {
+export const iconFor: Record<ComercioIcon, (p: React.SVGProps<SVGSVGElement>) => React.JSX.Element> = {
   vase: VaseIcon,
   sofa: SofaIcon,
   lamp: LampIcon,
