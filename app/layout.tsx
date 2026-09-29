@@ -6,7 +6,6 @@ import {
   Playfair_Display,
   Space_Grotesk,
   Poppins,
-  Newsreader,
   Plus_Jakarta_Sans,
   JetBrains_Mono,
   Bricolage_Grotesque,
@@ -15,6 +14,7 @@ import {
   DM_Sans,
   Barlow_Condensed,
 } from "next/font/google";
+import localFont from "next/font/local";
 import { site } from "@/lib/config";
 import "./globals.css";
 
@@ -66,12 +66,18 @@ const poppins = Poppins({
 
 // Fuentes del template Profesional (sus 3 diseños): serif editorial,
 // sans de texto y mono para los rótulos del diseño "Técnico".
-const newsreader = Newsreader({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
+// Newsreader se sirve desde el repo (woff2 variable del subset latin, tal como
+// lo entrega Google Fonts v26): Google a veces responde con URLs sin extensión
+// para esta fuente y next/font/google rompe el build (ver DOCS.md).
+const newsreader = localFont({
+  src: [
+    { path: "./fonts/newsreader-latin.woff2", style: "normal" },
+    { path: "./fonts/newsreader-latin-italic.woff2", style: "italic" },
+  ],
+  weight: "400 600",
   variable: "--font-newsreader",
   display: "swap",
+  adjustFontFallback: "Times New Roman",
 });
 
 const jakarta = Plus_Jakarta_Sans({

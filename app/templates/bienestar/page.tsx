@@ -24,12 +24,13 @@ const designComponents = {
   "3": DisenoDeportivo,
 } as const;
 
-export default function BienestarTemplatePage({
+export default async function BienestarTemplatePage({
   searchParams,
 }: {
-  searchParams: { diseno?: string | string[] };
+  searchParams: Promise<{ diseno?: string | string[] }>;
 }) {
-  const design = resolveDesign(bienestarDesigns, searchParams.diseno);
+  const { diseno } = await searchParams;
+  const design = resolveDesign(bienestarDesigns, diseno);
   const Design = designComponents[design.id as keyof typeof designComponents];
   return (
     <ThemeProvider

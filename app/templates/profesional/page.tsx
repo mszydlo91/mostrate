@@ -24,12 +24,13 @@ const designComponents = {
   "3": DisenoBoutique,
 } as const;
 
-export default function ProfesionalTemplatePage({
+export default async function ProfesionalTemplatePage({
   searchParams,
 }: {
-  searchParams: { diseno?: string | string[] };
+  searchParams: Promise<{ diseno?: string | string[] }>;
 }) {
-  const design = resolveDesign(profesionalDesigns, searchParams.diseno);
+  const { diseno } = await searchParams;
+  const design = resolveDesign(profesionalDesigns, diseno);
   const Design = designComponents[design.id as keyof typeof designComponents];
 
   return (

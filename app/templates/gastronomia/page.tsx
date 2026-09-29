@@ -24,12 +24,13 @@ const designComponents = {
   "3": DisenoTaberna,
 } as const;
 
-export default function GastronomiaTemplatePage({
+export default async function GastronomiaTemplatePage({
   searchParams,
 }: {
-  searchParams: { diseno?: string | string[] };
+  searchParams: Promise<{ diseno?: string | string[] }>;
 }) {
-  const design = resolveDesign(gastronomiaDesigns, searchParams.diseno);
+  const { diseno } = await searchParams;
+  const design = resolveDesign(gastronomiaDesigns, diseno);
   const Design = designComponents[design.id as keyof typeof designComponents];
   return (
     <ThemeProvider
