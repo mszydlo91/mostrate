@@ -56,7 +56,8 @@ export default function ThemeProvider({
   const [embedded, setEmbedded] = useState<boolean | null>(null);
 
   useEffect(() => {
-    setEmbedded(window.self !== window.top);
+    const requestedEmbed = new URLSearchParams(window.location.search).has("embed");
+    setEmbedded(window.self !== window.top || requestedEmbed);
   }, []);
 
   return (

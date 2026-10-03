@@ -8,7 +8,7 @@
   }
 
   body {
-    @apply bg-bg text-content font-inter antialiased;
+    @apply bg-bg text-content font-body antialiased;
     font-size: 16px;
     line-height: 1.6;
   }
@@ -21,7 +21,17 @@
    * espacio vacío antes del título.
    */
   section[id] {
-    scroll-margin-top: 24px;
+    scroll-margin-top: 88px;
+  }
+
+  :focus-visible {
+    outline: 3px solid theme("colors.accent");
+    outline-offset: 4px;
+  }
+
+  ::selection {
+    background: theme("colors.accent");
+    color: white;
   }
 }
 
@@ -32,6 +42,7 @@
   .animate-underline-in,
   .animate-pulse,
   .animate-fade-up,
+  .animate-reveal-in,
   .animate-marquee {
     animation: none !important;
   }

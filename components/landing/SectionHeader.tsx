@@ -10,7 +10,7 @@ export const labelClass =
   "inline-flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-accent";
 
 export const titleClass =
-  "text-balance font-syne text-[clamp(2rem,3.6vw,3.6rem)] font-extrabold leading-[1] tracking-[-0.04em]";
+  "text-balance font-display text-[clamp(2.2rem,4.3vw,5rem)] font-semibold leading-[0.98] tracking-[-0.05em]";
 
 /** Rótulo + título grande + bajada. Cada sección decide cómo lo compone. */
 export default function SectionHeader({ label, title, subtitle, className = "" }: Props) {

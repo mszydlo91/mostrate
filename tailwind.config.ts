@@ -9,19 +9,21 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: "#0F1117",
-        surface: "#1A1D27",
-        content: "#F0EEE9",
-        muted: "rgba(240,238,233,0.5)",
-        accent: "#4F7FFF",
-        "accent-dim": "rgba(79,127,255,0.13)",
-        line: "rgba(240,238,233,0.1)",
+        bg: "#F3F0E8",
+        surface: "#E7E3DA",
+        paper: "#FBFAF6",
+        content: "#111318",
+        muted: "rgba(17,19,24,0.66)",
+        accent: "#2D52E8",
+        "accent-dim": "rgba(45,82,232,0.11)",
+        signal: "#FF6247",
+        line: "rgba(17,19,24,0.16)",
       },
       fontFamily: {
+        display: ["var(--font-syne)", "sans-serif"],
+        body: ["var(--font-dmsans)", "sans-serif"],
         syne: ["var(--font-syne)", "sans-serif"],
         inter: ["var(--font-inter)", "sans-serif"],
-        // Serif itálica de acento para palabras destacadas de la landing.
-        serif: ["var(--font-instrument)", "Georgia", "serif"],
       },
       borderRadius: {
         DEFAULT: "12px",
@@ -41,6 +43,10 @@ const config: Config = {
           from: { opacity: "0", transform: "translateY(12px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
+        "reveal-in": {
+          from: { opacity: "0", transform: "translateY(16px) scale(0.99)" },
+          to: { opacity: "1", transform: "translateY(0) scale(1)" },
+        },
         marquee: {
           from: { transform: "translateX(0)" },
           to: { transform: "translateX(-50%)" },
@@ -50,6 +56,7 @@ const config: Config = {
         pulse: "pulse 2s infinite",
         "underline-in": "underline-in 0.6s 0.4s cubic-bezier(0.4,0,0.2,1) forwards",
         "fade-up": "fade-up 0.6s ease forwards",
+        "reveal-in": "reveal-in 0.55s cubic-bezier(0.22,1,0.36,1) both",
         marquee: "marquee 40s linear infinite",
       },
     },
