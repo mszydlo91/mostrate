@@ -31,7 +31,7 @@ Este repo contiene **dos cosas distintas**:
 | Framework | **Next.js 15** (App Router) + **React 19** |
 | Estilos | **Tailwind CSS** 3 |
 | Lenguaje | **TypeScript** (strict) |
-| Fuentes | **Syne** + **Inter** + **Instrument Serif** (itálica de acento) para la landing; títulos configurables en templates (sección 6). Todas alojadas en `app/fonts/` y cargadas con `next/font/local` (ver abajo) |
+| Fuentes | **Syne** (display selectivo) + **DM Sans** (texto/UI) para la landing; títulos configurables en templates (sección 6). Todas alojadas en `app/fonts/` y cargadas con `next/font/local` (ver abajo) |
 | Testing | **Vitest** + **React Testing Library** (jsdom), alias `@/*` vía `vite-tsconfig-paths` |
 | Deploy | **Vercel** como destino documentado; estado remoto no verificado desde el repo |
 
@@ -112,7 +112,10 @@ app/
   fonts/                         → woff2 de todas las fuentes (next/font/local, ver sección 2)
   globals.css                    → base de Tailwind + reduced-motion + scroll offset
   page.tsx                       → LANDING de Mostrate (ensambla las secciones)
+  robots.ts / sitemap.ts         → SEO técnico, condicionado por NEXT_PUBLIC_SITE_URL
+  opengraph-image.tsx            → imagen social generada por Next
   templates/
+    layout.tsx                   → fuentes exclusivas de los templates
     profesional/page.tsx         → demo Profesional desarrollada
     comercio/page.tsx            → demo Comercio desarrollada
     gastronomia/page.tsx         → demo Gastronomía desarrollada
@@ -120,19 +123,16 @@ app/
 
 components/
   landing/                       → secciones de la landing de Mostrate
-    Ambient.tsx                  → luz que sigue al cursor + grano de fondo
-    Nav.tsx                      → nav fija con blur + menú mobile a pantalla completa
+    Nav.tsx                      → nav fija + menú mobile accesible con foco contenido
     Logo.tsx                     → wordmark "mostrate"
     Icons.tsx                    → íconos de línea SVG inline (sin dependencias)
-    Button.tsx                   → botón único de la landing (celda de flecha, hover sobrio con brillo)
-    Hero.tsx                     → titular gigante + stats + vidriera en vivo
-    LiveStage.tsx                → vidriera: templates reales en iframes (compu + celular)
-    Marquee.tsx                  → cinta de rubros en movimiento
+    Button.tsx                   → botones primary, outline y text
+    Hero.tsx                     → propuesta + composición responsive con capturas reales
+    Portfolio.tsx                → portfolio sticky, screenshots + demo live bajo demanda
     SectionHeader.tsx            → encabezado reutilizable (label + título + sub)
-    Servicios.tsx                → lista numerada con encabezado fijo (sticky)
-    Templates.tsx                → galería escalonada con capturas reales de cada demo
-    Tilt.tsx                     → inclinación 3D siguiendo el mouse
-    Precios.tsx                  → 2 planes (precios desde config)
+    ComoTrabajamos.tsx           → recorrido compacto: trabajo, alcance y entrega
+    ModeloComercial.tsx          → inversión inicial + continuidad mensual
+    FAQ.tsx                      → preguntas frecuentes con details/summary nativos
     Contacto.tsx                 → formulario (mailto) + datos
     Footer.tsx
   templates/                     → motor + piezas reutilizables de los templates
@@ -191,46 +191,32 @@ chrome --headless=new --no-pdf-header-footer --virtual-time-budget=15000 \
 
 ## 4. Sistema de diseño
 
-### Dirección visual (landing de Mostrate — "vidriera en vivo", oscura)
-Rediseñada el 2026-09-23. La landing vende diseño, así que tiene que demostrarlo
-en vez de describirlo: el eje es la **vidriera en vivo** (los templates reales
-funcionando dentro de la página). Criterios para no caer en el look genérico
-"hecho con IA":
+### Dirección visual (landing de Mostrate — estudio editorial)
+La landing demuestra el servicio mediante páginas reales, no mediante recursos
+decorativos de agencia o SaaS. El portfolio es el protagonista: usa capturas
+desktop y mobile sincronizadas en una escena sticky en escritorio y una lectura
+apilada en mobile. El resto alterna escalas, listas, reglas y espacio negativo;
+evita matrices de cards, glassmorphism, blobs, tilt y gradientes de relleno.
 
-- **Mostrar el producto real**: iframes de las demos en el hero y capturas reales
-  en Templates, nunca mockups de relleno.
-- **Composición distinta por sección** (titular a todo el ancho, lista con
-  encabezado sticky, galería escalonada, cierre gigante), no el patrón repetido
-  rótulo + título + grilla de cards iguales.
-- **Tipografía como protagonista**: Syne 800 a gran escala + Instrument Serif
-  itálica para la palabra destacada.
-- **Detalles hechos a mano**: luz que sigue al cursor, grano, cinta de rubros,
-  cards con tilt, sello girando en el plan destacado.
-- Sin emojis (íconos de línea en `Icons.tsx`), sin blobs ni gradientes violeta.
-- **Botones** (`Button.tsx`, un solo componente para toda la landing): esquinas
-  rectas y celda cuadrada con flecha diagonal separada por una línea. Hover
-  sobrio: el color se aclara apenas, un brillo cruza el primario una sola vez y
-  la flecha se desliza unos píxeles; el outline ilumina el borde y abre las
-  marcas de corte de las esquinas. Se descartó un hover con inversión de color
-  y texto rodando por recargado.
+Syne aparece de manera selectiva en titulares y numeración. DM Sans sostiene la
+lectura y la interfaz. Los marcos son rectos, con bordes finos; cada template
+conserva su color propio únicamente como señal contextual dentro del portfolio.
 
-Una primera iteración clara ("atelier", generada con Stitch) se descartó el mismo
-día por genérica; la paleta oscura original se mantuvo por preferencia.
-
-### Paleta (landing de Mostrate — dark)
+### Paleta (landing de Mostrate)
 Definida en [`tailwind.config.ts`](tailwind.config.ts) como colores custom.
 Los templates de clientes **no** usan estos tokens: sus páginas fijan fondo,
 texto y fuente propios.
 
 | Token Tailwind | Valor | Uso |
 |---|---|---|
-| `bg` | `#0F1117` | Fondo |
-| `surface` | `#1A1D27` | Cards / superficies |
-| `content` | `#F0EEE9` | Texto principal |
-| `muted` | `rgba(240,238,233,0.5)` | Texto secundario |
-| `accent` | `#4F7FFF` | Acento (azul) |
-| `accent-dim` | `rgba(79,127,255,0.13)` | Acento tenue |
-| `line` | `rgba(240,238,233,0.1)` | Bordes |
+| `bg` | `#F3F0E8` | Fondo papel cálido |
+| `surface` | `#E7E3DA` | Superficie secundaria |
+| `paper` | `#FBFAF6` | Superficie clara para previews |
+| `content` | `#111318` | Tinta profunda |
+| `muted` | `rgba(17,19,24,0.66)` | Texto secundario |
+| `accent` | `#2D52E8` | Azul de identidad y acción |
+| `signal` | `#FF6247` | Señal excepcional, no color principal |
+| `line` | `rgba(17,19,24,0.16)` | Bordes |
 
 Radio por defecto: **12px** (`rounded`), usado por los templates; la landing
 usa esquinas rectas o `rounded-lg` en los marcos.
@@ -239,16 +225,12 @@ usa esquinas rectas o `rounded-lg` en los marcos.
 Cargadas en [`app/layout.tsx`](app/layout.tsx) y expuestas como variables CSS.
 La landing usa:
 
-- **Syne** 800 (`font-syne`) → titulares, logo, números. Es muy ancha: los
-  tamaños gigantes (hero, "¿Arrancamos?", wordmark del footer) están calculados
-  en `vw` para que entren; revisarlos si cambia el copy.
-- **Instrument Serif** itálica (`font-serif`, `--font-instrument`) → palabra
-  destacada del hero, números de templates, detalles.
-- **Inter** (`font-inter`) → texto. Es la fuente base del `body`.
+- **Syne** 400/600/700/800 (`font-display`) → titulares, logo y numeración.
+- **DM Sans** 300/400/500/700 (`font-body`) → texto e interfaz.
+- **Inter** queda disponible para compatibilidad puntual.
 
-El layout también carga **Playfair Display**, **Space Grotesk** y **Poppins**.
-Los templates eligen entre estas tres y Syne para los títulos mediante
-`--tpl-font-heading`; Inter se mantiene para el texto. Ver sección 6.
+Las fuentes adicionales se cargan únicamente bajo `app/templates/layout.tsx`;
+así no forman parte del payload inicial de la landing. Ver sección 6.
 
 ### Responsive
 Se usa `clamp()` para tamaños fluidos + breakpoints de Tailwind y arbitrarios
@@ -256,9 +238,9 @@ Se usa `clamp()` para tamaños fluidos + breakpoints de Tailwind y arbitrarios
 notebook chica, tablet, celu grande, celu chico.
 
 ### Animaciones
-- **Subrayado del hero**: línea de 1px bajo "presencia digital" (itálica en acento), keyframe `underline-in`, se dispara al cargar.
-- **Dot pulsante** del eyebrow: keyframe `pulse`.
-- Respeta `prefers-reduced-motion` (ver `globals.css`).
+Las transiciones se limitan a cambios breves de opacidad, posición y color en
+botones y previews. No hay scroll-jacking. `prefers-reduced-motion` desactiva
+el movimiento no esencial (ver `globals.css`).
 
 ---
 
@@ -266,27 +248,34 @@ notebook chica, tablet, celu grande, celu chico.
 
 Ensamblada en [`app/page.tsx`](app/page.tsx). Secciones en orden:
 
-1. **Nav** — fija, logo, links numerados, CTA "Hablemos", menú mobile a pantalla completa (el nav queda visible encima para poder cerrarlo).
-2. **Hero** — titular gigante con subrayado animado, bajada, 2 botones, stats y
-   la **vidriera en vivo** (`LiveStage.tsx`): la demo real de cada template en
-   un iframe escalado dentro de un marco de compu (desde tablet) y de celular.
-   Un selector de rubro cambia la demo; rota sola cada 7 s hasta que el visitante
-   elige (no rota con reduced-motion). Mientras carga, un boceto gris tapa el
-   iframe y se desvanece: el sitio "se arma".
-3. **Cinta de rubros** (`Marquee.tsx`) — palabras de `marquee` en config.
-4. **Servicios** — lista numerada con el encabezado fijo al costado.
-5. **Templates** — galería escalonada con capturas reales
-   (`public/previews/<slug>.webp`) y tilt; cada una linkea a `/templates/<slug>`.
-6. **Precios** — 2 planes; los precios salen de `config.ts`.
-7. **Contacto** — "¿Arrancamos?" gigante + formulario (abre el mail con los datos precargados) + info.
-8. **Footer** — links + wordmark gigante.
+1. **Nav** — fija, links a Trabajos, Cómo trabajamos y FAQ, CTA Contacto y menú mobile accesible.
+2. **Hero** — propuesta, CTAs y evidencia inmediata con previews reales.
+3. **Portfolio** — selector editorial 01–04 y escena desktop/mobile sticky. El
+   estado inicial usa screenshots; en desktop, “Explorar en vivo” monta una
+   única demo interactiva dentro del monitor y “Salir de demo” la desmonta. Al
+   cambiar de trabajo se vuelve primero al screenshot. En mobile cada trabajo
+   se presenta en flujo normal y “Ver demo” abre la ruta completa.
+4. **Cómo trabajamos** — una secuencia horizontal compacta que reúne proceso,
+   trabajo realizado y resultado entregado.
+5. **Modelo comercial** — inversión inicial y abono mensual como momentos del
+   mismo servicio, ambos con valor "A consultar".
+6. **FAQ** — respuestas sobre requisitos, adaptación, tiempos y continuidad.
+7. **Contacto** — formulario conceptual que prepara un `mailto:`.
+8. **Footer** — navegación y wordmark.
 
-### Demos embebidas y capturas
-- `ThemeProvider` detecta si la demo corre dentro de un iframe y en ese caso
-  no monta los controles de demo (tema, tipografía, "Volver a Mostrate").
-- Las capturas de `public/previews/` se generan cargando cada demo en un iframe
-  de 1440×900 y guardándola en WebP. **Hay que regenerarlas si cambia el hero de
-  un template**; no hay script versionado todavía.
+### Capturas del portfolio
+La presentación inicial no usa iframes: sirve WebP estáticos con `next/image`. Para cada slug
+hay una captura desktop `public/previews/<slug>.webp` (1440×900) y una mobile
+`public/previews/<slug>-mobile.webp` (390×1600). Para actualizarlas, abrir
+`/templates/<slug>?diseno=1&embed=preview`, capturar esos viewports completos y
+reemplazar los WebP con el mismo nombre. El parámetro `embed` hace que
+`ThemeProvider` oculte la barra de demo durante la captura; no cambia la ruta
+normal del template.
+
+En desktop el usuario puede solicitar una demo interactiva. Recién en ese clic
+se monta un único iframe con `/templates/<slug>`; no se precarga, no se conservan
+demos ocultas y se desmonta al salir o cambiar el template activo. El teléfono
+sigue usando la captura mobile y este modo no se ofrece en breakpoints mobile.
 
 ### 🔧 Config central — `lib/config.ts`
 Centraliza los precios, los datos de contacto y el contenido comercial de la
@@ -295,7 +284,8 @@ o cerrar el menú y el asunto/cuerpo del correo de contacto. Bloques principales
 
 - `pricing` → **precios** (`inicial`, `mensual`). *Editá esto para cambiar los precios.*
 - `contact` → email, WhatsApp, ubicación.
-- `site`, `nav`, `hero`, `servicios`, `templates`, `precios`, `contacto`, `footer`.
+- `site`, `nav`, `hero`, `portfolio`, `comoTrabajamos`, `modelo`, `faq`,
+  `contacto`, `footer`.
 
 ---
 
@@ -596,7 +586,9 @@ subagentes; Codex sigue el mismo archivo como procedimiento, referenciado desde
 
 1. Subir el repo a GitHub.
 2. Importar en Vercel (detecta Next.js solo).
-3. Deploy — sin variables de entorno.
+3. Configurar `NEXT_PUBLIC_SITE_URL` con el origen público (por ejemplo,
+   `https://mostrate.com.ar`) para habilitar canonical y sitemap absoluto. Sin
+   esa variable el sitio sigue funcionando y omite esos datos dependientes del dominio.
 4. Para clientes: dominio propio como objetivo; la publicación depende de la
    arquitectura pendiente de la sección 9, además de configurar los dominios.
 
@@ -630,6 +622,20 @@ constituyen una integración operativa mientras no se configure el número.
 
 ## 13. Changelog
 
+- **2026-10-03** — Segunda iteración estructural: Transformación, Qué incluye y
+  Proceso se fusionan en “Cómo trabajamos”, un recorrido horizontal de cinco
+  pasos. El portfolio conserva screenshots como estado inicial y suma una demo
+  live opcional en desktop: monta un solo iframe bajo demanda y lo destruye al
+  salir o cambiar de template. Navegación reducida a Trabajos, Cómo trabajamos,
+  FAQ y Contacto; se agregan pruebas específicas del ciclo del iframe.
+- **2026-10-01 (Fase 2)** — Rediseño integral de la landing como estudio
+  editorial: paleta papel/tinta/azul, Syne + DM Sans, hero con evidencia real,
+  portfolio protagonista con capturas desktop/mobile (sticky en escritorio y
+  apilado en mobile), transformación, alcance, proceso, modelo comercial, FAQ y
+  contacto `mailto:` honesto. Se retiraron iframes, ambientación de cursor,
+  marquee, tilt y planes enfrentados. Las fuentes específicas de demos se
+  aislaron en `app/templates/layout.tsx`; se agregaron metadata social,
+  `robots.txt`, sitemap condicionado y pruebas de navegación, FAQ y portfolio.
 - **2026-07-05** — Setup inicial: landing de Mostrate, estructura de carpetas,
   config central, motor de theming, template Profesional con 3 temas, y esta doc.
 - **2026-08-25** — Ancho del contenedor (`max-w-shell`) pasado a `clamp()`
@@ -713,6 +719,16 @@ constituyen una integración operativa mientras no se configure el número.
   apareció también con Space Grotesk, así que las 14 fuentes pasan a
   `app/fonts/` con `next/font/local` (mismos archivos y caras que Google,
   subset latin).
+- **2026-10-01** — Refinamiento visual de la landing: base marfil, papel claro,
+  tinta azul-negra y carmín como acento; Space Grotesk para títulos, logo y
+  números. El hero y la vidriera en vivo se compactaron para entrar mejor en el
+  viewport, y la rotación automática de la vidriera se pausa al recorrer una
+  demo y se desactiva con el primer clic dentro de ella. Cada cambio de demo
+  vuelve a montar los dos iframes con una URL propia para asegurar que carguen
+  Profesional, Comercio, Gastronomía y Bienestar; el estado de carga nace con
+  cada marco y no se reinicia en un efecto posterior, evitando que una respuesta
+  desde caché deje el boceto por encima del template. La galería de previews
+  reduce sus offsets para mostrar los cuatro trabajos con mayor continuidad.
 - **2026-09-23** — Rediseño de la landing de Mostrate con concepto de
   "vidriera en vivo": los templates reales se muestran funcionando en iframes
   dentro del hero (selector de rubro, boceto que "se arma" al cargar), cinta de
